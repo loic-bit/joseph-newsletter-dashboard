@@ -74,6 +74,22 @@
   </div>
 </div>
 
+<!-- API KEY MODAL -->
+<div id="apiKeyModal" class="fixed inset-0 z-50 hidden items-center justify-center" style="background:rgba(0,0,0,.85)">
+  <div class="card p-8 w-full max-w-sm">
+    <div class="text-center mb-6">
+      <div class="text-amber-400 font-bold text-base mb-1">Anthropic API Key</div>
+      <div class="text-gray-500 text-sm">Enter your key once — stored locally in your browser, never sent anywhere except Anthropic.</div>
+    </div>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." />
+    <div id="apiKeyError" class="text-red-400 text-xs mt-2 hidden">Key must start with sk-ant-</div>
+    <div class="flex gap-3 mt-4">
+      <button id="apiKeyCancelBtn" class="btn-ghost flex-1 justify-center hidden" onclick="closeApiKeyModal()">Cancel</button>
+      <button class="btn-primary flex-1 justify-center" onclick="saveApiKey()">Save Key</button>
+    </div>
+  </div>
+</div>
+
 <!-- APP -->
 <div id="app" class="hidden min-h-screen flex flex-col">
 
@@ -88,6 +104,8 @@
       <div class="flex items-center gap-3">
         <div id="researchDate" class="text-gray-700 text-xs"></div>
         <div id="statsChips" class="flex gap-2"></div>
+        <button class="copy-btn" style="font-size:11px" onclick="handleClearCache()">Clear Cache</button>
+        <button class="copy-btn" style="font-size:11px" onclick="showApiKeyModal()">API Key</button>
       </div>
     </div>
     <div class="px-6 flex gap-6 border-t border-gray-900">
@@ -128,7 +146,7 @@
 
       <!-- topic-select -->
       <div id="stateTopicSelect" class="hidden">
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center justify-between mb-2">
           <div>
             <h1 class="text-xl font-semibold text-white mb-1">Pick a topic</h1>
             <p class="text-gray-500 text-sm">Select one to generate email, story, and Skool variations.</p>
@@ -138,6 +156,7 @@
             Regenerate
           </button>
         </div>
+        <div id="topicsCacheStatus" class="hidden flex items-center gap-2 mb-5"></div>
         <div id="topicCards" class="flex flex-col gap-4"></div>
         <div id="topicsError" class="error-box mt-4 hidden"></div>
       </div>
@@ -154,7 +173,10 @@
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="min-w-0">
             <button class="btn-ghost mb-3" style="font-size:12px;padding:4px 10px" onclick="backToTopics()">← Topics</button>
-            <h2 id="contentTopicTitle" class="text-base font-semibold text-white leading-snug"></h2>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 id="contentTopicTitle" class="text-base font-semibold text-white leading-snug"></h2>
+              <span id="contentCacheStatus" class="badge hidden" style="background:#0a1a10;color:#4ade80">Cached</span>
+            </div>
             <div id="contentTopicSource" class="text-amber-600 text-xs mt-1"></div>
           </div>
           <button class="btn-ghost flex-shrink-0" id="btnRegenContent" onclick="regenerateContent()">
@@ -221,6 +243,277 @@
 </div>
 
 <script>
+// ─── API Config (browser-direct, no serverless function) ──────────────────────
+const HAIKU  = 'claude-haiku-4-5-20251001';
+const SONNET = 'claude-sonnet-4-6';
+function getApiKey() { return localStorage.getItem('ns_api_key') || ''; }
+
+const JOSEPH_SYSTEM = `You are a content strategist for "Investing Section 8" — Joseph Khateri's Section 8 real estate mentorship.
+
+AUDIENCE (ICP): Mid-30s to 50s W2 professionals (engineers, teachers, contractors, small business owners). Live in expensive markets (CA, NY, NJ, WA, DC). Have $20K-$100K saved. Been researching Section 8 for months or years. Never pulled the trigger. Analysis paralysis. Scared of making a $10-15K mistake alone.
+
+Top fears: bad tenants destroying property | picking the wrong market | wasting their savings | getting scammed by a guru
+Top desires: passive income depositing while they sleep | stop trading time for money | financial security | generational wealth
+
+OFFER: Done-with-you Section 8 mentorship. 6-month program ($4K) or 12-month program ($6K). Guarantee: first profitable property in that window or Joseph keeps working for free. Includes: 1-on-1 with Joseph directly (his personal number), DealFinder AI (proprietary daily deal feed), vetted team in the right markets, weekly group calls.
+
+JOSEPH: Licensed realtor in Virginia (legal obligation to tell the truth — no guru has this). Built $2.4M Section 8 portfolio by age 21. $30K/month gross. Started at 18 with $0 and no connections. First deal was a disaster (failed HUD inspections, burglarized, lost $6K). That pain built his system. 70+ clients, 100+ Section 8 properties acquired.
+
+PROVEN RESULTS (use these, never fabricate):
+- Yasir Tariq: data analyst, GA, 4 properties in Birmingham+Cleveland, $3,700/mo, 6 months, while working full-time
+- Daniel Bier: 26, Orange County CA, $76K Detroit purchase, $1,120/mo Section 8 rent, 17.53% cash-on-cash ROI, 4 months
+- Sarah: teacher in California, 4 Cleveland properties, $3,500/mo, 18 months — never visited her properties
+- Marcus: 2 years stuck in research mode, first deal in 6 weeks, $650/mo, now $1,800/mo
+- David: $30K saved, first property in 3 months, 19% ROI, now 5 properties at $2,400/mo
+- Giorgio: 0 to 9 properties using BRRRR, $14K/mo gross in 5 months
+
+KEY MECHANISMS:
+- Government pays 70-100% of rent directly to landlord's account, deposited every month
+- DSCR loans: qualify on property income not W2 or tax returns, start with $20K-$25K
+- 7 million families on the Section 8 waiting list — vacancy is not a real risk
+- Markets: Cleveland, Birmingham, Detroit — $70K-$100K homes, $1,250-$1,450/mo government rent
+- 95% of Joseph's clients invest out of state. 70% never visit their properties.
+- Honest cash-on-cash returns: 15-25% (never overclaim)
+
+VOICE RULES — NON-NEGOTIABLE:
+- NO em dashes (never — and never --)
+- NO these words: game-changer, transform, leverage, unlock, streamline, elevate, journey, revolutionary, cutting-edge, empower
+- Do NOT open the email body with "I" — open with a scene, a question, or a third-person story
+- One idea per sentence, short paragraphs (1-3 sentences max)
+- Specific: use market names, dollar amounts, timeframes, percentages — never vague
+- Conversational: write like Joseph is texting a serious investor who asked him a direct question
+- Proof over claims: show a real result instead of asserting something is "powerful" or "proven"
+- Honest: no fake scarcity, no manufactured urgency, no overpromising
+
+You output ONLY valid JSON. No text, no explanation, no markdown — just the JSON object.`;
+
+// ─── Claude API caller ────────────────────────────────────────────────────────
+async function callClaude(model, userPrompt, maxTokens) {
+  const apiKey = getApiKey();
+  if (!apiKey) { showApiKeyModal(true); throw new Error('API key not set'); }
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: maxTokens,
+      system: JOSEPH_SYSTEM,
+      messages: [{ role: 'user', content: userPrompt }],
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Claude API ${res.status}: ${err}`);
+  }
+  const data = await res.json();
+  return data.content[0].text;
+}
+
+function parseJSON(raw) {
+  const stripped = raw.replace(/^```(?:json)?\s*/m, '').replace(/\s*```$/m, '').trim();
+  try { return JSON.parse(stripped); } catch {
+    const m = stripped.match(/\{[\s\S]*\}/);
+    if (m) return JSON.parse(m[0]);
+    throw new Error('Could not parse JSON from Claude response');
+  }
+}
+
+// ─── Prompt builders (identical to generate.js) ───────────────────────────────
+function buildTopicsPrompt(research, previousTopics) {
+  const avoidNote = previousTopics && previousTopics.length > 0
+    ? `\nThe user already saw these topics and wants different ones — do NOT repeat them:\n${previousTopics.map(t => `- ${t.title}`).join('\n')}\n`
+    : '';
+  const compact = {
+    reddit_questions: research.reddit_questions.slice(0, 10).map(r => ({ source: r.source, text: r.text.slice(0, 200), score: r.score, url: r.url })),
+    reddit_top_posts: research.reddit_top_posts.slice(0, 8).map(r => ({ source: r.source, title: r.title, text: (r.text || '').slice(0, 150), score: r.score, url: r.url })),
+    youtube_questions: research.youtube_questions.slice(0, 6).map(y => ({ video: y.video_title, text: y.text.slice(0, 200), likes: y.likes })),
+    youtube_comments: research.youtube_comments.slice(0, 8).map(y => ({ video: y.video_title, text: y.text.slice(0, 200), likes: y.likes })),
+    news_items: research.news_items.slice(0, 12).map(n => ({ title: n.title, source: n.source })),
+    student_wins: (research.student_wins || []).slice(0, 5),
+  };
+  return `Based on this research data, identify 3 distinct newsletter topics with strong signal for Joseph Khateri's audience.${avoidNote}
+
+Rules for topic selection:
+1. Cross-source convergence wins: the same fear or theme in YouTube + Reddit + News = strongest signal
+2. The topic must address something Joseph's ICP is thinking about RIGHT NOW
+3. Make each topic a different type: e.g. myth-busting vs. market insight vs. social proof
+4. Every topic must cite a specific source URL or engagement metric
+
+RESEARCH DATA:
+${JSON.stringify(compact)}
+
+Return exactly this JSON structure:
+{
+  "topics": [
+    {
+      "id": "topic-1",
+      "title": "Specific topic title in 8-15 words",
+      "source": "Source name + engagement metric (e.g. '6 of 12 news items + YouTube comment')",
+      "signal_quote": "Exact quote or close paraphrase from the data that surfaced this topic",
+      "hook": "2-3 sentences: why this topic matters RIGHT NOW for Joseph's ICP and what fear or desire it taps",
+      "joseph_angle": "1-2 sentences: what Joseph's specific expertise adds that generic real estate advice cannot",
+      "icp_fit": "Which specific fear, desire, or objection from Joseph's ICP this addresses",
+      "cta": "none",
+      "type": "myth_busting"
+    },
+    { "id": "topic-2", "title": "...", "source": "...", "signal_quote": "...", "hook": "...", "joseph_angle": "...", "icp_fit": "...", "cta": "none or soft", "type": "pure_value or market_insight or social_proof or story" },
+    { "id": "topic-3", "title": "...", "source": "...", "signal_quote": "...", "hook": "...", "joseph_angle": "...", "icp_fit": "...", "cta": "none or soft", "type": "..." }
+  ]
+}`;
+}
+
+function buildEmailPrompt(topic, studentWins) {
+  const winsText = studentWins.length > 0
+    ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected, source: ${w.lead_source || 'direct'}`).join('\n')
+    : 'None available for this cycle.';
+  return `Generate 3 distinct email newsletter variations for Joseph Khateri on this topic.
+
+TOPIC: ${topic.title}
+SOURCE SIGNAL: ${topic.source}
+SIGNAL QUOTE: "${topic.signal_quote}"
+JOSEPH'S ANGLE: ${topic.joseph_angle}
+ICP FIT: ${topic.icp_fit}
+CTA TYPE: ${topic.cta}
+
+RECENT STUDENT WINS (use if relevant, never invent):
+${winsText}
+
+Email rules:
+- Subject line: under 8 words, all lowercase, sounds like a text to a friend not a marketing email
+- Preview text: continues or contrasts with the subject line
+- Body: 150-300 words. Open with a scene, a question, or a story about a specific person — NEVER start with "I"
+- Short paragraphs: 1-3 sentences each
+- Include one named student result if it fits naturally
+- No em dashes, no hype words
+- The 3 versions must use different structural approaches (not just synonym swaps)
+
+Return exactly this JSON:
+{
+  "email": [
+    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
+    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
+    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." }
+  ]
+}`;
+}
+
+function buildStoriesPrompt(topic, studentWins) {
+  const winsText = studentWins.length > 0
+    ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected`).join('\n')
+    : 'None available for this cycle.';
+  return `Generate 3 distinct Instagram Story sequences for Joseph Khateri on this topic.
+
+TOPIC: ${topic.title}
+JOSEPH'S ANGLE: ${topic.joseph_angle}
+ICP FIT: ${topic.icp_fit}
+CTA TYPE: ${topic.cta}
+
+STUDENT WINS (use if relevant):
+${winsText}
+
+Story rules:
+- 4-6 slides per sequence
+- Under 15 words per slide (this is on-screen text only — the visual carries the rest)
+- Structure: Hook → Context → Insight → Proof (if a real win fits) → CTA or Engagement question
+- The 3 sequences must have different hooks and different structural angles
+- No em dashes, no hype words
+
+Return exactly this JSON:
+{
+  "stories": [
+    { "slides": [{ "label": "Hook", "text": "..." }, { "label": "Context", "text": "..." }, { "label": "Insight", "text": "..." }, { "label": "CTA", "text": "..." }] },
+    { "slides": [...] },
+    { "slides": [...] }
+  ]
+}`;
+}
+
+function buildSkoolPrompt(topic) {
+  return `Generate 3 distinct Skool free community post variations for Joseph Khateri on this topic.
+
+TOPIC: ${topic.title}
+JOSEPH'S ANGLE: ${topic.joseph_angle}
+
+Skool post rules:
+- Under 200 words
+- Conversational, community-first tone (these people already follow Joseph and trust him)
+- Start with a specific hook: a question, a stat, or a short scene
+- Deliver one piece of genuine value
+- End with an engagement question or light CTA ("drop a comment", "DM me", etc.)
+- No hard sell, no fake urgency
+- The 3 variations must have different openers and different angles
+
+Return exactly this JSON:
+{
+  "skool": [
+    { "body": "..." },
+    { "body": "..." },
+    { "body": "..." }
+  ]
+}`;
+}
+
+// ─── Cache helpers ────────────────────────────────────────────────────────────
+function todayKey() { return new Date().toISOString().slice(0, 10); }
+
+function getCachedTopics() {
+  try { const r = localStorage.getItem(`ns_topics_${todayKey()}`); return r ? JSON.parse(r) : null; } catch { return null; }
+}
+function setCachedTopics(topics) {
+  try { localStorage.setItem(`ns_topics_${todayKey()}`, JSON.stringify(topics)); } catch {}
+}
+function getCachedContent(topicTitle) {
+  try { const r = localStorage.getItem(`ns_content_${todayKey()}_${topicTitle.slice(0,60)}`); return r ? JSON.parse(r) : null; } catch { return null; }
+}
+function setCachedContent(topicTitle, content) {
+  try { localStorage.setItem(`ns_content_${todayKey()}_${topicTitle.slice(0,60)}`, JSON.stringify(content)); } catch {}
+}
+function clearAllCache() {
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && (k.startsWith('ns_topics_') || k.startsWith('ns_content_'))) keys.push(k);
+  }
+  keys.forEach(k => localStorage.removeItem(k));
+}
+function handleClearCache() {
+  clearAllCache();
+  const btn = event.target;
+  btn.textContent = 'Cleared!';
+  setTimeout(() => { btn.textContent = 'Clear Cache'; }, 1500);
+}
+
+// ─── API Key modal ────────────────────────────────────────────────────────────
+function showApiKeyModal(fromError = false) {
+  const modal = document.getElementById('apiKeyModal');
+  const cancelBtn = document.getElementById('apiKeyCancelBtn');
+  const input = document.getElementById('apiKeyInput');
+  const err = document.getElementById('apiKeyError');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  if (getApiKey()) { input.value = getApiKey(); cancelBtn.classList.remove('hidden'); }
+  else if (!fromError) { cancelBtn.classList.add('hidden'); }
+  else { cancelBtn.classList.add('hidden'); }
+  err.classList.add('hidden');
+  input.focus();
+}
+function closeApiKeyModal() {
+  const modal = document.getElementById('apiKeyModal');
+  modal.classList.add('hidden');
+  modal.style.display = '';
+}
+function saveApiKey() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  const err = document.getElementById('apiKeyError');
+  if (!val.startsWith('sk-ant-')) { err.classList.remove('hidden'); return; }
+  localStorage.setItem('ns_api_key', val);
+  closeApiKeyModal();
+}
+
 // ─── State ────────────────────────────────────────────────────────────────────
 const S = {
   phase: 'loading',
@@ -241,6 +534,7 @@ function checkAuth() {
     sessionStorage.setItem('ns_auth', '1');
     document.getElementById('authGate').style.display = 'none';
     document.getElementById('app').classList.remove('hidden');
+    if (!getApiKey()) showApiKeyModal(false);
     init();
   } else {
     document.getElementById('pwError').classList.remove('hidden');
@@ -249,6 +543,7 @@ function checkAuth() {
 if (sessionStorage.getItem('ns_auth') === '1') {
   document.getElementById('authGate').style.display = 'none';
   document.getElementById('app').classList.remove('hidden');
+  if (!getApiKey()) showApiKeyModal(false);
   init();
 }
 
@@ -278,8 +573,7 @@ function switchNav(nav) {
   ['generate','research','history'].forEach(n => {
     document.getElementById('navBtn' + n.charAt(0).toUpperCase() + n.slice(1)).className =
       (n === nav ? 'nav-active' : 'nav-inactive') + ' py-3 text-sm font-medium transition-all';
-    document.getElementById('nav' + n.charAt(0).toUpperCase() + n.slice(1))
-      .classList.toggle('hidden', n !== nav);
+    document.getElementById('nav' + n.charAt(0).toUpperCase() + n.slice(1)).classList.toggle('hidden', n !== nav);
   });
   if (nav === 'history') renderHistoryList();
 }
@@ -305,14 +599,11 @@ function renderHeader(data) {
       `Research: ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
   }
   const s = data.stats;
-  const chips = [
+  document.getElementById('statsChips').innerHTML = [
     { label: `${(s.yt_comments||0)+(s.yt_questions||0)} YT`, color: '#ef4444' },
     { label: `${s.reddit_items||0} Reddit`, color: '#ff4500' },
     { label: `${s.news_items||0} News`, color: '#3b82f6' },
-  ];
-  document.getElementById('statsChips').innerHTML = chips
-    .map(c => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${c.color}22;color:${c.color}">${c.label}</span>`)
-    .join('');
+  ].map(c => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${c.color}22;color:${c.color}">${c.label}</span>`).join('');
 }
 
 function renderResearchBreakdown(data) {
@@ -348,105 +639,57 @@ function switchResearchTab(tab) {
 function renderResearchPanel() {
   if (!S.research) return;
   const panel = document.getElementById('researchPanel');
-  const r = S.research;
-  const tab = S.researchTab;
-
+  const r = S.research; const tab = S.researchTab;
   if (tab === 'reddit') {
-    const questions = (r.reddit_questions || []).slice(0, 15);
-    const posts     = (r.reddit_top_posts || []).slice(0, 10);
     panel.innerHTML = `
       <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Top Questions</div>
-      ${questions.map(q => `
-        <div class="signal-row">
-          <div class="flex items-start gap-2">
-            <span class="text-amber-500 text-xs font-bold flex-shrink-0 mt-0.5">Q</span>
-            <div class="flex-1 min-w-0">
-              <div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div>
-              <div class="text-gray-600 text-xs mt-1">${esc(q.source)} ${q.url ? `· <a href="${esc(q.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div>
-            </div>
-            <span class="score-badge flex-shrink-0">${q.score}</span>
-          </div>
-        </div>`).join('')}
+      ${(r.reddit_questions||[]).slice(0,15).map(q => `<div class="signal-row"><div class="flex items-start gap-2"><span class="text-amber-500 text-xs font-bold flex-shrink-0 mt-0.5">Q</span><div class="flex-1 min-w-0"><div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div><div class="text-gray-600 text-xs mt-1">${esc(q.source)} ${q.url ? `· <a href="${esc(q.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div></div><span class="score-badge flex-shrink-0">${q.score}</span></div></div>`).join('')}
       <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mt-6 mb-4">Top Posts</div>
-      ${posts.map(p => `
-        <div class="signal-row">
-          <div class="flex items-start gap-2">
-            <div class="flex-1 min-w-0">
-              <div class="text-gray-200 text-sm font-medium leading-snug">${esc(p.title||'')}</div>
-              ${p.text ? `<div class="text-gray-500 text-xs mt-1 leading-snug">${esc(p.text.slice(0,120))}...</div>` : ''}
-              <div class="text-gray-600 text-xs mt-1">${esc(p.source)} ${p.url ? `· <a href="${esc(p.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div>
-            </div>
-            <span class="score-badge flex-shrink-0">${p.score||0}</span>
-          </div>
-        </div>`).join('')}`;
+      ${(r.reddit_top_posts||[]).slice(0,10).map(p => `<div class="signal-row"><div class="flex items-start gap-2"><div class="flex-1 min-w-0"><div class="text-gray-200 text-sm font-medium leading-snug">${esc(p.title||'')}</div>${p.text ? `<div class="text-gray-500 text-xs mt-1 leading-snug">${esc(p.text.slice(0,120))}...</div>` : ''}<div class="text-gray-600 text-xs mt-1">${esc(p.source)} ${p.url ? `· <a href="${esc(p.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div></div><span class="score-badge flex-shrink-0">${p.score||0}</span></div></div>`).join('')}`;
   }
-
   if (tab === 'youtube') {
-    const questions = (r.youtube_questions || []).slice(0, 10);
-    const comments  = (r.youtube_comments  || []).slice(0, 15);
     panel.innerHTML = `
       <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Questions</div>
-      ${questions.map(q => `
-        <div class="signal-row">
-          <div class="flex items-start gap-2">
-            <span class="text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">Q</span>
-            <div class="flex-1 min-w-0">
-              <div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div>
-              <div class="text-gray-600 text-xs mt-1">${esc(q.video_title||'')}</div>
-            </div>
-            <span class="score-badge flex-shrink-0">${q.likes||0}</span>
-          </div>
-        </div>`).join('')}
+      ${(r.youtube_questions||[]).slice(0,10).map(q => `<div class="signal-row"><div class="flex items-start gap-2"><span class="text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">Q</span><div class="flex-1 min-w-0"><div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div><div class="text-gray-600 text-xs mt-1">${esc(q.video_title||'')}</div></div><span class="score-badge flex-shrink-0">${q.likes||0}</span></div></div>`).join('')}
       <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mt-6 mb-4">Top Comments</div>
-      ${comments.map(c => `
-        <div class="signal-row">
-          <div class="flex items-start gap-2">
-            <div class="flex-1 min-w-0">
-              <div class="text-gray-300 text-sm leading-snug">${esc(c.text.slice(0,250))}</div>
-              <div class="text-gray-600 text-xs mt-1">${esc(c.video_title||'')}</div>
-            </div>
-            <span class="score-badge flex-shrink-0">${c.likes||0}</span>
-          </div>
-        </div>`).join('')}`;
+      ${(r.youtube_comments||[]).slice(0,15).map(c => `<div class="signal-row"><div class="flex items-start gap-2"><div class="flex-1 min-w-0"><div class="text-gray-300 text-sm leading-snug">${esc(c.text.slice(0,250))}</div><div class="text-gray-600 text-xs mt-1">${esc(c.video_title||'')}</div></div><span class="score-badge flex-shrink-0">${c.likes||0}</span></div></div>`).join('')}`;
   }
-
   if (tab === 'news') {
-    const items = (r.news_items || []).slice(0, 20);
-    panel.innerHTML = `
-      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">${items.length} Items</div>
-      ${items.map(n => `
-        <div class="signal-row">
-          <div class="text-gray-200 text-sm leading-snug">${esc(n.title||'')}</div>
-          <div class="text-gray-600 text-xs mt-1">${esc(n.source||'')}${n.published ? ' · ' + new Date(n.published).toLocaleDateString() : ''}</div>
-        </div>`).join('')}`;
+    const items = (r.news_items||[]).slice(0,20);
+    panel.innerHTML = `<div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">${items.length} Items</div>${items.map(n => `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(n.title||'')}</div><div class="text-gray-600 text-xs mt-1">${esc(n.source||'')}${n.published ? ' · ' + new Date(n.published).toLocaleDateString() : ''}</div></div>`).join('')}`;
   }
 }
 
 function renderVideosPanel() {
   if (!S.research) return;
-  const videos = (S.research.joseph_videos || []).slice(0, 8);
-  document.getElementById('videosPanel').innerHTML = videos.map(v => `
-    <div class="signal-row">
-      <div class="text-gray-200 text-sm leading-snug">${esc(v.title||'')}</div>
-      <div class="text-gray-600 text-xs mt-1">${(v.views||0).toLocaleString()} views · ${v.comment_count||0} comments</div>
-    </div>`).join('');
+  document.getElementById('videosPanel').innerHTML = (S.research.joseph_videos||[]).slice(0,8).map(v =>
+    `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(v.title||'')}</div><div class="text-gray-600 text-xs mt-1">${(v.views||0).toLocaleString()} views · ${v.comment_count||0} comments</div></div>`).join('');
 }
 
 // ─── Topics ───────────────────────────────────────────────────────────────────
-async function generateTopics(previousTopics) {
+async function generateTopics(previousTopics, force) {
+  // Load from cache if available and not forcing a refresh
+  if (!force && !previousTopics?.length) {
+    const cached = getCachedTopics();
+    if (cached) {
+      S.topics = cached;
+      renderTopics(cached);
+      showTopicsCacheStatus(true);
+      setPhase('topic-select');
+      return;
+    }
+  }
+
   setPhase('topics-loading');
   document.getElementById('topicsError').classList.add('hidden');
   try {
-    const res = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'generate_topics', research: S.research, previous_topics: previousTopics || [] }),
-    });
-    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
-    const data = await res.json();
+    const raw = await callClaude(HAIKU, buildTopicsPrompt(S.research, previousTopics || []), 2500);
+    const data = parseJSON(raw);
     if (!data.topics?.length) throw new Error('No topics returned');
     S.topics = data.topics;
+    setCachedTopics(data.topics);
     renderTopics(data.topics);
+    showTopicsCacheStatus(false);
     setPhase('topic-select');
   } catch (err) {
     setPhase('topic-select');
@@ -457,11 +700,22 @@ async function generateTopics(previousTopics) {
   }
 }
 
+function showTopicsCacheStatus(fromCache) {
+  const el = document.getElementById('topicsCacheStatus');
+  if (!el) return;
+  if (fromCache) {
+    el.innerHTML = `<span class="badge" style="background:#0a1a10;color:#4ade80">From cache</span><span class="text-gray-600 text-xs">Topics generated earlier today. Hit Regenerate for fresh ones.</span>`;
+    el.classList.remove('hidden');
+  } else {
+    el.classList.add('hidden');
+  }
+}
+
 async function regenerateTopics() {
   const btn = document.getElementById('btnRegen');
   const spin = document.getElementById('regenSpinner');
   btn.disabled = true; spin.classList.remove('hidden');
-  await generateTopics(S.topics || []);
+  await generateTopics(S.topics || [], true);
   spin.classList.add('hidden'); btn.disabled = false;
 }
 
@@ -502,22 +756,41 @@ async function selectTopic(idx) {
   await generateContent();
 }
 
-async function generateContent() {
+async function generateContent(force) {
+  // Load from cache if available and not forcing refresh
+  if (!force) {
+    const cached = getCachedContent(S.selectedTopic.title);
+    if (cached) {
+      S.content = cached;
+      document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
+      document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
+      document.getElementById('contentCacheStatus').classList.remove('hidden');
+      S.activeTab = 'email'; S.activeVersion = 0;
+      saveToHistory(S.selectedTopic, S.content);
+      renderContentView();
+      setPhase('content-view');
+      return;
+    }
+  }
+
+  document.getElementById('contentCacheStatus').classList.add('hidden');
   setPhase('content-loading');
   document.getElementById('contentError').classList.add('hidden');
   try {
-    const res = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'generate_content', research: S.research, topic: S.selectedTopic }),
-    });
-    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
-    const data = await res.json();
+    const studentWins = S.research.student_wins || [];
+    const [emailRaw, storiesRaw, skoolRaw] = await Promise.all([
+      callClaude(SONNET, buildEmailPrompt(S.selectedTopic, studentWins), 5000),
+      callClaude(HAIKU,  buildStoriesPrompt(S.selectedTopic, studentWins), 2500),
+      callClaude(HAIKU,  buildSkoolPrompt(S.selectedTopic), 2000),
+    ]);
+    const data = { ...parseJSON(emailRaw), ...parseJSON(storiesRaw), ...parseJSON(skoolRaw) };
     if (!data.email || !data.stories || !data.skool) throw new Error('Incomplete content returned');
     S.content = data;
-    S.activeTab = 'email'; S.activeVersion = 0;
+    setCachedContent(S.selectedTopic.title, data);
     document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
     document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
+    document.getElementById('contentCacheStatus').classList.add('hidden');
+    S.activeTab = 'email'; S.activeVersion = 0;
     saveToHistory(S.selectedTopic, S.content);
     renderContentView();
     setPhase('content-view');
@@ -533,7 +806,7 @@ async function regenerateContent() {
   const btn = document.getElementById('btnRegenContent');
   const spin = document.getElementById('regenContentSpinner');
   btn.disabled = true; spin.classList.remove('hidden');
-  await generateContent();
+  await generateContent(true);
   spin.classList.add('hidden'); btn.disabled = false;
 }
 
@@ -549,13 +822,14 @@ function switchTab(tab) { S.activeTab = tab; updateTabUI(); showActivePanel(); }
 function switchVersion(idx) { S.activeVersion = idx; updatePillUI(); applyVersionVisibility(); }
 function updateTabUI() {
   ['email','stories','skool'].forEach(t => {
-    const id = 'tab' + t.charAt(0).toUpperCase() + t.slice(1);
-    document.getElementById(id).className = (S.activeTab === t ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
+    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).className =
+      (S.activeTab === t ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
   });
 }
 function updatePillUI() {
   [0,1,2].forEach(i => {
-    document.getElementById(`pill${i+1}`).className = (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
+    document.getElementById(`pill${i+1}`).className =
+      (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
   });
 }
 function showActivePanel() {
@@ -574,108 +848,62 @@ function applyVersionVisibility() {
 function renderEmailPanel() {
   document.getElementById('panelEmail').innerHTML = S.content.email.map((e, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button></div>
-        <div class="text-white font-medium text-sm">${esc(e.subject)}</div>
-      </div>
-      <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div>
-        <div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div>
-      </div>
-      <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div>
-        <div class="text-gray-300 text-sm">${esc(e.preview)}</div>
-      </div>
-      <div class="card p-5">
-        <div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div>
-        <div class="email-body">${esc(e.body)}</div>
-        <div class="border-t border-gray-900 mt-5 pt-4 flex justify-end">
-          <button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button>
-        </div>
-      </div>
+      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button></div><div class="text-white font-medium text-sm">${esc(e.subject)}</div></div>
+      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div></div>
+      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.preview)}</div></div>
+      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div><div class="email-body">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex justify-end"><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
     </div>`).join('');
 }
 
 function renderStoriesPanel() {
   document.getElementById('panelStories').innerHTML = S.content.stories.map((seq, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5">
-        <div class="flex items-center justify-between mb-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div><button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button></div>
-        <div class="flex flex-col gap-5">
-          ${seq.slides.map((slide, si) => `
-            <div class="flex gap-3 items-start">
-              <div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div>
-              <div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div>
-              <button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button>
-            </div>`).join('')}
-        </div>
-      </div>
+      <div class="card p-5"><div class="flex items-center justify-between mb-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div><button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button></div>
+      <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button></div>`).join('')}</div></div>
     </div>`).join('');
 }
 
 function renderSkoolPanel() {
   document.getElementById('panelSkool').innerHTML = S.content.skool.map((p, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5">
-        <div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(p.body)})">Copy post</button></div>
-        <div class="email-body">${esc(p.body)}</div>
-      </div>
+      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(p.body)})">Copy post</button></div><div class="email-body">${esc(p.body)}</div></div>
     </div>`).join('');
 }
 
 // ─── History ──────────────────────────────────────────────────────────────────
 function saveToHistory(topic, content) {
   const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
-  history.unshift({
-    id: Date.now(),
-    date: new Date().toISOString(),
-    topic: { title: topic.title, source: topic.source, type: topic.type, hook: topic.hook },
-    content,
-    notes: '',
-  });
+  history.unshift({ id: Date.now(), date: new Date().toISOString(), topic: { title: topic.title, source: topic.source, type: topic.type, hook: topic.hook }, content, notes: '' });
   localStorage.setItem('ns_history', JSON.stringify(history.slice(0, 60)));
 }
 
 function renderHistoryList() {
   const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
   const container = document.getElementById('historyList');
-
   if (!history.length) {
     container.innerHTML = `<div class="text-center py-16 text-gray-600 text-sm">No sessions yet. Generate some content and it will appear here.</div>`;
     return;
   }
-
-  // Group by date
   const groups = {};
   history.forEach(s => {
     const d = new Date(s.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     if (!groups[d]) groups[d] = [];
     groups[d].push(s);
   });
-
   container.innerHTML = Object.entries(groups).map(([date, sessions]) => `
     <div class="mb-8">
       <div class="text-gray-600 text-xs uppercase tracking-wider font-semibold mb-3">${date}</div>
       ${sessions.map(s => {
         const badge = TYPE_BADGES[s.topic.type] || TYPE_BADGES.pure_value;
-        return `
-        <div class="history-card" id="hcard-${s.id}">
+        return `<div class="history-card" id="hcard-${s.id}">
           <div class="flex items-start justify-between gap-3 mb-2">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="badge ${badge.cls}">${badge.label}</span>
-              <span class="text-gray-600 text-xs">${new Date(s.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
-            </div>
+            <div class="flex items-center gap-2 flex-wrap"><span class="badge ${badge.cls}">${badge.label}</span><span class="text-gray-600 text-xs">${new Date(s.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span></div>
             <button class="copy-btn" style="font-size:11px" onclick="reloadSession('${s.id}')">Reload →</button>
           </div>
           <div class="text-white text-sm font-medium mb-1 leading-snug">${esc(s.topic.title)}</div>
           <div class="text-amber-700 text-xs mb-3">${esc(s.topic.source)}</div>
-          <div class="text-gray-600 text-xs mb-3 flex gap-3">
-            <span>📧 ${s.content.email?.length || 0} emails</span>
-            <span>📱 ${s.content.stories?.length || 0} story seqs</span>
-            <span>🎯 ${s.content.skool?.length || 0} Skool posts</span>
-          </div>
-          <textarea rows="2" placeholder="Add performance notes (e.g. open rate, DMs received, best performer...)"
-            onchange="saveNote('${s.id}', this.value)">${esc(s.notes || '')}</textarea>
+          <div class="text-gray-600 text-xs mb-3 flex gap-3"><span>📧 ${s.content.email?.length||0} emails</span><span>📱 ${s.content.stories?.length||0} story seqs</span><span>🎯 ${s.content.skool?.length||0} Skool posts</span></div>
+          <textarea rows="2" placeholder="Add performance notes (e.g. open rate, DMs received, best performer...)" onchange="saveNote('${s.id}', this.value)">${esc(s.notes||'')}</textarea>
         </div>`;
       }).join('')}
     </div>`).join('');
@@ -688,14 +916,14 @@ function saveNote(id, note) {
 }
 
 function reloadSession(id) {
-  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
-  const session = history.find(s => String(s.id) === String(id));
+  const session = JSON.parse(localStorage.getItem('ns_history') || '[]').find(s => String(s.id) === String(id));
   if (!session) return;
   S.selectedTopic = session.topic;
   S.content = session.content;
   S.activeTab = 'email'; S.activeVersion = 0;
   document.getElementById('contentTopicTitle').textContent = session.topic.title;
   document.getElementById('contentTopicSource').textContent = session.topic.source;
+  document.getElementById('contentCacheStatus').classList.add('hidden');
   renderContentView();
   setPhase('content-view');
   switchNav('generate');
@@ -721,8 +949,7 @@ async function copyFullEmail(btn, vIdx) {
   await copyText(btn, `Subject: ${e.subject}\nAlt Subject: ${e.alt_subject}\nPreview: ${e.preview}\n\n${e.body}`);
 }
 async function copyAllSlides(btn, vIdx) {
-  const seq = S.content.stories[vIdx];
-  await copyText(btn, seq.slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n'));
+  await copyText(btn, S.content.stories[vIdx].slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n'));
 }
 function esc(str = '') {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
