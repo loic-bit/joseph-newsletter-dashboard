@@ -399,7 +399,9 @@ function buildEmailPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected, source: ${w.lead_source || 'direct'}`).join('\n')
     : 'None available for this cycle.';
-  return `Write 3 standalone newsletter emails for Joseph Khateri. Goal: educate on Section 8 investing, break a limiting belief, move the reader one step closer to wanting to invest.
+  return `Write 2 standalone newsletter emails. You are ghostwriting for Joseph Khateri — he is the author and sender. Every word is written in FIRST PERSON as Joseph. "I was 19", "my first property", "I made a mistake", "my clients". Never refer to Joseph in third person. Never write "Joseph was..." or "Joseph did..." — it is always "I was..." or "I did...". The reader receives this email from Joseph directly.
+
+Goal: educate on Section 8 investing, break a limiting belief, move the reader one step closer to wanting to invest.
 
 TOPIC: ${topic.title}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
@@ -427,9 +429,9 @@ LENGTH: 500-700 words per email body. Write every section in full. Do not summar
 6. READER TIE (1 paragraph): Speak directly to where the reader is right now. Make it personal.
 7. CTA (1 paragraph): One soft action. No fake urgency. Do NOT ask readers to reply — inbox is not monitored.
 
-2 VARIATIONS — different opening hook each:
-- Variation 1 (scene_setter): A specific physical moment from Joseph's life — early 20s, phone call with a property manager, first property purchase, real estate meetup. Set the scene fully. Reader should be able to picture it.
-- Variation 2 (confession): Joseph admits something counterintuitive, owns a mistake, or opens by stating the belief the reader probably holds right now and then calmly dismantling it.
+2 VARIATIONS — different opening hook each. Both written in first person as Joseph:
+- Variation 1 (scene_setter): Drop into a specific moment from your own life — "I was 19, sitting in my car in a Virginia parking lot..." or "I got a call from my property manager in Cleveland at 7am..." Set the scene in first person. Reader should be able to picture exactly where you were and what you were feeling.
+- Variation 2 (confession): Admit something counterintuitive in first person — "I used to tell myself..." or "The thing I got completely wrong when I started..." or state the belief the reader holds and dismantle it: "Everyone told me vacancy would kill me. Here is what actually happened."
 
 Each variation must use a different student from the proof list above.
 
@@ -456,7 +458,7 @@ function buildStoriesPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected`).join('\n')
     : 'None available for this cycle.';
-  return `Generate 2 Instagram Story sequences (3 slides each) for Joseph Khateri on this topic.
+  return `Generate 2 Instagram Story sequences (3 slides each). You are ghostwriting for Joseph Khateri — all copy is written in FIRST PERSON as Joseph. "my client", "I built", "I was 19". Never "Joseph did" or "Joseph's portfolio". Joseph is the one posting these stories.
 
 TOPIC: ${topic.title}
 TYPE: ${topic.type}
@@ -524,7 +526,7 @@ Return exactly this JSON — each slide has a label and the exact on-screen text
 }
 
 function buildSkoolPrompt(topic) {
-  return `Write 2 Skool community post variations for Joseph Khateri. This is a warm free community — members already know Joseph, they trust him, and they're here because they want to invest in real estate. These posts are NOT emails. They are public community posts, like a Facebook group post from the group owner.
+  return `Write 2 Skool community post variations. You are ghostwriting for Joseph Khateri — all copy is written in FIRST PERSON as Joseph. "I had a call with one of you guys this week", "I keep seeing this in the community", "my clients". Never "Joseph said" or "Joseph's community". Joseph is writing directly to his community members.
 
 TOPIC: ${topic.title}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
