@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store" />
 <title>Newsletter Studio — Joseph Khateri</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -686,30 +687,38 @@ if (sessionStorage.getItem('ns_auth') === '1') {
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+function showInitError(msg, detail) {
+  try {
+    document.getElementById('stateLoading').innerHTML =
+      `<div style="color:#f87171;text-align:center;padding:2rem;max-width:440px;margin:auto">
+        <b>${msg}</b><br>
+        <span style="font-size:.75rem;color:#9ca3af;display:block;margin:.5rem 0">${detail}</span>
+        <button onclick="init()" style="background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600;margin-top:.5rem">Retry</button>
+      </div>`;
+  } catch(e) { console.error('showInitError failed', e); }
+}
+
 async function init() {
-  setPhase('loading');
-  let data;
-  // Use inline data if the research script embedded it, otherwise fetch
-  if (window.__RESEARCH__) {
-    data = window.__RESEARCH__;
-  } else {
-    try {
-      const res = await fetch('./dashboard-data.json?v=' + Date.now());
-      if (!res.ok) throw new Error(`HTTP ${res.status} — dashboard-data.json not found`);
-      data = await res.json();
-    } catch (err) {
-      document.getElementById('stateLoading').innerHTML =
-        `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto">
-          <b>Could not load research data</b><br>
-          <span style="font-size:.75rem;color:#9ca3af;display:block;margin:.5rem 0">${err.message}</span>
-          <span style="font-size:.7rem;color:#4b5563;display:block;margin-bottom:1rem">Run the research script and re-deploy, or check the browser console for details.</span>
-          <button onclick="init()" style="background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button>
-        </div>`;
-      console.error('init error:', err);
-      return;
-    }
+  try {
+    setPhase('loading');
+  } catch(e) {
+    console.error('setPhase loading failed:', e);
   }
   try {
+    let data;
+    if (window.__RESEARCH__) {
+      data = window.__RESEARCH__;
+    } else {
+      try {
+        const res = await fetch('./dashboard-data.json?v=' + Date.now());
+        if (!res.ok) throw new Error(`HTTP ${res.status} — dashboard-data.json not found`);
+        data = await res.json();
+      } catch (err) {
+        showInitError('Could not load research data', err.message + ' — run the research script and re-deploy');
+        console.error('init fetch error:', err);
+        return;
+      }
+    }
     S.research = data.research;
     renderHeader(data);
     renderResearchBreakdown(data);
@@ -718,9 +727,8 @@ async function init() {
     renderVideosPanel();
     setPhase('ready');
   } catch (err) {
-    console.error('render error:', err);
-    document.getElementById('stateLoading').innerHTML =
-      `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto"><b>Render error</b><br><span style="font-size:.75rem;color:#9ca3af">${err.message}</span></div>`;
+    showInitError('Render error', err.message);
+    console.error('init render error:', err);
   }
 }
 
