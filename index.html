@@ -524,26 +524,57 @@ Return exactly this JSON — each slide has a label and the exact on-screen text
 }
 
 function buildSkoolPrompt(topic) {
-  return `Generate 3 distinct Skool free community post variations for Joseph Khateri on this topic.
+  return `Write 3 Skool community post variations for Joseph Khateri. This is a warm free community — members already know Joseph, they trust him, and they're here because they want to invest in real estate. These posts are NOT emails. They are public community posts, like a Facebook group post from the group owner.
 
 TOPIC: ${topic.title}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
+ICP FIT: ${topic.icp_fit}
 
-Skool post rules:
-- Under 200 words
-- Conversational, community-first tone (these people already follow Joseph and trust him)
-- Start with a specific hook: a question, a stat, or a short scene
-- Deliver one piece of genuine value
-- End with an engagement question or light CTA ("drop a comment", "DM me", etc.)
-- No hard sell, no fake urgency
-- The 3 variations must have different openers and different angles
+THE FORMAT — every post has two parts:
+1. TITLE: the post headline. Shows in the feed before anyone clicks. This is what gets the click.
+2. BODY: the post content once they open it. Warm, direct, community-native.
+
+TITLE RULES:
+- 5-10 words, punchy, conversational
+- Should feel like something a friend posted in a group you're in
+- Question format works well: "who else is dealing with this right now?"
+- Or a bold statement that calls out exactly what the reader is thinking
+- Not a clickbait headline — sounds like Joseph talking, not a marketer
+
+BODY RULES — this is what makes Skool different from email:
+- Open warmly — "Hey guys," / "Something I keep seeing in the community..." / "Had a call with a member this week and this came up again..."
+- Reference the community directly — mention "you guys", "this community", "I see this question a lot here", "drop your answer below"
+- 100-200 words. Short paragraphs. Lots of white space.
+- One idea only — don't pack in 3 points
+- Conversational and personal — like Joseph typed this on his phone between calls
+- End with a genuine engagement question that people will actually want to answer — make it specific and easy to respond to
+- The question drives comments, not just likes — ask something that invites a real answer, not just "thoughts?"
+- No hard sell. No fake urgency. If there's a CTA, it's a soft mention at the very end.
+
+TONE:
+- Warm and direct. Not polished. Not corporate.
+- Joseph is talking TO his community, not at them
+- Uses "guys", "you", "I", "we" — inclusive language
+- Feels like a post from someone who genuinely shows up in the group, not just to promote
+
+THE 3 VARIATIONS — each must use a different angle:
+- Variation 1: Community question — open a discussion, ask what they're experiencing
+- Variation 2: Insight or mindset — share something Joseph noticed/learned, invite reactions
+- Variation 3: Member win or social proof — celebrate a result (real or pattern), pull the community into it
+
+BANNED:
+- Em dashes (— or --)
+- "game-changer", "transform", "unlock", "leverage", "elevate", "revolutionary"
+- Email-style sign-offs ("Joseph" at the end, "PS:", etc.)
+- Hard sells or price mentions
+- "In today's post..."
 
 Return exactly this JSON:
 {
   "skool": [
-    { "body": "..." },
-    { "body": "..." },
-    { "body": "..." }
+    { "title": "...", "body": "..." },
+    { "title": "...", "body": "..." },
+    { "title": "...", "body": "..." }
   ]
 }`;
 }
@@ -995,7 +1026,14 @@ function renderStoriesPanel() {
 function renderSkoolPanel() {
   document.getElementById('panelSkool').innerHTML = S.content.skool.map((p, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(p.body)})">Copy post</button></div><div class="email-body">${esc(p.body)}</div></div>
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div>
+          <button class="copy-btn" onclick="copyText(this,${JSON.stringify((p.title ? p.title + '\n\n' : '') + p.body)})">Copy post</button>
+        </div>
+        ${p.title ? `<div class="text-white font-semibold text-base mb-3 leading-snug">${esc(p.title)}</div>` : ''}
+        <div class="email-body">${esc(p.body)}</div>
+      </div>
     </div>`).join('');
 }
 
