@@ -166,7 +166,7 @@
       <div id="stateContentLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
         <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
         <div id="contentLoadingStatus" class="text-gray-300 text-sm font-medium">Writing emails...</div>
-        <div id="contentLoadingStep" class="text-gray-600 text-xs">Step 1 of 3</div>
+        <div id="contentLoadingStep" class="text-gray-600 text-xs">2 emails + 2 story sequences + 2 Skool posts</div>
       </div>
 
       <!-- content-view -->
@@ -193,7 +193,6 @@
         <div class="flex gap-2 mb-5">
           <button id="pill1" class="pill-active   px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(0)">Version 1</button>
           <button id="pill2" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(1)">Version 2</button>
-          <button id="pill3" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(2)">Version 3</button>
         </div>
         <div id="panelEmail"></div>
         <div id="panelStories" class="hidden"></div>
@@ -428,26 +427,26 @@ LENGTH: 500-700 words per email body. Write every section in full. Do not summar
 6. READER TIE (1 paragraph): Speak directly to where the reader is right now. Make it personal.
 7. CTA (1 paragraph): One soft action. No fake urgency. Do NOT ask readers to reply — inbox is not monitored.
 
-3 VARIATIONS — different opening hook each:
-- Variation 1 (scene_setter): Physical moment from Joseph's life — early 20s, phone call, first property, meetup. Reader should be able to picture it.
-- Variation 2 (third_party_story): Open with a named student before they acted. Show their fear and hesitation. Hold the outcome until the proof section.
-- Variation 3 (confession): Joseph admits something counterintuitive or dismantles the belief the reader probably holds right now.
+2 VARIATIONS — different opening hook each:
+- Variation 1 (scene_setter): A specific physical moment from Joseph's life — early 20s, phone call with a property manager, first property purchase, real estate meetup. Set the scene fully. Reader should be able to picture it.
+- Variation 2 (confession): Joseph admits something counterintuitive, owns a mistake, or opens by stating the belief the reader probably holds right now and then calmly dismantling it.
 
-SUBJECT LINES: Under 8 words, lowercase, different format per variation. Curiosity, specific outcome, or conversational — test: would Joseph say this in a voice note?
+Each variation must use a different student from the proof list above.
 
-VOICE: Warm and direct. Specific beats vague ("3-bed in Cleveland" not "a property"). Parenthetical asides for personality: (it still deposited.) Bold one line max per email.
+SUBJECT LINES: Under 8 words, lowercase, different angle per variation. Curiosity, specific outcome, or conversational — test: would Joseph say this in a voice note to a friend?
 
-PS: Always include. 1-2 sentences. Never ask for a reply. Never tease a next email.
+VOICE: Warm and direct. Specific beats vague ("3-bed in Cleveland" not "a property"). "HUD deposits directly to the landlord's bank account" not "the government pays." Parenthetical asides for personality sparingly: (it still deposited.) Bold one line max per email — the single most important sentence.
 
-SIGN-OFF: "Joseph" only.
+PS: Always include. 1-2 sentences. A second CTA angle, a stat, or something that didn't fit. Never ask for a reply. Never tease a next email. Never skip it.
 
-BANNED: em dashes, hype words (game-changer/transform/unlock/leverage/elevate/revolutionary/empower), "In today's email I'm going to", bullet lists in the body, multiple bold lines, fake scarcity, starting with "I", asking readers to reply, choppy one-line paragraphs, referencing any outside source (no Reddit, YouTube, forums, or platform names).
+SIGN-OFF: "Joseph" only. No title, company, or links.
+
+BANNED: em dashes (— or --), hype words (game-changer/transform/unlock/leverage/elevate/revolutionary/empower/streamline), "In today's email I'm going to", bullet lists in the body, more than one bolded line, fake urgency or scarcity, starting the body with "I", asking readers to reply, choppy single-sentence paragraphs, referencing any outside source (Reddit, YouTube, forums, news articles, platform names — Joseph's ideas are his own).
 
 Return exactly this JSON — body uses \\n for line breaks:
 {
   "email": [
     { "hook_type": "scene_setter", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
-    { "hook_type": "third_party_story", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
     { "hook_type": "confession", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." }
   ]
 }`;
@@ -457,7 +456,7 @@ function buildStoriesPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected`).join('\n')
     : 'None available for this cycle.';
-  return `Generate 3 Instagram Story sequences (3 slides each) for Joseph Khateri on this topic.
+  return `Generate 2 Instagram Story sequences (3 slides each) for Joseph Khateri on this topic.
 
 TOPIC: ${topic.title}
 TYPE: ${topic.type}
@@ -468,14 +467,14 @@ CTA TYPE: ${topic.cta}
 STUDENT WINS (use only real names/numbers above — never invent):
 ${winsText}
 
-SEQUENCE TYPE SELECTION — pick the best fit for each of the 3 variations:
-- student_win / social_proof topic → use FOMO or STUDENT WIN framework
-- myth_busting topic → use BREAKING LIMITING BELIEFS framework
-- market_insight topic → use VALUE or HOOK & HIT framework
-- pure_value topic → use VALUE framework
-Each of the 3 variations must use a different sequence type or a different hook angle.
+SEQUENCE TYPE SELECTION — pick the best 2 types for this topic, each variation different:
+- student_win / social_proof topic → FOMO or STUDENT WIN
+- myth_busting topic → BREAKING BELIEFS
+- market_insight topic → VALUE or HOOK & HIT
+- pure_value topic → VALUE
+The 2 variations must use different sequence types or different hook angles.
 
-FRAMEWORK RULES (apply to all 3):
+FRAMEWORK RULES (apply to both):
 Progressive fade-back narrative — 3 slides build on each other:
   Slide 1 (Hook): stop the scroll. one punchy line. maximum 10 words. no context yet.
   Slide 2 (Body): continue the story directly below. adds the insight, proof, or tension. 2-4 short lines.
@@ -514,18 +513,18 @@ Return exactly this JSON — each slide has a label and the exact on-screen text
     },
     {
       "type": "breaking_beliefs",
-      "slides": [...]
-    },
-    {
-      "type": "value",
-      "slides": [...]
+      "slides": [
+        { "label": "Hook", "text": "..." },
+        { "label": "Body", "text": "..." },
+        { "label": "CTA", "text": "..." }
+      ]
     }
   ]
 }`;
 }
 
 function buildSkoolPrompt(topic) {
-  return `Write 3 Skool community post variations for Joseph Khateri. This is a warm free community — members already know Joseph, they trust him, and they're here because they want to invest in real estate. These posts are NOT emails. They are public community posts, like a Facebook group post from the group owner.
+  return `Write 2 Skool community post variations for Joseph Khateri. This is a warm free community — members already know Joseph, they trust him, and they're here because they want to invest in real estate. These posts are NOT emails. They are public community posts, like a Facebook group post from the group owner.
 
 TOPIC: ${topic.title}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
@@ -558,10 +557,9 @@ TONE:
 - Uses "guys", "you", "I", "we" — inclusive language
 - Feels like a post from someone who genuinely shows up in the group, not just to promote
 
-THE 3 VARIATIONS — each must use a different angle:
-- Variation 1: Community question — open a discussion, ask what they're experiencing
-- Variation 2: Insight or mindset — share something Joseph noticed/learned, invite reactions
-- Variation 3: Member win or social proof — celebrate a result (real or pattern), pull the community into it
+THE 2 VARIATIONS — each must use a different angle:
+- Variation 1: Community question — open a discussion, ask what they're experiencing right now
+- Variation 2: Insight or member win — share something Joseph noticed/learned, or celebrate a real result and pull the community into it
 
 BANNED:
 - Em dashes (— or --)
@@ -574,7 +572,6 @@ BANNED:
 Return exactly this JSON:
 {
   "skool": [
-    { "title": "...", "body": "..." },
     { "title": "...", "body": "..." },
     { "title": "...", "body": "..." }
   ]
@@ -977,7 +974,7 @@ function updateTabUI() {
   });
 }
 function updatePillUI() {
-  [0,1,2].forEach(i => {
+  [0,1].forEach(i => {
     document.getElementById(`pill${i+1}`).className =
       (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
   });
