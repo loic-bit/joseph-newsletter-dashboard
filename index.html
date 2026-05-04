@@ -21,6 +21,9 @@
   .pill-active { background: #f59e0b; color: #000; }
   .pill-inactive { background: #1a1a1a; color: #6b7280; border: 1px solid #2a2a2a; }
   .pill-inactive:hover { border-color: #f59e0b; color: #e5e7eb; }
+  .nav-active { color: #f59e0b; border-bottom: 2px solid #f59e0b; }
+  .nav-inactive { color: #6b7280; border-bottom: 2px solid transparent; }
+  .nav-inactive:hover { color: #d1d5db; }
   .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; }
   .badge-myth    { background: #1a0a2e; color: #c084fc; }
   .badge-value   { background: #0a1a10; color: #4ade80; }
@@ -42,6 +45,13 @@
   .btn-ghost:hover:not(:disabled) { border-color: #f59e0b; color: #f59e0b; }
   .btn-ghost:disabled { opacity: .4; cursor: not-allowed; }
   .error-box { background: #1a0a0a; border: 1px solid #7f1d1d; border-radius: 8px; padding: 14px 16px; color: #fca5a5; font-size: 13px; }
+  .signal-row { border-bottom: 1px solid #161616; padding: 12px 0; }
+  .signal-row:last-child { border-bottom: none; }
+  .score-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: #1a1000; color: #f59e0b; }
+  .history-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 10px; padding: 16px; margin-bottom: 12px; transition: border-color .15s; }
+  .history-card:hover { border-color: #2a2a2a; }
+  textarea { background: #111; border: 1px solid #2a2a2a; color: #d1d5db; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.6; resize: vertical; outline: none; width: 100%; transition: border-color .15s; }
+  textarea:focus { border-color: #f59e0b; }
   input[type=password] { background: #111; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 10px 14px; border-radius: 8px; outline: none; width: 100%; transition: border-color .15s; }
   input[type=password]:focus { border-color: #f59e0b; }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -67,102 +77,144 @@
 <!-- APP -->
 <div id="app" class="hidden min-h-screen flex flex-col">
 
-  <!-- HEADER -->
-  <header class="border-b border-gray-900 px-6 py-4 flex items-center justify-between sticky top-0 z-10" style="background:#0a0a0a">
-    <div class="flex items-center gap-3">
-      <span class="text-amber-400 font-bold text-base">Newsletter Studio</span>
-      <span class="text-gray-800">/</span>
-      <span class="text-gray-500 text-sm">Joseph Khateri</span>
+  <!-- HEADER + NAV -->
+  <header class="border-b border-gray-900 sticky top-0 z-10" style="background:#0a0a0a">
+    <div class="px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-amber-400 font-bold text-base">Newsletter Studio</span>
+        <span class="text-gray-800">/</span>
+        <span class="text-gray-500 text-sm">Joseph Khateri</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div id="researchDate" class="text-gray-700 text-xs"></div>
+        <div id="statsChips" class="flex gap-2"></div>
+      </div>
     </div>
-    <div class="flex items-center gap-3">
-      <div id="researchDate" class="text-gray-700 text-xs"></div>
-      <div id="statsChips" class="flex gap-2"></div>
+    <div class="px-6 flex gap-6 border-t border-gray-900">
+      <button id="navBtnGenerate" class="nav-active py-3 text-sm font-medium transition-all" onclick="switchNav('generate')">Generate</button>
+      <button id="navBtnResearch" class="nav-inactive py-3 text-sm font-medium transition-all" onclick="switchNav('research')">Research</button>
+      <button id="navBtnHistory"  class="nav-inactive py-3 text-sm font-medium transition-all" onclick="switchNav('history')">History</button>
     </div>
   </header>
 
   <!-- MAIN -->
-  <main class="flex-1 px-6 py-8 max-w-3xl mx-auto w-full">
+  <main class="flex-1 px-6 py-8">
 
-    <!-- loading -->
-    <div id="stateLoading" class="flex flex-col items-center justify-center py-32 gap-4">
-      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
-      <div class="text-gray-500 text-sm">Loading research data...</div>
-    </div>
+    <!-- ══════════════════ GENERATE ══════════════════ -->
+    <div id="navGenerate" class="max-w-3xl mx-auto">
 
-    <!-- ready -->
-    <div id="stateReady" class="hidden">
-      <div class="mb-8">
-        <h1 class="text-xl font-semibold text-white mb-2">Research is ready</h1>
-        <p class="text-gray-500 text-sm">Generate 3 topic options based on today's data. Pick one and get 3 versions of each content format.</p>
+      <!-- loading -->
+      <div id="stateLoading" class="flex flex-col items-center justify-center py-32 gap-4">
+        <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+        <div class="text-gray-500 text-sm">Loading research data...</div>
       </div>
-      <div id="researchBreakdown" class="grid grid-cols-2 gap-3 mb-8 sm:grid-cols-4"></div>
-      <button class="btn-primary" id="btnGenTopics" onclick="generateTopics()">Generate 3 Topics</button>
+
+      <!-- ready -->
+      <div id="stateReady" class="hidden">
+        <div class="mb-8">
+          <h1 class="text-xl font-semibold text-white mb-2">Research is ready</h1>
+          <p class="text-gray-500 text-sm">Generate 3 topic options from today's data. Pick one and get 3 versions of each content format.</p>
+        </div>
+        <div id="researchBreakdown" class="grid grid-cols-2 gap-3 mb-8 sm:grid-cols-4"></div>
+        <button class="btn-primary" onclick="generateTopics()">Generate 3 Topics</button>
+      </div>
+
+      <!-- topics-loading -->
+      <div id="stateTopicsLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
+        <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+        <div class="text-gray-300 text-sm font-medium">Analyzing research data...</div>
+        <div class="text-gray-600 text-xs">Finding cross-source signal</div>
+      </div>
+
+      <!-- topic-select -->
+      <div id="stateTopicSelect" class="hidden">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h1 class="text-xl font-semibold text-white mb-1">Pick a topic</h1>
+            <p class="text-gray-500 text-sm">Select one to generate email, story, and Skool variations.</p>
+          </div>
+          <button class="btn-ghost" id="btnRegen" onclick="regenerateTopics()">
+            <span id="regenSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+            Regenerate
+          </button>
+        </div>
+        <div id="topicCards" class="flex flex-col gap-4"></div>
+        <div id="topicsError" class="error-box mt-4 hidden"></div>
+      </div>
+
+      <!-- content-loading -->
+      <div id="stateContentLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
+        <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+        <div class="text-gray-300 text-sm font-medium">Writing content variations...</div>
+        <div class="text-gray-600 text-xs">3 emails + 3 story sequences + 3 Skool posts</div>
+      </div>
+
+      <!-- content-view -->
+      <div id="stateContentView" class="hidden">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="min-w-0">
+            <button class="btn-ghost mb-3" style="font-size:12px;padding:4px 10px" onclick="backToTopics()">← Topics</button>
+            <h2 id="contentTopicTitle" class="text-base font-semibold text-white leading-snug"></h2>
+            <div id="contentTopicSource" class="text-amber-600 text-xs mt-1"></div>
+          </div>
+          <button class="btn-ghost flex-shrink-0" id="btnRegenContent" onclick="regenerateContent()">
+            <span id="regenContentSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+            Regenerate
+          </button>
+        </div>
+        <div class="flex gap-2 mb-5">
+          <button id="tabEmail"   class="tab-active   px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('email')">Email</button>
+          <button id="tabStories" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('stories')">IG Stories</button>
+          <button id="tabSkool"   class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('skool')">Skool Post</button>
+        </div>
+        <div class="flex gap-2 mb-5">
+          <button id="pill1" class="pill-active   px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(0)">Version 1</button>
+          <button id="pill2" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(1)">Version 2</button>
+          <button id="pill3" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(2)">Version 3</button>
+        </div>
+        <div id="panelEmail"></div>
+        <div id="panelStories" class="hidden"></div>
+        <div id="panelSkool" class="hidden"></div>
+        <div id="contentError" class="error-box mt-4 hidden"></div>
+      </div>
+
     </div>
 
-    <!-- topics-loading -->
-    <div id="stateTopicsLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
-      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
-      <div class="text-gray-300 text-sm font-medium">Analyzing research data...</div>
-      <div class="text-gray-600 text-xs">Finding cross-source signal</div>
+    <!-- ══════════════════ RESEARCH ══════════════════ -->
+    <div id="navResearch" class="hidden max-w-5xl mx-auto">
+      <div class="mb-6">
+        <h1 class="text-xl font-semibold text-white mb-1">Research Signals</h1>
+        <p class="text-gray-500 text-sm">Raw data from today's research run. Use this to spot trends and topic ideas.</p>
+      </div>
+      <div id="researchStatCards" class="grid grid-cols-2 gap-3 mb-6 sm:grid-cols-4"></div>
+      <div class="flex gap-2 mb-5">
+        <button id="rTabReddit"  class="tab-active   px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchResearchTab('reddit')">Reddit</button>
+        <button id="rTabYoutube" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchResearchTab('youtube')">YouTube</button>
+        <button id="rTabNews"    class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchResearchTab('news')">News</button>
+      </div>
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <div id="researchPanel" class="card p-5"></div>
+        </div>
+        <div>
+          <div class="card p-5">
+            <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Joseph's Videos</div>
+            <div id="videosPanel"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- topic-select -->
-    <div id="stateTopicSelect" class="hidden">
+    <!-- ══════════════════ HISTORY ══════════════════ -->
+    <div id="navHistory" class="hidden max-w-3xl mx-auto">
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h1 class="text-xl font-semibold text-white mb-1">Pick a topic</h1>
-          <p class="text-gray-500 text-sm">Select one to generate email, story, and Skool variations.</p>
+          <h1 class="text-xl font-semibold text-white mb-1">History</h1>
+          <p class="text-gray-500 text-sm">Every content session saved automatically. Add notes to track what performed.</p>
         </div>
-        <button class="btn-ghost" id="btnRegen" onclick="regenerateTopics()">
-          <span id="regenSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
-          Regenerate
-        </button>
+        <button class="btn-ghost text-red-400 hover:border-red-800" style="font-size:12px;padding:6px 12px" onclick="clearHistory()">Clear all</button>
       </div>
-      <div id="topicCards" class="flex flex-col gap-4"></div>
-      <div id="topicsError" class="error-box mt-4 hidden"></div>
-    </div>
-
-    <!-- content-loading -->
-    <div id="stateContentLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
-      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
-      <div class="text-gray-300 text-sm font-medium">Writing content variations...</div>
-      <div class="text-gray-600 text-xs">3 emails + 3 story sequences + 3 Skool posts</div>
-    </div>
-
-    <!-- content-view -->
-    <div id="stateContentView" class="hidden">
-      <div class="flex items-start justify-between gap-4 mb-6">
-        <div class="min-w-0">
-          <button class="btn-ghost mb-3" style="font-size:12px;padding:4px 10px" onclick="backToTopics()">← Topics</button>
-          <h2 id="contentTopicTitle" class="text-base font-semibold text-white leading-snug"></h2>
-          <div id="contentTopicSource" class="text-amber-600 text-xs mt-1"></div>
-        </div>
-        <button class="btn-ghost flex-shrink-0" id="btnRegenContent" onclick="regenerateContent()">
-          <span id="regenContentSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
-          Regenerate
-        </button>
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex gap-2 mb-5">
-        <button id="tabEmail"   class="tab-active   px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('email')">Email</button>
-        <button id="tabStories" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('stories')">IG Stories</button>
-        <button id="tabSkool"   class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('skool')">Skool Post</button>
-      </div>
-
-      <!-- Version pills -->
-      <div class="flex gap-2 mb-5">
-        <button id="pill1" class="pill-active   px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(0)">Version 1</button>
-        <button id="pill2" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(1)">Version 2</button>
-        <button id="pill3" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(2)">Version 3</button>
-      </div>
-
-      <!-- Panels -->
-      <div id="panelEmail"></div>
-      <div id="panelStories" class="hidden"></div>
-      <div id="panelSkool" class="hidden"></div>
-
-      <div id="contentError" class="error-box mt-4 hidden"></div>
+      <div id="historyList"></div>
     </div>
 
   </main>
@@ -172,17 +224,18 @@
 // ─── State ────────────────────────────────────────────────────────────────────
 const S = {
   phase: 'loading',
+  nav: 'generate',
   research: null,
   topics: null,
   selectedTopic: null,
   content: null,
   activeTab: 'email',
   activeVersion: 0,
+  researchTab: 'reddit',
 };
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAuth(); });
-
 function checkAuth() {
   if (document.getElementById('pwInput').value === 'section8') {
     sessionStorage.setItem('ns_auth', '1');
@@ -193,14 +246,13 @@ function checkAuth() {
     document.getElementById('pwError').classList.remove('hidden');
   }
 }
-
-// ─── Boot ─────────────────────────────────────────────────────────────────────
 if (sessionStorage.getItem('ns_auth') === '1') {
   document.getElementById('authGate').style.display = 'none';
   document.getElementById('app').classList.remove('hidden');
   init();
 }
 
+// ─── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
   setPhase('loading');
   try {
@@ -210,31 +262,38 @@ async function init() {
     S.research = data.research;
     renderHeader(data);
     renderResearchBreakdown(data);
+    renderResearchStatCards(data);
+    renderResearchPanel();
+    renderVideosPanel();
     setPhase('ready');
   } catch (err) {
     document.getElementById('stateLoading').innerHTML =
-      `<div class="error-box max-w-sm text-center mx-auto">
-        Failed to load research data.<br>
-        <span class="text-gray-500 text-xs block mt-1">${esc(err.message)}</span>
-        <button class="btn-primary mt-4 justify-center" onclick="init()">Retry</button>
-      </div>`;
+      `<div class="error-box max-w-sm text-center mx-auto">Failed to load research data.<br><span class="text-gray-500 text-xs block mt-1">${esc(err.message)}</span><button class="btn-primary mt-4 justify-center" onclick="init()">Retry</button></div>`;
   }
+}
+
+// ─── Nav switching ────────────────────────────────────────────────────────────
+function switchNav(nav) {
+  S.nav = nav;
+  ['generate','research','history'].forEach(n => {
+    document.getElementById('navBtn' + n.charAt(0).toUpperCase() + n.slice(1)).className =
+      (n === nav ? 'nav-active' : 'nav-inactive') + ' py-3 text-sm font-medium transition-all';
+    document.getElementById('nav' + n.charAt(0).toUpperCase() + n.slice(1))
+      .classList.toggle('hidden', n !== nav);
+  });
+  if (nav === 'history') renderHistoryList();
 }
 
 // ─── Phase switching ──────────────────────────────────────────────────────────
 const PHASE_MAP = {
-  'loading': 'stateLoading',
-  'ready': 'stateReady',
-  'topics-loading': 'stateTopicsLoading',
-  'topic-select': 'stateTopicSelect',
-  'content-loading': 'stateContentLoading',
-  'content-view': 'stateContentView',
+  'loading': 'stateLoading', 'ready': 'stateReady',
+  'topics-loading': 'stateTopicsLoading', 'topic-select': 'stateTopicSelect',
+  'content-loading': 'stateContentLoading', 'content-view': 'stateContentView',
 };
 function setPhase(phase) {
   S.phase = phase;
   Object.keys(PHASE_MAP).forEach(p => {
-    const el = document.getElementById(PHASE_MAP[p]);
-    if (el) el.classList.toggle('hidden', p !== phase);
+    document.getElementById(PHASE_MAP[p]).classList.toggle('hidden', p !== phase);
   });
 }
 
@@ -247,9 +306,9 @@ function renderHeader(data) {
   }
   const s = data.stats;
   const chips = [
-    { label: `${(s.yt_comments || 0) + (s.yt_questions || 0)} YT`, color: '#ef4444' },
-    { label: `${s.reddit_items || 0} Reddit`, color: '#ff4500' },
-    { label: `${s.news_items || 0} News`, color: '#3b82f6' },
+    { label: `${(s.yt_comments||0)+(s.yt_questions||0)} YT`, color: '#ef4444' },
+    { label: `${s.reddit_items||0} Reddit`, color: '#ff4500' },
+    { label: `${s.news_items||0} News`, color: '#3b82f6' },
   ];
   document.getElementById('statsChips').innerHTML = chips
     .map(c => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${c.color}22;color:${c.color}">${c.label}</span>`)
@@ -257,17 +316,120 @@ function renderHeader(data) {
 }
 
 function renderResearchBreakdown(data) {
-  const s = data.stats;
-  const r = data.research;
-  const items = [
-    { label: 'YouTube', value: `${(s.yt_comments || 0) + (s.yt_questions || 0)} comments` },
-    { label: 'Reddit',  value: `${s.reddit_items || 0} posts` },
-    { label: 'News',    value: `${s.news_items || 0} items` },
-    { label: 'Student Wins', value: `${(r.student_wins || []).length} recent` },
-  ];
-  document.getElementById('researchBreakdown').innerHTML = items
-    .map(item => `<div class="card p-4"><div class="text-gray-500 text-xs mb-1">${item.label}</div><div class="text-white font-semibold text-sm">${item.value}</div></div>`)
-    .join('');
+  const s = data.stats; const r = data.research;
+  document.getElementById('researchBreakdown').innerHTML = [
+    { label: 'YouTube',      value: `${(s.yt_comments||0)+(s.yt_questions||0)} comments` },
+    { label: 'Reddit',       value: `${s.reddit_items||0} posts` },
+    { label: 'News',         value: `${s.news_items||0} items` },
+    { label: 'Student Wins', value: `${(r.student_wins||[]).length} recent` },
+  ].map(i => `<div class="card p-4"><div class="text-gray-500 text-xs mb-1">${i.label}</div><div class="text-white font-semibold text-sm">${i.value}</div></div>`).join('');
+}
+
+// ─── Research tab ─────────────────────────────────────────────────────────────
+function renderResearchStatCards(data) {
+  const s = data.stats; const r = data.research;
+  document.getElementById('researchStatCards').innerHTML = [
+    { label: 'REDDIT SIGNALS', value: s.reddit_items||0, sub: `${s.reddit_questions||0} questions` },
+    { label: 'YT COMMENTS',    value: (s.yt_comments||0)+(s.yt_questions||0), sub: `${s.yt_questions||0} questions` },
+    { label: 'NEWS ITEMS',     value: s.news_items||0, sub: 'Section 8 / HUD' },
+    { label: 'STUDENT WINS',   value: (r.student_wins||[]).length, sub: 'from Airtable' },
+  ].map(i => `<div class="card p-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-1">${i.label}</div><div class="text-white font-bold text-2xl">${i.value}</div><div class="text-gray-600 text-xs mt-0.5">${i.sub}</div></div>`).join('');
+}
+
+function switchResearchTab(tab) {
+  S.researchTab = tab;
+  ['reddit','youtube','news'].forEach(t => {
+    document.getElementById('rTab' + t.charAt(0).toUpperCase() + t.slice(1)).className =
+      (t === tab ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
+  });
+  renderResearchPanel();
+}
+
+function renderResearchPanel() {
+  if (!S.research) return;
+  const panel = document.getElementById('researchPanel');
+  const r = S.research;
+  const tab = S.researchTab;
+
+  if (tab === 'reddit') {
+    const questions = (r.reddit_questions || []).slice(0, 15);
+    const posts     = (r.reddit_top_posts || []).slice(0, 10);
+    panel.innerHTML = `
+      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Top Questions</div>
+      ${questions.map(q => `
+        <div class="signal-row">
+          <div class="flex items-start gap-2">
+            <span class="text-amber-500 text-xs font-bold flex-shrink-0 mt-0.5">Q</span>
+            <div class="flex-1 min-w-0">
+              <div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div>
+              <div class="text-gray-600 text-xs mt-1">${esc(q.source)} ${q.url ? `· <a href="${esc(q.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div>
+            </div>
+            <span class="score-badge flex-shrink-0">${q.score}</span>
+          </div>
+        </div>`).join('')}
+      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mt-6 mb-4">Top Posts</div>
+      ${posts.map(p => `
+        <div class="signal-row">
+          <div class="flex items-start gap-2">
+            <div class="flex-1 min-w-0">
+              <div class="text-gray-200 text-sm font-medium leading-snug">${esc(p.title||'')}</div>
+              ${p.text ? `<div class="text-gray-500 text-xs mt-1 leading-snug">${esc(p.text.slice(0,120))}...</div>` : ''}
+              <div class="text-gray-600 text-xs mt-1">${esc(p.source)} ${p.url ? `· <a href="${esc(p.url)}" target="_blank" class="text-amber-700 hover:text-amber-500">view</a>` : ''}</div>
+            </div>
+            <span class="score-badge flex-shrink-0">${p.score||0}</span>
+          </div>
+        </div>`).join('')}`;
+  }
+
+  if (tab === 'youtube') {
+    const questions = (r.youtube_questions || []).slice(0, 10);
+    const comments  = (r.youtube_comments  || []).slice(0, 15);
+    panel.innerHTML = `
+      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Questions</div>
+      ${questions.map(q => `
+        <div class="signal-row">
+          <div class="flex items-start gap-2">
+            <span class="text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">Q</span>
+            <div class="flex-1 min-w-0">
+              <div class="text-gray-200 text-sm leading-snug">${esc(q.text.slice(0,200))}</div>
+              <div class="text-gray-600 text-xs mt-1">${esc(q.video_title||'')}</div>
+            </div>
+            <span class="score-badge flex-shrink-0">${q.likes||0}</span>
+          </div>
+        </div>`).join('')}
+      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mt-6 mb-4">Top Comments</div>
+      ${comments.map(c => `
+        <div class="signal-row">
+          <div class="flex items-start gap-2">
+            <div class="flex-1 min-w-0">
+              <div class="text-gray-300 text-sm leading-snug">${esc(c.text.slice(0,250))}</div>
+              <div class="text-gray-600 text-xs mt-1">${esc(c.video_title||'')}</div>
+            </div>
+            <span class="score-badge flex-shrink-0">${c.likes||0}</span>
+          </div>
+        </div>`).join('')}`;
+  }
+
+  if (tab === 'news') {
+    const items = (r.news_items || []).slice(0, 20);
+    panel.innerHTML = `
+      <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">${items.length} Items</div>
+      ${items.map(n => `
+        <div class="signal-row">
+          <div class="text-gray-200 text-sm leading-snug">${esc(n.title||'')}</div>
+          <div class="text-gray-600 text-xs mt-1">${esc(n.source||'')}${n.published ? ' · ' + new Date(n.published).toLocaleDateString() : ''}</div>
+        </div>`).join('')}`;
+  }
+}
+
+function renderVideosPanel() {
+  if (!S.research) return;
+  const videos = (S.research.joseph_videos || []).slice(0, 8);
+  document.getElementById('videosPanel').innerHTML = videos.map(v => `
+    <div class="signal-row">
+      <div class="text-gray-200 text-sm leading-snug">${esc(v.title||'')}</div>
+      <div class="text-gray-600 text-xs mt-1">${(v.views||0).toLocaleString()} views · ${v.comment_count||0} comments</div>
+    </div>`).join('');
 }
 
 // ─── Topics ───────────────────────────────────────────────────────────────────
@@ -280,10 +442,7 @@ async function generateTopics(previousTopics) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate_topics', research: S.research, previous_topics: previousTopics || [] }),
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-      throw new Error(err.error || `HTTP ${res.status}`);
-    }
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
     const data = await res.json();
     if (!data.topics?.length) throw new Error('No topics returned');
     S.topics = data.topics;
@@ -307,38 +466,30 @@ async function regenerateTopics() {
 }
 
 const TYPE_BADGES = {
-  myth_busting:   { label: 'Myth Busting',   cls: 'badge-myth'   },
-  pure_value:     { label: 'Pure Value',      cls: 'badge-value'  },
-  market_insight: { label: 'Market Insight',  cls: 'badge-market' },
-  social_proof:   { label: 'Social Proof',    cls: 'badge-social' },
-  story:          { label: 'Story',           cls: 'badge-story'  },
+  myth_busting:   { label: 'Myth Busting',  cls: 'badge-myth'   },
+  pure_value:     { label: 'Pure Value',     cls: 'badge-value'  },
+  market_insight: { label: 'Market Insight', cls: 'badge-market' },
+  social_proof:   { label: 'Social Proof',   cls: 'badge-social' },
+  story:          { label: 'Story',          cls: 'badge-story'  },
 };
 
 function renderTopics(topics) {
   document.getElementById('topicCards').innerHTML = topics.map((t, i) => {
     const badge = TYPE_BADGES[t.type] || TYPE_BADGES.pure_value;
-    const ctaBadge = t.cta !== 'none'
-      ? `<span class="badge" style="background:#1a120a;color:#d97706">Soft CTA</span>`
-      : `<span class="badge" style="background:#111;color:#374151">No CTA</span>`;
     return `
     <div class="card card-hover p-5" id="topicCard${i}" onclick="selectTopic(${i})">
       <div class="flex items-center gap-2 mb-3">
         <span class="badge ${badge.cls}">${badge.label}</span>
-        ${ctaBadge}
+        ${t.cta !== 'none' ? `<span class="badge" style="background:#1a120a;color:#d97706">Soft CTA</span>` : `<span class="badge" style="background:#111;color:#374151">No CTA</span>`}
       </div>
       <h3 class="text-white font-semibold text-base mb-2 leading-snug">${esc(t.title)}</h3>
       <p class="text-gray-400 text-sm mb-3 leading-relaxed">${esc(t.hook)}</p>
-      <div class="text-amber-600 text-xs mb-3 flex items-start gap-1">
-        <span class="text-gray-600 flex-shrink-0">Signal:</span>
-        <span>${esc(t.source)}</span>
-      </div>
-      <div class="border-t border-gray-900 pt-3 mt-1 mb-4">
+      <div class="text-amber-600 text-xs mb-3"><span class="text-gray-600">Signal:</span> ${esc(t.source)}</div>
+      <div class="border-t border-gray-900 pt-3 mb-4">
         <div class="text-gray-600 text-xs mb-1">Joseph's angle</div>
         <div class="text-gray-500 text-xs leading-relaxed">${esc(t.joseph_angle)}</div>
       </div>
-      <button class="btn-primary text-xs py-2 px-4" onclick="event.stopPropagation(); selectTopic(${i})">
-        Use this topic →
-      </button>
+      <button class="btn-primary text-xs py-2 px-4" onclick="event.stopPropagation(); selectTopic(${i})">Use this topic →</button>
     </div>`;
   }).join('');
 }
@@ -360,25 +511,21 @@ async function generateContent() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate_content', research: S.research, topic: S.selectedTopic }),
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-      throw new Error(err.error || `HTTP ${res.status}`);
-    }
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
     const data = await res.json();
     if (!data.email || !data.stories || !data.skool) throw new Error('Incomplete content returned');
     S.content = data;
-    S.activeTab = 'email';
-    S.activeVersion = 0;
+    S.activeTab = 'email'; S.activeVersion = 0;
     document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
     document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
+    saveToHistory(S.selectedTopic, S.content);
     renderContentView();
     setPhase('content-view');
   } catch (err) {
     if (!S.content) { setPhase('topic-select'); return; }
     setPhase('content-view');
-    const el = document.getElementById('contentError');
-    el.textContent = `Error: ${err.message}`;
-    el.classList.remove('hidden');
+    document.getElementById('contentError').textContent = `Error: ${err.message}`;
+    document.getElementById('contentError').classList.remove('hidden');
   }
 }
 
@@ -398,125 +545,166 @@ function renderContentView() {
   renderEmailPanel(); renderStoriesPanel(); renderSkoolPanel();
   showActivePanel();
 }
-
-function switchTab(tab) {
-  S.activeTab = tab; updateTabUI(); showActivePanel();
-}
-
-function switchVersion(idx) {
-  S.activeVersion = idx; updatePillUI(); applyVersionVisibility();
-}
-
+function switchTab(tab) { S.activeTab = tab; updateTabUI(); showActivePanel(); }
+function switchVersion(idx) { S.activeVersion = idx; updatePillUI(); applyVersionVisibility(); }
 function updateTabUI() {
-  ['email', 'stories', 'skool'].forEach(t => {
+  ['email','stories','skool'].forEach(t => {
     const id = 'tab' + t.charAt(0).toUpperCase() + t.slice(1);
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.className = (S.activeTab === t ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
+    document.getElementById(id).className = (S.activeTab === t ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
   });
 }
-
 function updatePillUI() {
-  [0, 1, 2].forEach(i => {
-    const el = document.getElementById(`pill${i + 1}`);
-    if (!el) return;
-    el.className = (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
+  [0,1,2].forEach(i => {
+    document.getElementById(`pill${i+1}`).className = (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
   });
 }
-
 function showActivePanel() {
-  ['email', 'stories', 'skool'].forEach(t => {
-    const id = 'panel' + t.charAt(0).toUpperCase() + t.slice(1);
-    document.getElementById(id).classList.toggle('hidden', S.activeTab !== t);
+  ['email','stories','skool'].forEach(t => {
+    document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('hidden', S.activeTab !== t);
   });
 }
-
 function applyVersionVisibility() {
   const i = S.activeVersion;
-  ['email', 'stories', 'skool'].forEach(t => {
-    const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
-    panel.querySelectorAll(`[data-version]`).forEach(el => {
-      el.style.display = parseInt(el.dataset.version) === i ? '' : 'none';
-    });
+  ['email','stories','skool'].forEach(t => {
+    document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1))
+      .querySelectorAll('[data-version]').forEach(el => { el.style.display = parseInt(el.dataset.version) === i ? '' : 'none'; });
   });
 }
 
-// ─── Panel renderers ──────────────────────────────────────────────────────────
 function renderEmailPanel() {
   document.getElementById('panelEmail').innerHTML = S.content.email.map((e, i) => `
-    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+    <div data-version="${i}" style="display:${i===0?'':'none'}">
       <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div>
-          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.subject)})">Copy</button>
-        </div>
+        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button></div>
         <div class="text-white font-medium text-sm">${esc(e.subject)}</div>
       </div>
       <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div>
-          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.alt_subject)})">Copy</button>
-        </div>
+        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div>
         <div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div>
       </div>
       <div class="card p-5 mb-3">
-        <div class="flex items-center justify-between mb-2">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div>
-          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.preview)})">Copy</button>
-        </div>
+        <div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div>
         <div class="text-gray-300 text-sm">${esc(e.preview)}</div>
       </div>
       <div class="card p-5">
-        <div class="flex items-center justify-between mb-3">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div>
-          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.body)})">Copy body</button>
-        </div>
+        <div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div>
         <div class="email-body">${esc(e.body)}</div>
         <div class="border-t border-gray-900 mt-5 pt-4 flex justify-end">
-          <button class="btn-primary text-xs py-2" onclick="copyFullEmail(this, ${i})">Copy full email</button>
+          <button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function renderStoriesPanel() {
   document.getElementById('panelStories').innerHTML = S.content.stories.map((seq, i) => `
-    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+    <div data-version="${i}" style="display:${i===0?'':'none'}">
       <div class="card p-5">
-        <div class="flex items-center justify-between mb-4">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div>
-          <button class="copy-btn" onclick="copyAllSlides(this, ${i})">Copy all slides</button>
-        </div>
+        <div class="flex items-center justify-between mb-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div><button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button></div>
         <div class="flex flex-col gap-5">
           ${seq.slides.map((slide, si) => `
             <div class="flex gap-3 items-start">
-              <div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si + 1}</div>
-              <div class="flex-1 min-w-0">
-                <div class="slide-label">${esc(slide.label)}</div>
-                <div class="slide-text">${esc(slide.text)}</div>
-              </div>
-              <button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this, ${JSON.stringify(slide.text)})">Copy</button>
-            </div>
-          `).join('')}
+              <div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div>
+              <div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div>
+              <button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button>
+            </div>`).join('')}
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function renderSkoolPanel() {
   document.getElementById('panelSkool').innerHTML = S.content.skool.map((p, i) => `
-    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+    <div data-version="${i}" style="display:${i===0?'':'none'}">
       <div class="card p-5">
-        <div class="flex items-center justify-between mb-3">
-          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div>
-          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(p.body)})">Copy post</button>
-        </div>
+        <div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(p.body)})">Copy post</button></div>
         <div class="email-body">${esc(p.body)}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
+}
+
+// ─── History ──────────────────────────────────────────────────────────────────
+function saveToHistory(topic, content) {
+  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
+  history.unshift({
+    id: Date.now(),
+    date: new Date().toISOString(),
+    topic: { title: topic.title, source: topic.source, type: topic.type, hook: topic.hook },
+    content,
+    notes: '',
+  });
+  localStorage.setItem('ns_history', JSON.stringify(history.slice(0, 60)));
+}
+
+function renderHistoryList() {
+  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
+  const container = document.getElementById('historyList');
+
+  if (!history.length) {
+    container.innerHTML = `<div class="text-center py-16 text-gray-600 text-sm">No sessions yet. Generate some content and it will appear here.</div>`;
+    return;
+  }
+
+  // Group by date
+  const groups = {};
+  history.forEach(s => {
+    const d = new Date(s.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    if (!groups[d]) groups[d] = [];
+    groups[d].push(s);
+  });
+
+  container.innerHTML = Object.entries(groups).map(([date, sessions]) => `
+    <div class="mb-8">
+      <div class="text-gray-600 text-xs uppercase tracking-wider font-semibold mb-3">${date}</div>
+      ${sessions.map(s => {
+        const badge = TYPE_BADGES[s.topic.type] || TYPE_BADGES.pure_value;
+        return `
+        <div class="history-card" id="hcard-${s.id}">
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="badge ${badge.cls}">${badge.label}</span>
+              <span class="text-gray-600 text-xs">${new Date(s.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
+            </div>
+            <button class="copy-btn" style="font-size:11px" onclick="reloadSession('${s.id}')">Reload →</button>
+          </div>
+          <div class="text-white text-sm font-medium mb-1 leading-snug">${esc(s.topic.title)}</div>
+          <div class="text-amber-700 text-xs mb-3">${esc(s.topic.source)}</div>
+          <div class="text-gray-600 text-xs mb-3 flex gap-3">
+            <span>📧 ${s.content.email?.length || 0} emails</span>
+            <span>📱 ${s.content.stories?.length || 0} story seqs</span>
+            <span>🎯 ${s.content.skool?.length || 0} Skool posts</span>
+          </div>
+          <textarea rows="2" placeholder="Add performance notes (e.g. open rate, DMs received, best performer...)"
+            onchange="saveNote('${s.id}', this.value)">${esc(s.notes || '')}</textarea>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function saveNote(id, note) {
+  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
+  const idx = history.findIndex(s => String(s.id) === String(id));
+  if (idx !== -1) { history[idx].notes = note; localStorage.setItem('ns_history', JSON.stringify(history)); }
+}
+
+function reloadSession(id) {
+  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
+  const session = history.find(s => String(s.id) === String(id));
+  if (!session) return;
+  S.selectedTopic = session.topic;
+  S.content = session.content;
+  S.activeTab = 'email'; S.activeVersion = 0;
+  document.getElementById('contentTopicTitle').textContent = session.topic.title;
+  document.getElementById('contentTopicSource').textContent = session.topic.source;
+  renderContentView();
+  setPhase('content-view');
+  switchNav('generate');
+}
+
+function clearHistory() {
+  if (!confirm('Clear all history? This cannot be undone.')) return;
+  localStorage.removeItem('ns_history');
+  renderHistoryList();
 }
 
 // ─── Copy helpers ─────────────────────────────────────────────────────────────
@@ -524,27 +712,20 @@ async function copyText(btn, text) {
   try {
     await navigator.clipboard.writeText(text);
     const orig = btn.textContent;
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
-  } catch { /* silent fail */ }
+  } catch { /* silent */ }
 }
-
 async function copyFullEmail(btn, vIdx) {
   const e = S.content.email[vIdx];
-  const text = `Subject: ${e.subject}\nAlt Subject: ${e.alt_subject}\nPreview: ${e.preview}\n\n${e.body}`;
-  await copyText(btn, text);
+  await copyText(btn, `Subject: ${e.subject}\nAlt Subject: ${e.alt_subject}\nPreview: ${e.preview}\n\n${e.body}`);
 }
-
 async function copyAllSlides(btn, vIdx) {
   const seq = S.content.stories[vIdx];
-  const text = seq.slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n');
-  await copyText(btn, text);
+  await copyText(btn, seq.slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n'));
 }
-
 function esc(str = '') {
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
