@@ -411,29 +411,68 @@ function buildStoriesPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected`).join('\n')
     : 'None available for this cycle.';
-  return `Generate 3 distinct Instagram Story sequences for Joseph Khateri on this topic.
+  return `Generate 3 Instagram Story sequences (3 slides each) for Joseph Khateri on this topic.
 
 TOPIC: ${topic.title}
+TYPE: ${topic.type}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
 ICP FIT: ${topic.icp_fit}
 CTA TYPE: ${topic.cta}
 
-STUDENT WINS (use if relevant):
+STUDENT WINS (use only real names/numbers above — never invent):
 ${winsText}
 
-Story rules:
-- 4-6 slides per sequence
-- Under 15 words per slide (this is on-screen text only — the visual carries the rest)
-- Structure: Hook → Context → Insight → Proof (if a real win fits) → CTA or Engagement question
-- The 3 sequences must have different hooks and different structural angles
-- No em dashes, no hype words
+SEQUENCE TYPE SELECTION — pick the best fit for each of the 3 variations:
+- student_win / social_proof topic → use FOMO or STUDENT WIN framework
+- myth_busting topic → use BREAKING LIMITING BELIEFS framework
+- market_insight topic → use VALUE or HOOK & HIT framework
+- pure_value topic → use VALUE framework
+Each of the 3 variations must use a different sequence type or a different hook angle.
 
-Return exactly this JSON:
+FRAMEWORK RULES (apply to all 3):
+Progressive fade-back narrative — 3 slides build on each other:
+  Slide 1 (Hook): stop the scroll. one punchy line. maximum 10 words. no context yet.
+  Slide 2 (Body): continue the story directly below. adds the insight, proof, or tension. 2-4 short lines.
+  Slide 3 (CTA): everything else fades. one action only. reply "KEYWORD" format.
+
+HARD COPY RULES — non-negotiable:
+- lowercase only on every slide — no capitals, no title case, no ALL CAPS
+- under 12 words per slide (on-screen text — the photo carries the rest)
+- one idea per slide — never two things on one frame
+- slide 1 hook must work as a standalone billboard — magnetic on its own
+- slide 2 copy stacks below slide 1 copy — it continues, not restarts
+- slide 3 is CTA only — no new information, just the action
+- no em dashes, no hype words (game-changer, transform, unlock, etc.)
+- write like joseph texted this — raw and real, not polished
+- if a student win fits naturally, use it with their name and number
+- the hook should create tension or call out a specific fear/desire joseph's ICP has right now
+
+SEQUENCE TYPES FOR REFERENCE:
+- FOMO: hook = result → body = how/context → cta = "you could be next"
+- STUDENT WIN: hook = specific result → body = proof stack → cta = dm keyword
+- BREAKING BELIEFS: hook = bold contrarian statement → body = attack the excuse → cta = belief shift + action
+- VALUE: hook = surprising insight → body = the mechanism → cta = soft or freebie
+- HOOK & HIT: hook = pattern interrupt → body = validate + teach → cta = optional soft
+
+Return exactly this JSON — each slide has a label and the exact on-screen text:
 {
   "stories": [
-    { "slides": [{ "label": "Hook", "text": "..." }, { "label": "Context", "text": "..." }, { "label": "Insight", "text": "..." }, { "label": "CTA", "text": "..." }] },
-    { "slides": [...] },
-    { "slides": [...] }
+    {
+      "type": "fomo",
+      "slides": [
+        { "label": "Hook", "text": "..." },
+        { "label": "Body", "text": "..." },
+        { "label": "CTA", "text": "..." }
+      ]
+    },
+    {
+      "type": "breaking_beliefs",
+      "slides": [...]
+    },
+    {
+      "type": "value",
+      "slides": [...]
+    }
   ]
 }`;
 }
@@ -805,7 +844,7 @@ async function generateContent(force) {
     const studentWins = S.research.student_wins || [];
     const [emailRaw, storiesRaw, skoolRaw] = await Promise.all([
       callClaude(SONNET, buildEmailPrompt(S.selectedTopic, studentWins), 5000),
-      callClaude(HAIKU,  buildStoriesPrompt(S.selectedTopic, studentWins), 2500),
+      callClaude(SONNET, buildStoriesPrompt(S.selectedTopic, studentWins), 3000),
       callClaude(HAIKU,  buildSkoolPrompt(S.selectedTopic), 2000),
     ]);
     const data = { ...parseJSON(emailRaw), ...parseJSON(storiesRaw), ...parseJSON(skoolRaw) };
@@ -881,10 +920,19 @@ function renderEmailPanel() {
 }
 
 function renderStoriesPanel() {
+  const typeLabel = t => t ? t.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Sequence';
   document.getElementById('panelStories').innerHTML = S.content.stories.map((seq, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5"><div class="flex items-center justify-between mb-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div><button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button></div>
-      <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button></div>`).join('')}</div></div>
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div>
+            ${seq.type ? `<span class="badge" style="background:#1a0a2e;color:#c084fc">${esc(typeLabel(seq.type))}</span>` : ''}
+          </div>
+          <button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button>
+        </div>
+        <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button></div>`).join('')}</div>
+      </div>
     </div>`).join('');
 }
 
