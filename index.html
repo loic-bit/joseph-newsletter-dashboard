@@ -381,7 +381,6 @@ function buildEmailPrompt(topic, studentWins) {
 These are NOT short punchy social posts. They are NEWSLETTER EMAILS. They need to be fully developed, readable from top to bottom, and feel like a letter from someone the reader genuinely respects. Think of the best newsletter you've ever read — the kind where you get to the end and feel like you actually learned something. That is the standard.
 
 TOPIC: ${topic.title}
-SIGNAL QUOTE: "${topic.signal_quote}"
 JOSEPH'S ANGLE: ${topic.joseph_angle}
 ICP FIT: ${topic.icp_fit}
 CTA TYPE: ${topic.cta}
@@ -456,6 +455,7 @@ BANNED:
 - Starting the body with "I"
 - Asking readers to reply to the email
 - Half-developed thoughts or fragment-heavy writing
+- Referencing any source — never mention Reddit, YouTube, comments, "a post I saw", "someone asked", r/anything, or any platform. The ideas are Joseph's own.
 
 Return exactly this JSON — body uses \\n for line breaks:
 {
@@ -506,6 +506,7 @@ HARD COPY RULES — non-negotiable:
 - write like joseph texted this — raw and real, not polished
 - if a student win fits naturally, use it with their name and number
 - the hook should create tension or call out a specific fear/desire joseph's ICP has right now
+- never reference the source of the topic — no Reddit, YouTube, comments, "someone asked", r/anything. The idea is Joseph's own.
 
 SEQUENCE TYPES FOR REFERENCE:
 - FOMO: hook = result → body = how/context → cta = "you could be next"
@@ -582,6 +583,7 @@ BANNED:
 - Email-style sign-offs ("Joseph" at the end, "PS:", etc.)
 - Hard sells or price mentions
 - "In today's post..."
+- Referencing the source of the topic — never mention Reddit, YouTube, comments, "someone asked", r/anything. The idea is Joseph's own.
 
 Return exactly this JSON:
 {
