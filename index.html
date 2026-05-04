@@ -1,1055 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Newsletter Dashboard — Joseph Khateri</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { surface: '#111111', card: '#1a1a1a', border: '#272727' },
-          fontFamily: { sans: ['Inter', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #f0f0f0; }
-
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #111; }
-    ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
-
-    #sidebar { width: 220px; flex-shrink: 0; background: #0d0d0d; border-right: 1px solid #1e1e1e; display: flex; flex-direction: column; height: 100vh; position: fixed; top: 0; left: 0; z-index: 10; }
-    #main { margin-left: 220px; height: 100vh; overflow-y: auto; }
-
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 8px; cursor: pointer; transition: all 0.12s ease; color: #6b7280; font-size: 13.5px; font-weight: 500; border-left: 2px solid transparent; }
-    .nav-item:hover { background: #1a1a1a; color: #d1d5db; }
-    .nav-item.active { background: #1a1a1a; color: #fff; border-left-color: #f59e0b; }
-    .nav-item.active svg { color: #f59e0b; }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .nav-section { font-size: 10px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.08em; padding: 10px 14px 4px; }
-
-    .kpi-card { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 18px 20px; transition: border-color 0.15s; }
-    .kpi-card:hover { border-color: #333; }
-
-    .data-table { width: 100%; border-collapse: collapse; }
-    .data-table th { background: #141414; padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; position: sticky; top: 0; z-index: 1; border-bottom: 1px solid #1e1e1e; }
-    .data-table td { padding: 10px 14px; font-size: 13px; color: #d1d5db; border-bottom: 1px solid #1a1a1a; vertical-align: top; }
-    .data-table tr:last-child td { border-bottom: none; }
-    .data-table tr:hover td { background: #141414; }
-
-    .badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 500; white-space: nowrap; }
-    .badge-green  { background: rgba(16,185,129,0.12);  color: #34d399; }
-    .badge-red    { background: rgba(239,68,68,0.12);   color: #f87171; }
-    .badge-amber  { background: rgba(245,158,11,0.12);  color: #fbbf24; }
-    .badge-blue   { background: rgba(59,130,246,0.12);  color: #60a5fa; }
-    .badge-purple { background: rgba(139,92,246,0.12);  color: #a78bfa; }
-    .badge-gray   { background: rgba(107,114,128,0.12); color: #9ca3af; }
-
-    .filter-select { background: #141414; border: 1px solid #222; color: #d1d5db; font-size: 13px; padding: 7px 12px; border-radius: 8px; outline: none; transition: border-color 0.12s; font-family: Inter; }
-    .filter-select:focus { border-color: #f59e0b; }
-    .filter-select option { background: #1a1a1a; }
-
-    .spinner { width: 18px; height: 18px; border: 2px solid #272727; border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #auth-gate { position: fixed; inset: 0; background: #0a0a0a; display: flex; align-items: center; justify-content: center; z-index: 999; }
-
-    .view { display: none; }
-    .view.active { display: block; }
-
-    .text-amber { color: #f59e0b; }
-    .text-green { color: #10b981; }
-    .text-red   { color: #ef4444; }
-    .text-muted { color: #6b7280; }
-
-    .tab-btn { padding: 6px 14px; font-size: 12.5px; font-weight: 500; border-radius: 7px; cursor: pointer; color: #6b7280; transition: all 0.12s; border: 1px solid transparent; }
-    .tab-btn:hover { color: #d1d5db; background: #1a1a1a; }
-    .tab-btn.active { color: #f59e0b; background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); }
-
-    .source-tab { display: none; }
-    .source-tab.active { display: block; }
-
-    .signal-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 13px 15px; transition: border-color 0.12s; margin-bottom: 8px; }
-    .signal-card:hover { border-color: #2a2a2a; }
-    .signal-card a { color: #6b7280; text-decoration: none; font-size: 11px; }
-    .signal-card a:hover { color: #f59e0b; }
-
-    .draft-card { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.12s; }
-    .draft-card:hover { border-color: #2a2a2a; }
-    .draft-header { padding: 16px 18px; cursor: pointer; display: flex; align-items: flex-start; gap: 14px; }
-    .draft-body { display: none; border-top: 1px solid #1e1e1e; }
-    .draft-body.open { display: grid; grid-template-columns: 1fr 1fr; }
-    .draft-col { padding: 20px 22px; }
-    .draft-col + .draft-col { border-left: 1px solid #1e1e1e; }
-    .draft-col h4 { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
-    .email-text { font-size: 13px; line-height: 1.7; color: #d1d5db; white-space: pre-wrap; }
-
-    .story-block { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
-    .story-label { font-size: 10.5px; font-weight: 600; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-    .story-text { font-size: 13px; color: #d1d5db; line-height: 1.6; }
-
-    .progress-bar { height: 4px; background: #1e1e1e; border-radius: 99px; margin-top: 8px; }
-    .progress-fill { height: 4px; border-radius: 99px; background: #f59e0b; transition: width 0.4s ease; }
-
-    .chevron { transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
-    .chevron.open { transform: rotate(180deg); }
-
-    .video-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
-    .video-row:last-child { border-bottom: none; }
-
-    /* ── Content Studio ── */
-    .channel-toggle { display: flex; background: #141414; border: 1px solid #222; border-radius: 10px; padding: 4px; gap: 4px; }
-    .channel-btn { flex: 1; padding: 8px 14px; font-size: 13px; font-weight: 500; border-radius: 7px; border: none; cursor: pointer; transition: all 0.15s; color: #6b7280; background: transparent; font-family: Inter; }
-    .channel-btn.active { background: #f59e0b; color: #000; font-weight: 600; }
-
-    .fw-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 13px 15px; cursor: pointer; transition: all 0.12s; }
-    .fw-card:hover { border-color: #3a3a3a; }
-    .fw-card.selected { border-color: #f59e0b; background: rgba(245,158,11,0.05); }
-    .fw-letter { font-size: 18px; font-weight: 700; color: #f59e0b; margin-bottom: 4px; }
-    .fw-name { font-size: 13px; font-weight: 600; color: #e5e7eb; margin-bottom: 3px; }
-    .fw-desc { font-size: 11.5px; color: #6b7280; line-height: 1.5; }
-    .fw-frames { font-size: 10.5px; color: #4b5563; margin-top:4px; }
-
-    .topic-search { width: 100%; background: #141414; border: 1px solid #222; color: #d1d5db; font-size: 13px; padding: 9px 12px; border-radius: 9px; outline: none; font-family: Inter; transition: border-color 0.12s; }
-    .topic-search:focus { border-color: #f59e0b; }
-
-    .topic-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 13px; border-radius: 8px; cursor: pointer; transition: background 0.1s; border: 1px solid transparent; }
-    .topic-item:hover { background: #141414; border-color: #222; }
-    .topic-item.selected { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.3); }
-
-    .cta-stage-pill { padding: 5px 13px; font-size: 12px; font-weight: 500; border-radius: 999px; cursor: pointer; border: 1px solid #222; color: #6b7280; background: transparent; transition: all 0.12s; font-family: Inter; }
-    .cta-stage-pill:hover { color: #d1d5db; border-color: #333; }
-    .cta-stage-pill.active { color: #f59e0b; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.07); }
-
-    .cta-item { display: flex; align-items: flex-start; gap:10px; padding: 10px 13px; border-radius: 8px; cursor: pointer; transition: background 0.1s; border: 1px solid transparent; }
-    .cta-item:hover { background: #141414; border-color: #222; }
-    .cta-item.selected { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.3); }
-
-    .studio-input { background: #141414; border: 1px solid #222; color: #d1d5db; font-size: 13px; padding: 9px 12px; border-radius: 9px; outline: none; font-family: Inter; transition: border-color 0.12s; width: 100%; resize: vertical; }
-    .studio-input:focus { border-color: #f59e0b; }
-
-    .output-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 10px; padding: 16px; font-size: 12.5px; line-height: 1.7; color: #d1d5db; white-space: pre-wrap; min-height: 200px; font-family: 'SF Mono', 'Fira Code', monospace; overflow-y: auto; max-height: 500px; }
-
-    .btn-primary { background: #f59e0b; color: #000; font-size: 13.5px; font-weight: 600; padding: 10px 20px; border-radius: 9px; border: none; cursor: pointer; font-family: Inter; transition: opacity 0.12s; }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-secondary { background: #1a1a1a; color: #d1d5db; font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: 9px; border: 1px solid #272727; cursor: pointer; font-family: Inter; transition: all 0.12s; }
-    .btn-secondary:hover { border-color: #3a3a3a; color: #fff; }
-
-    .voice-issue { padding: 7px 12px; border-radius: 7px; font-size: 12.5px; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; }
-    .voice-error   { background: rgba(239,68,68,0.08);   border-left: 3px solid #ef4444; }
-    .voice-warning { background: rgba(245,158,11,0.08);  border-left: 3px solid #f59e0b; }
-    .voice-info    { background: rgba(59,130,246,0.08);  border-left: 3px solid #60a5fa; }
-
-    .cta-card-lib { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 14px 16px; transition: border-color 0.12s; }
-    .cta-card-lib:hover { border-color: #2a2a2a; }
-
-    .ratio-bar { display: flex; height: 8px; border-radius: 99px; overflow: hidden; gap: 2px; }
-    .ratio-seg { border-radius: 99px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Newsletter Studio — Joseph Khateri</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { font-family: 'Inter', sans-serif; }
+  body { background: #0a0a0a; color: #e5e7eb; }
+  .card { background: #111; border: 1px solid #1f1f1f; border-radius: 12px; }
+  .card-hover { transition: border-color .15s, background .15s; cursor: pointer; }
+  .card-hover:hover { border-color: #f59e0b; background: #161206; }
+  .card-selected { border-color: #f59e0b !important; background: #161206 !important; }
+  .tab-active { background: #f59e0b; color: #000; }
+  .tab-inactive { background: #1a1a1a; color: #9ca3af; }
+  .tab-inactive:hover { background: #222; color: #e5e7eb; }
+  .pill-active { background: #f59e0b; color: #000; }
+  .pill-inactive { background: #1a1a1a; color: #6b7280; border: 1px solid #2a2a2a; }
+  .pill-inactive:hover { border-color: #f59e0b; color: #e5e7eb; }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; }
+  .badge-myth    { background: #1a0a2e; color: #c084fc; }
+  .badge-value   { background: #0a1a10; color: #4ade80; }
+  .badge-market  { background: #0a1020; color: #60a5fa; }
+  .badge-social  { background: #1a1000; color: #fb923c; }
+  .badge-story   { background: #1a0a0a; color: #f87171; }
+  .copy-btn { font-size: 12px; padding: 4px 10px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; color: #6b7280; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .copy-btn:hover { border-color: #f59e0b; color: #f59e0b; }
+  .copy-btn.copied { background: #0a1a10; border-color: #4ade80; color: #4ade80; }
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #333; border-top-color: #f59e0b; border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .email-body { white-space: pre-wrap; line-height: 1.8; font-size: 14px; color: #d1d5db; }
+  .slide-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #6b7280; margin-bottom: 4px; }
+  .slide-text { font-size: 15px; color: #e5e7eb; line-height: 1.5; }
+  .btn-primary { background: #f59e0b; color: #000; font-weight: 600; padding: 10px 24px; border-radius: 8px; cursor: pointer; transition: opacity .15s; border: none; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-primary:hover:not(:disabled) { opacity: .85; }
+  .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: #6b7280; border: 1px solid #2a2a2a; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-ghost:hover:not(:disabled) { border-color: #f59e0b; color: #f59e0b; }
+  .btn-ghost:disabled { opacity: .4; cursor: not-allowed; }
+  .error-box { background: #1a0a0a; border: 1px solid #7f1d1d; border-radius: 8px; padding: 14px 16px; color: #fca5a5; font-size: 13px; }
+  input[type=password] { background: #111; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 10px 14px; border-radius: 8px; outline: none; width: 100%; transition: border-color .15s; }
+  input[type=password]:focus { border-color: #f59e0b; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #111; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+</style>
 </head>
-<body>
+<body class="min-h-screen">
 
 <!-- AUTH GATE -->
-<div id="auth-gate">
-  <div style="width:340px;">
-    <div style="text-align:center; margin-bottom:32px;">
-      <div style="font-size:22px; font-weight:700; color:#fff; margin-bottom:4px;">Newsletter Dashboard</div>
-      <div style="font-size:13px; color:#6b7280;">Joseph Khateri — Scale Wise Media</div>
+<div id="authGate" class="fixed inset-0 z-50 flex items-center justify-center" style="background:#0a0a0a">
+  <div class="card p-8 w-full max-w-sm">
+    <div class="text-center mb-6">
+      <div class="text-amber-400 font-bold text-lg mb-1">Newsletter Studio</div>
+      <div class="text-gray-500 text-sm">Joseph Khateri</div>
     </div>
-    <input id="pw-input" type="password" placeholder="Password"
-      style="width:100%; background:#141414; border:1px solid #272727; color:#fff; font-size:14px; padding:11px 14px; border-radius:10px; outline:none; font-family:Inter; margin-bottom:10px;"
-      onkeydown="if(event.key==='Enter')checkAuth()">
-    <button onclick="checkAuth()"
-      style="width:100%; background:#f59e0b; color:#000; font-size:14px; font-weight:600; padding:11px; border-radius:10px; border:none; cursor:pointer; font-family:Inter;">
-      Sign In
-    </button>
-    <p id="pw-err" style="color:#f87171; font-size:12px; text-align:center; margin-top:8px; display:none;">Incorrect password.</p>
+    <input type="password" id="pwInput" placeholder="Password" />
+    <div id="pwError" class="text-red-400 text-xs mt-2 hidden">Incorrect password</div>
+    <button class="btn-primary w-full mt-4 justify-center" onclick="checkAuth()">Enter</button>
   </div>
 </div>
 
-<div style="display:flex;">
+<!-- APP -->
+<div id="app" class="hidden min-h-screen flex flex-col">
 
-  <!-- ═══ SIDEBAR ═══ -->
-  <div id="sidebar">
-    <div style="padding:18px 14px 12px;">
-      <div style="font-size:13px; font-weight:700; color:#fff;">Newsletter</div>
-      <div style="font-size:11px; color:#4b5563; margin-top:1px;">Joseph Khateri</div>
+  <!-- HEADER -->
+  <header class="border-b border-gray-900 px-6 py-4 flex items-center justify-between sticky top-0 z-10" style="background:#0a0a0a">
+    <div class="flex items-center gap-3">
+      <span class="text-amber-400 font-bold text-base">Newsletter Studio</span>
+      <span class="text-gray-800">/</span>
+      <span class="text-gray-500 text-sm">Joseph Khateri</span>
     </div>
-    <div style="height:1px; background:#1e1e1e; margin:0 14px 8px;"></div>
+    <div class="flex items-center gap-3">
+      <div id="researchDate" class="text-gray-700 text-xs"></div>
+      <div id="statsChips" class="flex gap-2"></div>
+    </div>
+  </header>
 
-    <div style="padding:0 8px; flex:1; overflow-y:auto;">
-      <div class="nav-section">Insights</div>
-      <div class="nav-item active" onclick="switchView('research',this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        Research Feed
-      </div>
-      <div class="nav-item" onclick="switchView('drafts',this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-        Draft Queue
-      </div>
+  <!-- MAIN -->
+  <main class="flex-1 px-6 py-8 max-w-3xl mx-auto w-full">
 
-      <div class="nav-section" style="margin-top:8px;">Create</div>
-      <div class="nav-item" onclick="switchView('studio',this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-        Content Studio
-      </div>
-      <div class="nav-item" onclick="switchView('cta',this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-        CTA Library
-      </div>
-      <div class="nav-item" onclick="switchView('topics',this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-        Topic Bank
-      </div>
+    <!-- loading -->
+    <div id="stateLoading" class="flex flex-col items-center justify-center py-32 gap-4">
+      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+      <div class="text-gray-500 text-sm">Loading research data...</div>
     </div>
 
-    <div style="padding:14px; border-top:1px solid #1e1e1e;">
-      <div id="sidebar-updated" style="font-size:11px; color:#4b5563;">Last updated —</div>
-    </div>
-  </div>
-
-  <!-- ═══ MAIN ═══ -->
-  <div id="main">
-    <div id="loading" style="display:flex;align-items:center;justify-content:center;height:100vh;">
-      <div style="text-align:center;">
-        <div class="spinner" style="margin:0 auto 12px;"></div>
-        <div style="font-size:13px;color:#6b7280;">Loading…</div>
+    <!-- ready -->
+    <div id="stateReady" class="hidden">
+      <div class="mb-8">
+        <h1 class="text-xl font-semibold text-white mb-2">Research is ready</h1>
+        <p class="text-gray-500 text-sm">Generate 3 topic options based on today's data. Pick one and get 3 versions of each content format.</p>
       </div>
+      <div id="researchBreakdown" class="grid grid-cols-2 gap-3 mb-8 sm:grid-cols-4"></div>
+      <button class="btn-primary" id="btnGenTopics" onclick="generateTopics()">Generate 3 Topics</button>
     </div>
 
-    <!-- ══════════════════════ VIEW: RESEARCH FEED ══════════════════════ -->
-    <div id="view-research" class="view" style="padding:28px 32px;">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
-        <div class="kpi-card">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Reddit Signals</div>
-          <div id="stat-reddit" style="font-size:26px;font-weight:700;color:#fff;">—</div>
-          <div id="stat-reddit-q" style="font-size:12px;color:#6b7280;margin-top:3px;">— questions</div>
-        </div>
-        <div class="kpi-card">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">YT Comments</div>
-          <div id="stat-yt" style="font-size:26px;font-weight:700;color:#fff;">—</div>
-          <div id="stat-yt-q" style="font-size:12px;color:#6b7280;margin-top:3px;">— questions</div>
-        </div>
-        <div class="kpi-card">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">News Items</div>
-          <div id="stat-news" style="font-size:26px;font-weight:700;color:#fff;">—</div>
-          <div style="font-size:12px;color:#6b7280;margin-top:3px;">Section 8 / HUD</div>
-        </div>
-        <div class="kpi-card">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Drafts This Week</div>
-          <div id="stat-drafts-week" style="font-size:26px;font-weight:700;color:#fff;">—</div>
-          <div style="font-size:12px;color:#6b7280;margin-top:3px;">of 3 goal</div>
-          <div class="progress-bar"><div id="drafts-progress" class="progress-fill" style="width:0%"></div></div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;">
+    <!-- topics-loading -->
+    <div id="stateTopicsLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
+      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+      <div class="text-gray-300 text-sm font-medium">Analyzing research data...</div>
+      <div class="text-gray-600 text-xs">Finding cross-source signal</div>
+    </div>
+
+    <!-- topic-select -->
+    <div id="stateTopicSelect" class="hidden">
+      <div class="flex items-center justify-between mb-6">
         <div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <div style="font-size:14px;font-weight:600;color:#fff;">Research Signals</div>
-            <div style="display:flex;gap:6px;">
-              <button class="tab-btn active" onclick="switchSourceTab('reddit',this)">Reddit</button>
-              <button class="tab-btn" onclick="switchSourceTab('youtube',this)">YouTube</button>
-              <button class="tab-btn" onclick="switchSourceTab('news',this)">News</button>
-            </div>
-          </div>
-          <div id="tab-reddit" class="source-tab active"><div id="reddit-list"></div></div>
-          <div id="tab-youtube" class="source-tab"><div id="youtube-list"></div></div>
-          <div id="tab-news" class="source-tab"><div id="news-list"></div></div>
+          <h1 class="text-xl font-semibold text-white mb-1">Pick a topic</h1>
+          <p class="text-gray-500 text-sm">Select one to generate email, story, and Skool variations.</p>
         </div>
-        <div>
-          <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:14px;">Joseph's Videos</div>
-          <div class="kpi-card" style="padding:14px 16px;"><div id="videos-list"></div></div>
-        </div>
+        <button class="btn-ghost" id="btnRegen" onclick="regenerateTopics()">
+          <span id="regenSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+          Regenerate
+        </button>
       </div>
+      <div id="topicCards" class="flex flex-col gap-4"></div>
+      <div id="topicsError" class="error-box mt-4 hidden"></div>
     </div>
 
-    <!-- ══════════════════════ VIEW: DRAFT QUEUE ══════════════════════ -->
-    <div id="view-drafts" class="view" style="padding:28px 32px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-        <div>
-          <div style="font-size:20px;font-weight:700;color:#fff;">Draft Queue</div>
-          <div id="drafts-subtitle" style="font-size:13px;color:#6b7280;margin-top:3px;">—</div>
-        </div>
-        <div class="kpi-card" style="padding:12px 18px;min-width:160px;">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">This Week</div>
-          <div style="display:flex;align-items:baseline;gap:6px;">
-            <span id="drafts-week-big" style="font-size:22px;font-weight:700;color:#f59e0b;">—</span>
-            <span style="font-size:13px;color:#6b7280;">/ 3 emails</span>
-          </div>
-          <div class="progress-bar" style="margin-top:8px;"><div id="drafts-progress-2" class="progress-fill" style="width:0%"></div></div>
-        </div>
-      </div>
-      <div id="drafts-list">
-        <div style="color:#6b7280;font-size:13px;text-align:center;padding:60px 0;">No drafts yet. Run the research script then ask Claude to "draft newsletter for Joseph".</div>
-      </div>
+    <!-- content-loading -->
+    <div id="stateContentLoading" class="hidden flex flex-col items-center justify-center py-32 gap-4">
+      <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+      <div class="text-gray-300 text-sm font-medium">Writing content variations...</div>
+      <div class="text-gray-600 text-xs">3 emails + 3 story sequences + 3 Skool posts</div>
     </div>
 
-    <!-- ══════════════════════ VIEW: CONTENT STUDIO ══════════════════════ -->
-    <div id="view-studio" class="view" style="padding:28px 32px;">
-      <div style="margin-bottom:24px;">
-        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;">Content Studio</div>
-        <div style="font-size:13px;color:#6b7280;">Build a brief. Copy the prompt into Claude Code to generate the full draft.</div>
+    <!-- content-view -->
+    <div id="stateContentView" class="hidden">
+      <div class="flex items-start justify-between gap-4 mb-6">
+        <div class="min-w-0">
+          <button class="btn-ghost mb-3" style="font-size:12px;padding:4px 10px" onclick="backToTopics()">← Topics</button>
+          <h2 id="contentTopicTitle" class="text-base font-semibold text-white leading-snug"></h2>
+          <div id="contentTopicSource" class="text-amber-600 text-xs mt-1"></div>
+        </div>
+        <button class="btn-ghost flex-shrink-0" id="btnRegenContent" onclick="regenerateContent()">
+          <span id="regenContentSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+          Regenerate
+        </button>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
-
-        <!-- LEFT: Inputs -->
-        <div style="display:flex;flex-direction:column;gap:20px;">
-
-          <!-- Channel -->
-          <div>
-            <div style="font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Channel</div>
-            <div class="channel-toggle">
-              <button class="channel-btn active" id="ch-email" onclick="setChannel('email')">Email Broadcast</button>
-              <button class="channel-btn" id="ch-story" onclick="setChannel('story')">IG Story Sequence</button>
-            </div>
-          </div>
-
-          <!-- Framework -->
-          <div>
-            <div style="font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Framework</div>
-            <div id="fw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
-          </div>
-
-          <!-- Topic -->
-          <div>
-            <div style="font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Topic</div>
-            <input class="topic-search" id="studio-topic-search" placeholder="Search topics or type your own..." oninput="filterStudioTopics()" style="margin-bottom:8px;">
-            <div id="studio-topic-list" style="max-height:200px;overflow-y:auto;border:1px solid #1e1e1e;border-radius:9px;background:#0d0d0d;"></div>
-            <div style="margin-top:8px;">
-              <div style="font-size:11px;color:#4b5563;margin-bottom:4px;">Custom angle (optional)</div>
-              <textarea class="studio-input" id="studio-topic-custom" rows="2" placeholder="Add a specific angle, data point, or context..."></textarea>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div>
-            <div style="font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">CTA <span style="font-weight:400;color:#4b5563;text-transform:none;letter-spacing:0;">(default: none)</span></div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;" id="studio-stage-pills"></div>
-            <div id="studio-cta-list" style="max-height:200px;overflow-y:auto;border:1px solid #1e1e1e;border-radius:9px;background:#0d0d0d;"></div>
-          </div>
-
-        </div>
-
-        <!-- RIGHT: Output + Voice Check -->
-        <div style="display:flex;flex-direction:column;gap:16px;">
-
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:14px;font-weight:600;color:#fff;">Generated Prompt</div>
-            <div style="display:flex;gap:8px;">
-              <button class="btn-primary" onclick="buildPrompt()">Build Prompt</button>
-              <button class="btn-secondary" onclick="copyPrompt()" id="copy-btn">Copy</button>
-            </div>
-          </div>
-
-          <div id="studio-output" class="output-box">Select your channel, framework, topic, and CTA, then click "Build Prompt".</div>
-
-          <div style="border-top:1px solid #1e1e1e;padding-top:16px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-              <div style="font-size:13px;font-weight:600;color:#fff;">Voice Checker</div>
-              <button class="btn-secondary" onclick="runVoiceCheck()" style="font-size:12px;padding:6px 12px;">Check</button>
-            </div>
-            <textarea class="studio-input" id="voice-input" rows="6" placeholder="Paste your generated content here to check for voice violations..."></textarea>
-            <div id="voice-results" style="margin-top:10px;"></div>
-          </div>
-
-        </div>
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-5">
+        <button id="tabEmail"   class="tab-active   px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('email')">Email</button>
+        <button id="tabStories" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('stories')">IG Stories</button>
+        <button id="tabSkool"   class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('skool')">Skool Post</button>
       </div>
+
+      <!-- Version pills -->
+      <div class="flex gap-2 mb-5">
+        <button id="pill1" class="pill-active   px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(0)">Version 1</button>
+        <button id="pill2" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(1)">Version 2</button>
+        <button id="pill3" class="pill-inactive px-3 py-1.5 rounded-full text-xs font-semibold transition-all" onclick="switchVersion(2)">Version 3</button>
+      </div>
+
+      <!-- Panels -->
+      <div id="panelEmail"></div>
+      <div id="panelStories" class="hidden"></div>
+      <div id="panelSkool" class="hidden"></div>
+
+      <div id="contentError" class="error-box mt-4 hidden"></div>
     </div>
 
-    <!-- ══════════════════════ VIEW: CTA LIBRARY ══════════════════════ -->
-    <div id="view-cta" class="view" style="padding:28px 32px;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:20px;">
-        <div>
-          <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;">CTA Library</div>
-          <div style="font-size:13px;color:#6b7280;">30 CTAs organized by funnel stage. The default should always be Soft or None.</div>
-        </div>
-        <div class="kpi-card" style="padding:14px 18px;min-width:260px;flex-shrink:0;">
-          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;">Target Weekly CTA Ratio</div>
-          <div class="ratio-bar" style="margin-bottom:8px;">
-            <div class="ratio-seg" style="width:60%;background:#10b981;"></div>
-            <div class="ratio-seg" style="width:25%;background:#60a5fa;"></div>
-            <div class="ratio-seg" style="width:15%;background:#f59e0b;"></div>
-          </div>
-          <div style="display:flex;gap:14px;font-size:11.5px;">
-            <span style="color:#10b981;">60% value / soft</span>
-            <span style="color:#60a5fa;">25% content</span>
-            <span style="color:#f59e0b;">15% pitch</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;" id="cta-stage-filter"></div>
-      <div id="cta-library-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;"></div>
-    </div>
-
-    <!-- ══════════════════════ VIEW: TOPIC BANK ══════════════════════ -->
-    <div id="view-topics" class="view" style="padding:28px 32px;">
-      <div style="margin-bottom:24px;">
-        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;">Topic Bank</div>
-        <div style="font-size:13px;color:#6b7280;">Pre-loaded topics organized by category. Click "Use" to load into Content Studio.</div>
-      </div>
-
-      <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center;">
-        <input class="topic-search" id="topics-search" placeholder="Search topics..." oninput="filterTopics()" style="max-width:320px;">
-        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="topics-cat-filter"></div>
-      </div>
-      <div id="topics-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;"></div>
-    </div>
-
-  </div><!-- /main -->
-</div><!-- /layout -->
+  </main>
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════════════
-
-const TOPIC_BANK = [
-  // Limiting Beliefs
-  { cat:'Limiting Beliefs', id:'lb1', label:'You need $100K to start investing',           angle:'DSCR loans require 10-20% down on $70K properties. Many clients start under $25K.' },
-  { cat:'Limiting Beliefs', id:'lb2', label:"Can't invest out of state",                   angle:"95% of Joseph's clients invest remotely. 70% never visit their properties." },
-  { cat:'Limiting Beliefs', id:'lb3', label:'Section 8 tenants destroy properties',        angle:"Government holds tenants to higher standards. Marcus's tenant has been there 3+ years with zero damage." },
-  { cat:'Limiting Beliefs', id:'lb4', label:'Real estate investing is too risky',          angle:'Section 8 FMR is guaranteed by the government. Licensed realtor: legal obligation to tell the truth.' },
-  { cat:'Limiting Beliefs', id:'lb5', label:'Need to wait for rates to drop',              angle:'Timing the market vs time in the market. DSCR loans cash-flow at current rates in the right markets.' },
-  { cat:'Limiting Beliefs', id:'lb6', label:'Missed the window — market is too expensive', angle:'Cleveland, Birmingham, Detroit still have $70-100K properties cash-flowing $400-900/mo.' },
-  { cat:'Limiting Beliefs', id:'lb7', label:"Not smart enough for real estate",            angle:"Joseph's system is step-by-step. DealFinder AI does the analysis. 70+ clients have done it." },
-  { cat:'Limiting Beliefs', id:'lb8', label:"Don't have time to manage properties",        angle:'Property managers handle everything. 70% of clients never visit. Takes 15 min/month once running.' },
-  { cat:'Limiting Beliefs', id:'lb9', label:'Tried a course before and got nothing',       angle:"This isn't a course. It's 1-on-1 with Joseph personally. Direct phone number, daily check-ins, real deals." },
-  // Market Insights
-  { cat:'Market Insights', id:'mi1', label:'HUD Fair Market Rent update',                  angle:'FMR just changed. Here is what this means for cash flow projections in top markets.' },
-  { cat:'Market Insights', id:'mi2', label:'Why DSCR loans change the math',               angle:'No W2 income required. How the current rate environment affects deal analysis on $70-100K properties.' },
-  { cat:'Market Insights', id:'mi3', label:"Cleveland's top Section 8 neighborhoods",      angle:'Specific areas, price points, and cash flow numbers that work right now.' },
-  { cat:'Market Insights', id:'mi4', label:'Section 8 voucher availability right now',     angle:'Voucher demand vs supply of qualifying units. Why landlords have negotiating power.' },
-  { cat:'Market Insights', id:'mi5', label:'Government rent vs market rent comparison',    angle:'FMR often exceeds market rent in top Section 8 markets. The math most investors miss.' },
-  { cat:'Market Insights', id:'mi6', label:'What is actually happening in the real estate market', angle:'Rate moves, affordability shift, where first-time investors are going wrong right now.' },
-  // Educational
-  { cat:'Educational', id:'ed1', label:'What is a DSCR loan?',                             angle:'Debt Service Coverage Ratio. No W2, no tax return. Qualifies on property income alone.' },
-  { cat:'Educational', id:'ed2', label:'How HUD inspections work',                         angle:'What HUD actually looks for, how to prepare, how to pass first try every time.' },
-  { cat:'Educational', id:'ed3', label:'The BRRRR strategy explained',                     angle:'Buy, Rehab, Rent, Refinance, Repeat. How to pull 50-80% of capital back out and repeat.' },
-  { cat:'Educational', id:'ed4', label:'How to find and screen Section 8 tenants',         angle:'Contacting housing authorities, tenant screening process, what the government already checks.' },
-  { cat:'Educational', id:'ed5', label:'Deal analysis basics',                             angle:'Price point, cash flow target, FMR vs purchase price ratio. How to run numbers in under 10 minutes.' },
-  { cat:'Educational', id:'ed6', label:'Property management for remote investors',         angle:'How to find a PM, what they handle, typical fees, what to watch out for.' },
-  { cat:'Educational', id:'ed7', label:'Why the Section 8 rent guarantee matters',        angle:'Government pays directly on the 1st. Even if the tenant does not pay their portion.' },
-  // Behind the Scenes
-  { cat:'Behind the Scenes', id:'bts1', label:'What happened on a client call this week',  angle:'Real question, real objection, real breakthrough. Show the moment of shift.' },
-  { cat:'Behind the Scenes', id:'bts2', label:'A deal I almost passed on',                 angle:'Property that looked wrong on paper but worked once analyzed correctly. What changed.' },
-  { cat:'Behind the Scenes', id:'bts3', label:'Student win: first deal closed',            angle:'Name, situation, what they did, what they earn now. Yasir, Sarah, Marcus, Giorgio, David, Jennifer.' },
-  { cat:'Behind the Scenes', id:'bts4', label:'How I analyze a deal in under 10 minutes', angle:'Live DealFinder AI walkthrough. Real property. Real numbers. What to look for.' },
-  { cat:'Behind the Scenes', id:'bts5', label:'What I look for in a Section 8 market',    angle:'Under $100K, FMR above $1,200, vacancy rate, neighborhood trajectory. The checklist.' },
-  // Joseph's Stories
-  { cat:"Joseph's Stories", id:'js1', label:'The first deal that went wrong',              angle:'First HUD inspection failure, 2-month vacancy, burglarized, $6K in losses. The real story and what he learned.' },
-  { cat:"Joseph's Stories", id:'js2', label:"Building his parents' $1.9M portfolio",      angle:'Started at 18 with no money, no connections. The exact path from nothing to $1.9M.' },
-  { cat:"Joseph's Stories", id:'js3', label:'Why I became a licensed realtor',            angle:'Legal obligation to tell the truth. Every guru can say anything. Joseph legally cannot.' },
-  { cat:"Joseph's Stories", id:'js4', label:'My system before DealFinder AI existed',    angle:'Manual deal analysis took hours. What the tool replaced and why that matters for clients.' },
-  { cat:"Joseph's Stories", id:'js5', label:'The moment I realized Section 8 was different', angle:'Government rent, tenant stability, the guarantee. Why most investors have it completely backwards.' },
-];
-
-const CTA_LIBRARY = [
-  { id:1,  stage:'Soft',         label:'Keyword reply',        text:"Reply with the word [keyword] and I'll send you my [resource]" },
-  { id:2,  stage:'Soft',         label:'DM keyword',           text:"DM me [keyword] if you want me to send the breakdown" },
-  { id:3,  stage:'Soft',         label:'Invite reply',         text:"Hit reply and tell me what you'd add" },
-  { id:4,  stage:'Soft',         label:"What's stopping you",  text:"What's stopping you? Reply and let me know" },
-  { id:5,  stage:'Soft',         label:'Follow along',         text:"Follow along for more market updates like this" },
-  { id:6,  stage:'Soft',         label:'No CTA',               text:"[No CTA. End the email. Let the value speak.]" },
-  { id:7,  stage:'Content',      label:'YouTube video',        text:"I broke the full numbers down in this YouTube video: [link]" },
-  { id:8,  stage:'Content',      label:'12-min breakdown',     text:"Watch this 12 minute breakdown on [topic]: [link]" },
-  { id:9,  stage:'Content',      label:'Podcast episode',      text:"Listen to my podcast episode where I unpack this: [link]" },
-  { id:10, stage:'Content',      label:'Full case study',      text:"Read the full case study here: [link]" },
-  { id:11, stage:'Content',      label:'Instagram carousel',   text:"I posted a carousel on this yesterday, swipe through it: [link]" },
-  { id:12, stage:'Lead Magnet',  label:'Starter guide',        text:"Grab my free Section 8 starter guide here: [link]" },
-  { id:13, stage:'Lead Magnet',  label:'FMR cheat sheet',      text:"Want my FMR cheat sheet? Reply 'FMR' and I'll send it" },
-  { id:14, stage:'Lead Magnet',  label:'Deal calculator',      text:"Download the deal analysis calculator here: [link]" },
-  { id:15, stage:'Lead Magnet',  label:'Top 10 markets',       text:"Get my list of the top 10 Section 8 markets: [link]" },
-  { id:16, stage:'Landing Page', label:'Program page',         text:"If you want to see how my mentorship works, here's the page: [link]" },
-  { id:17, stage:'Landing Page', label:'DealFinder demo',      text:"Curious about DealFinder AI? Watch the demo: [link]" },
-  { id:18, stage:'Landing Page', label:'Inside the program',   text:"See exactly what's inside the program: [link]" },
-  { id:19, stage:'Application',  label:'Book a call',          text:"If you're serious about your first deal, book a call here: [link]" },
-  { id:20, stage:'Application',  label:'Apply 1-on-1',         text:"Apply to work with me 1 on 1: [link]" },
-  { id:21, stage:'Application',  label:'3 spots left',         text:"I have 3 spots left this month. Apply here: [link]" },
-  { id:22, stage:'Engagement',   label:'Comment YES',          text:"Comment 'YES' if you've ever felt this" },
-  { id:23, stage:'Engagement',   label:'Poll: local/OOS',      text:"Tap the poll: are you investing local or out of state?" },
-  { id:24, stage:'Engagement',   label:'Share it',             text:"Send this to one person who needs to hear it" },
-  { id:25, stage:'Engagement',   label:'Save for later',       text:"Save this for when you're running your next deal analysis" },
-  { id:26, stage:'Story Sticker',label:'Question sticker',     text:"[Question sticker] Ask: [open-ended question tied to the content]" },
-  { id:27, stage:'Story Sticker',label:'Poll sticker',         text:"[Poll sticker] [Option A] vs [Option B]" },
-  { id:28, stage:'Story Sticker',label:'Quiz sticker',         text:"[Quiz sticker] Test their knowledge: [question with 3 options]" },
-  { id:29, stage:'Story Sticker',label:'Slider sticker',       text:"[Slider sticker] How ready are you to invest?" },
-  { id:30, stage:'Story Sticker',label:'Link sticker',         text:"[Link sticker] Direct to: [YouTube / landing page / lead magnet]" },
-];
-
-const STORY_FW = {
-  A:{ label:'Pain → Value → CTA', frames:'3 frames', desc:'Identify a pain point, deliver a reframe, soft CTA.',
-      structure:['Frame 1: Name a specific pain point or limiting belief the audience has',
-                 'Frame 2: Standalone value that reframes the belief. Story, stat, or contrarian truth. Worth reading even if they tap away.',
-                 'Frame 3: Soft CTA. Keyword reply, question, or YouTube link.'] },
-  B:{ label:'Hook → Story → Lesson → CTA', frames:'4-5 frames', desc:'Pattern interrupt, tell a specific story, extract the lesson.',
-      structure:['Frame 1: Pattern interrupt hook. Bold claim, surprising stat, or question that stops the scroll.',
-                 'Frame 2-3: Tell a specific story (Joseph\'s first failed deal, a student transformation, a market move).',
-                 'Frame 4: Extract the lesson. What this means for the viewer\'s life.',
-                 'Frame 5 (optional): CTA'] },
-  C:{ label:'Myth → Truth → Proof → Action', frames:'4 frames', desc:'Name the myth, demolish it, prove it, tell them what to do.',
-      structure:['Frame 1: State the common myth directly (e.g. "Section 8 tenants ruin properties")',
-                 'Frame 2: Demolish it with a specific reframe',
-                 'Frame 3: Proof — named student result, government data, or Joseph\'s own numbers',
-                 'Frame 4: Tell the viewer what to do with this information'] },
-  D:{ label:'Market Insight Drop', frames:'3 frames', desc:'Something happening right now that investors need to know.',
-      structure:['Frame 1: "Something happening in the market right now you should know about"',
-                 'Frame 2: The actual insight (rate change, policy update, FMR shift, market move)',
-                 'Frame 3: What it means for their next move'] },
-  E:{ label:'Limiting Belief Killer', frames:'3-4 frames', desc:'Name the belief out loud, dismantle it, give the replacement.',
-      structure:['Frame 1: Name the belief out loud (e.g. "You think you need $100K to start")',
-                 'Frame 2: Why this belief is wrong. Specifics, not platitudes.',
-                 'Frame 3: Replacement belief with proof',
-                 'Frame 4 (optional): Next step'] },
+// ─── State ────────────────────────────────────────────────────────────────────
+const S = {
+  phase: 'loading',
+  research: null,
+  topics: null,
+  selectedTopic: null,
+  content: null,
+  activeTab: 'email',
+  activeVersion: 0,
 };
 
-const EMAIL_FW = {
-  A:{ label:'Story Email', desc:'Hook → specific story → lesson woven in → optional CTA.',
-      structure:['Hook line that creates curiosity (1-2 sentences, do not start with "I")',
-                 'A specific story (recent client conversation, a deal just closed, a mistake watched)',
-                 'Lesson woven in naturally, not lectured',
-                 'Optional CTA (sometimes no CTA at all)'] },
-  B:{ label:'Insight Email', desc:'"Here\'s something I noticed this week" → observation → what it means → optional CTA.',
-      structure:['"Here\'s something I noticed this week" as an entry point',
-                 'Market observation, counterintuitive data point, or industry trend',
-                 'What it actually means for the reader\'s investing decisions',
-                 'Optional CTA'] },
-  C:{ label:'Myth Buster Email', desc:'Name the myth in subject line, lead with counter-evidence, walk through specifics.',
-      structure:['Subject line names the myth (e.g. "Section 8 destroys properties? Read this.")',
-                 'Lead with the strongest counter-evidence first',
-                 'Walk through specifics: named students, numbers, Joseph\'s portfolio data',
-                 'Optional CTA'] },
-  D:{ label:'Behind the Scenes', desc:'"What happened on a client call yesterday" → show, don\'t tell → universal lesson.',
-      structure:['"What happened on a client call yesterday" as the opener',
-                 'Show, do not tell. Real situations, real numbers, real names.',
-                 'Pull the universal lesson out at the end',
-                 'Optional CTA'] },
-  E:{ label:'Limiting Belief Email', desc:'Name the belief, validate it, dismantle it with evidence, reframe.',
-      structure:['Name a belief the reader probably holds',
-                 'Validate why they hold it (empathy, not condescension)',
-                 'Dismantle it with specific evidence',
-                 'Replacement belief and optional CTA'] },
-};
-
-const STAGE_COLORS = {
-  'Soft':'badge-green','Content':'badge-blue','Lead Magnet':'badge-purple',
-  'Landing Page':'badge-amber','Application':'badge-red','Engagement':'badge-gray','Story Sticker':'badge-gray'
-};
-
-// ═══════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════
-let state = { channel:'email', framework:'', topicId:'', ctaId:6 };
-
-// ═══════════════════════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════════════════════
-const AUTH_KEY = 'nl_auth_joseph';
-const PASSWORD = 'section8';
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAuth(); });
 
 function checkAuth() {
-  if (document.getElementById('pw-input').value === PASSWORD) {
-    sessionStorage.setItem(AUTH_KEY,'1');
-    document.getElementById('auth-gate').style.display='none';
+  if (document.getElementById('pwInput').value === 'section8') {
+    sessionStorage.setItem('ns_auth', '1');
+    document.getElementById('authGate').style.display = 'none';
+    document.getElementById('app').classList.remove('hidden');
     init();
   } else {
-    document.getElementById('pw-err').style.display='block';
+    document.getElementById('pwError').classList.remove('hidden');
   }
 }
-if (sessionStorage.getItem(AUTH_KEY)) {
-  document.getElementById('auth-gate').style.display='none';
+
+// ─── Boot ─────────────────────────────────────────────────────────────────────
+if (sessionStorage.getItem('ns_auth') === '1') {
+  document.getElementById('authGate').style.display = 'none';
+  document.getElementById('app').classList.remove('hidden');
   init();
 }
 
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
-function init() {
-  buildStudioFrameworks();
-  buildStudioTopics();
-  buildStudioCTAs();
-  buildCTALibrary();
-  buildTopicsView();
-  loadData();
-}
-
-// ═══════════════════════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════════════════════
-function switchView(name, el) {
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('view-'+name).classList.add('active');
-  el.classList.add('active');
-}
-function switchSourceTab(name, el) {
-  document.querySelectorAll('.source-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('view-research').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  el.classList.add('active');
-}
-
-// ═══════════════════════════════════════════════════════════
-// DATA LOAD
-// ═══════════════════════════════════════════════════════════
-async function loadData() {
+async function init() {
+  setPhase('loading');
   try {
-    const res = await fetch('./dashboard-data.json?t='+Date.now());
-    if (!res.ok) throw new Error();
-    const d = await res.json();
-    document.getElementById('loading').style.display='none';
-    document.getElementById('view-research').classList.add('active');
-    render(d);
-  } catch(e) {
-    document.getElementById('loading').innerHTML=`<div style="text-align:center;color:#6b7280;padding:40px;">
-      <div style="font-size:14px;margin-bottom:8px;">Could not load dashboard-data.json</div>
-      <div style="font-size:12px;">Run <code style="background:#141414;padding:2px 6px;border-radius:4px;">python3 Scripts/newsletter-research.py</code> then redeploy.</div>
-    </div>`;
+    const res = await fetch('./dashboard-data.json');
+    if (!res.ok) throw new Error('dashboard-data.json not found');
+    const data = await res.json();
+    S.research = data.research;
+    renderHeader(data);
+    renderResearchBreakdown(data);
+    setPhase('ready');
+  } catch (err) {
+    document.getElementById('stateLoading').innerHTML =
+      `<div class="error-box max-w-sm text-center mx-auto">
+        Failed to load research data.<br>
+        <span class="text-gray-500 text-xs block mt-1">${esc(err.message)}</span>
+        <button class="btn-primary mt-4 justify-center" onclick="init()">Retry</button>
+      </div>`;
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════
-const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const fmt = n => Number(n).toLocaleString();
-function timeAgo(iso){
-  const d=(Date.now()-new Date(iso))/1000;
-  if(d<3600) return Math.round(d/60)+'m ago';
-  if(d<86400) return Math.round(d/3600)+'h ago';
-  return Math.round(d/86400)+'d ago';
-}
-function scoreColor(s){ return s>=200?'badge-amber':s>=50?'badge-blue':'badge-gray'; }
-
-// ═══════════════════════════════════════════════════════════
-// RENDER (research + drafts)
-// ═══════════════════════════════════════════════════════════
-function render(d) {
-  const s=d.stats||{}, r=d.research||{};
-  document.getElementById('sidebar-updated').textContent='Updated '+timeAgo(d.generated_at);
-  document.getElementById('stat-reddit').textContent=fmt(s.reddit_items||0);
-  document.getElementById('stat-reddit-q').textContent=fmt(s.reddit_questions||0)+' questions';
-  document.getElementById('stat-yt').textContent=fmt(s.yt_comments||0);
-  document.getElementById('stat-yt-q').textContent=fmt(s.yt_questions||0)+' questions';
-  document.getElementById('stat-news').textContent=fmt(s.news_items||0);
-  document.getElementById('stat-drafts-week').textContent=s.this_week_drafts||0;
-  const pct=Math.min(100,Math.round(((s.this_week_drafts||0)/(s.weekly_goal||3))*100));
-  document.getElementById('drafts-progress').style.width=pct+'%';
-  document.getElementById('drafts-week-big').textContent=s.this_week_drafts||0;
-  document.getElementById('drafts-progress-2').style.width=pct+'%';
-  document.getElementById('drafts-subtitle').textContent=(d.drafts||[]).length+' total drafts';
-  renderReddit(r.reddit_questions||[],r.reddit_top_posts||[]);
-  renderYouTube(r.youtube_questions||[],r.youtube_comments||[]);
-  renderNews(r.news_items||[]);
-  renderVideos(r.joseph_videos||[]);
-  renderDrafts(d.drafts||[]);
-}
-
-function renderReddit(questions,posts) {
-  const all=[...questions,...posts.filter(p=>!questions.find(q=>q.url===p.url))];
-  const el=document.getElementById('reddit-list');
-  if(!all.length){el.innerHTML='<div style="color:#6b7280;font-size:13px;padding:20px 0;">No Reddit signals yet.</div>';return;}
-  el.innerHTML=all.slice(0,20).map(item=>`
-    <div class="signal-card">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;">
-        <div style="font-size:13px;color:#e5e7eb;line-height:1.5;flex:1;">
-          ${item.is_question?'<span style="color:#f59e0b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-right:6px;">Q</span>':''}${esc(item.title||item.text||'')}
-        </div>
-        <span class="badge ${scoreColor(item.score)}" style="flex-shrink:0;">${fmt(item.score)}</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:11.5px;color:#6b7280;">${esc(item.source||'')}</span>
-        ${item.num_comments?`<span style="font-size:11.5px;color:#4b5563;">${fmt(item.num_comments)} comments</span>`:''}
-        ${item.age_days?`<span style="font-size:11.5px;color:#4b5563;">${item.age_days}d ago</span>`:''}
-        <a href="${esc(item.url||'#')}" target="_blank">↗ view</a>
-      </div>
-      ${item.text&&item.type==='comment'?`<div style="font-size:12px;color:#9ca3af;margin-top:8px;line-height:1.6;border-left:2px solid #272727;padding-left:10px;">${esc(item.text.slice(0,200))}${item.text.length>200?'…':''}</div>`:''}
-    </div>`).join('');
-}
-
-function renderYouTube(questions,all) {
-  const combined=[...questions,...all.filter(c=>!questions.find(q=>q.text===c.text))];
-  const el=document.getElementById('youtube-list');
-  if(!combined.length){el.innerHTML='<div style="color:#6b7280;font-size:13px;padding:20px 0;">No YouTube comments yet.</div>';return;}
-  el.innerHTML=combined.slice(0,20).map(c=>`
-    <div class="signal-card">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;">
-        <div style="font-size:13px;color:#e5e7eb;line-height:1.5;flex:1;">
-          ${c.is_question?'<span style="color:#f59e0b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-right:6px;">Q</span>':''}${esc(c.text||'')}
-        </div>
-        ${c.likes>0?`<span class="badge badge-purple" style="flex-shrink:0;">${fmt(c.likes)} ♥</span>`:''}
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:11.5px;color:#6b7280;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(c.video_title||'')}</span>
-        <a href="${esc(c.url||'#')}" target="_blank" style="font-size:11px;color:#6b7280;text-decoration:none;flex-shrink:0;">↗ watch</a>
-      </div>
-    </div>`).join('');
-}
-
-function renderNews(items) {
-  const el=document.getElementById('news-list');
-  if(!items.length){el.innerHTML='<div style="color:#6b7280;font-size:13px;padding:20px 0;">No news yet.</div>';return;}
-  el.innerHTML=items.map(n=>`
-    <div class="signal-card">
-      <div style="font-size:13px;color:#e5e7eb;line-height:1.5;margin-bottom:6px;">${esc(n.title||'')}</div>
-      ${n.description?`<div style="font-size:12px;color:#9ca3af;margin-bottom:6px;line-height:1.5;">${esc(n.description.replace(/<[^>]+>/g,'').slice(0,160))}…</div>`:''}
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span class="badge badge-blue" style="font-size:10.5px;">${esc(n.source||'')}</span>
-        ${n.date?`<span style="font-size:11.5px;color:#4b5563;">${esc(n.date.slice(0,16))}</span>`:''}
-        <a href="${esc(n.url||'#')}" target="_blank" style="margin-left:auto;">↗ read</a>
-      </div>
-    </div>`).join('');
-}
-
-function renderVideos(videos) {
-  const el=document.getElementById('videos-list');
-  if(!videos.length){el.innerHTML='<div style="color:#6b7280;font-size:12px;padding:10px 0;">No videos (set JOSEPH_YT_API_KEY).</div>';return;}
-  el.innerHTML=videos.map(v=>`
-    <div class="video-row">
-      <div style="flex:1;overflow:hidden;">
-        <div style="font-size:12.5px;color:#e5e7eb;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${esc(v.title||'')}</div>
-        <div style="font-size:11px;color:#6b7280;margin-top:3px;">${fmt(v.view_count)} views · ${fmt(v.comment_count)} comments</div>
-      </div>
-      <a href="${esc(v.url||'#')}" target="_blank" style="font-size:11px;color:#6b7280;text-decoration:none;flex-shrink:0;margin-left:8px;">↗</a>
-    </div>`).join('');
-}
-
-function renderDrafts(drafts) {
-  const el=document.getElementById('drafts-list');
-  if(!drafts.length) return;
-  el.innerHTML=drafts.map((d,i)=>`
-    <div class="draft-card">
-      <div class="draft-header" onclick="toggleDraft(${i})">
-        <svg id="chev-${i}" class="chevron" width="16" height="16" fill="none" stroke="#6b7280" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
-            <span class="badge badge-gray" style="font-size:10.5px;">${esc(d.date||'')}</span>
-            <span class="badge badge-amber">Draft</span>
-            ${d.cta?'<span class="badge badge-green">CTA</span>':'<span class="badge badge-gray">No CTA</span>'}
-            ${d.source?`<span style="font-size:11px;color:#6b7280;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px;">${esc(d.source.slice(0,80))}</span>`:''}
-          </div>
-          <div style="font-size:14.5px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.4;">${esc(d.subject||d.topic||d.slug||'—')}</div>
-          ${d.preview?`<div style="font-size:12.5px;color:#9ca3af;line-height:1.5;">${esc(d.preview)}</div>`:''}
-        </div>
-      </div>
-      <div id="draft-body-${i}" class="draft-body">
-        <div class="draft-col">
-          <h4>Email</h4>
-          ${d.alt_subject?`<div style="font-size:11.5px;color:#6b7280;margin-bottom:12px;">Alt: <span style="color:#9ca3af;">${esc(d.alt_subject)}</span></div>`:''}
-          <div class="email-text">${esc(d.email_body||'No email body in draft file.')}</div>
-        </div>
-        <div class="draft-col">
-          <h4>IG Story Sequence</h4>
-          ${(d.stories||[]).length?d.stories.map(s=>`<div class="story-block">${s.label?`<div class="story-label">${esc(s.label)}</div>`:''}<div class="story-text">${esc(s.text||'')}</div></div>`).join(''):'<div style="color:#6b7280;font-size:13px;">No stories in draft.</div>'}
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function toggleDraft(i) {
-  const body=document.getElementById('draft-body-'+i);
-  const chev=document.getElementById('chev-'+i);
-  const open=body.classList.contains('open');
-  body.classList.toggle('open',!open);
-  chev.classList.toggle('open',!open);
-}
-
-// ═══════════════════════════════════════════════════════════
-// CONTENT STUDIO
-// ═══════════════════════════════════════════════════════════
-function setChannel(ch) {
-  state.channel=ch; state.framework='';
-  document.getElementById('ch-email').classList.toggle('active',ch==='email');
-  document.getElementById('ch-story').classList.toggle('active',ch==='story');
-  buildStudioFrameworks();
-}
-
-function buildStudioFrameworks() {
-  const fw = state.channel==='email' ? EMAIL_FW : STORY_FW;
-  document.getElementById('fw-grid').innerHTML = Object.entries(fw).map(([k,v])=>`
-    <div class="fw-card ${state.framework===k?'selected':''}" onclick="selectFW('${k}')">
-      <div class="fw-letter">${k}</div>
-      <div class="fw-name">${esc(v.label)}</div>
-      <div class="fw-desc">${esc(v.desc)}</div>
-      ${v.frames?`<div class="fw-frames">${esc(v.frames)}</div>`:''}
-    </div>`).join('');
-}
-
-function selectFW(k) {
-  state.framework=k;
-  buildStudioFrameworks();
-}
-
-function buildStudioTopics() {
-  filterStudioTopics();
-}
-
-function filterStudioTopics() {
-  const q=(document.getElementById('studio-topic-search').value||'').toLowerCase();
-  const filtered=TOPIC_BANK.filter(t=>!q||t.label.toLowerCase().includes(q)||t.cat.toLowerCase().includes(q)||t.angle.toLowerCase().includes(q));
-  const el=document.getElementById('studio-topic-list');
-  if(!filtered.length){el.innerHTML='<div style="padding:12px;font-size:12.5px;color:#6b7280;">No topics match. Type your own angle above.</div>';return;}
-  el.innerHTML=filtered.map(t=>`
-    <div class="topic-item ${state.topicId===t.id?'selected':''}" onclick="selectStudioTopic('${t.id}')">
-      <div>
-        <div style="font-size:12.5px;color:#e5e7eb;font-weight:500;">${esc(t.label)}</div>
-        <div style="font-size:11px;color:#6b7280;margin-top:2px;">${esc(t.cat)}</div>
-      </div>
-      <svg width="14" height="14" fill="none" stroke="${state.topicId===t.id?'#f59e0b':'#4b5563'}" viewBox="0 0 24 24" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-    </div>`).join('');
-}
-
-function selectStudioTopic(id) {
-  state.topicId=id;
-  filterStudioTopics();
-}
-
-let activeCTAStage='all';
-function buildStudioCTAs() {
-  const stages=['all',...new Set(CTA_LIBRARY.map(c=>c.stage))];
-  document.getElementById('studio-stage-pills').innerHTML=stages.map(s=>`
-    <button class="cta-stage-pill ${activeCTAStage===s?'active':''}" onclick="setCTAStage('${s}','studio')">${s==='all'?'All':s}</button>`).join('');
-  filterStudioCTAs();
-}
-
-function setCTAStage(stage, ctx) {
-  activeCTAStage=stage;
-  buildStudioCTAs();
-}
-
-function filterStudioCTAs() {
-  const filtered=activeCTAStage==='all'?CTA_LIBRARY:CTA_LIBRARY.filter(c=>c.stage===activeCTAStage);
-  document.getElementById('studio-cta-list').innerHTML=filtered.map(c=>`
-    <div class="cta-item ${state.ctaId===c.id?'selected':''}" onclick="selectCTA(${c.id})">
-      <div style="flex:1;">
-        <div style="font-size:12px;color:#e5e7eb;font-weight:500;">${esc(c.label)}</div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">${esc(c.text)}</div>
-      </div>
-      <span class="badge ${STAGE_COLORS[c.stage]||'badge-gray'}" style="font-size:10px;flex-shrink:0;">${esc(c.stage)}</span>
-    </div>`).join('');
-}
-
-function selectCTA(id) {
-  state.ctaId=id;
-  filterStudioCTAs();
-}
-
-function buildPrompt() {
-  const ch  = state.channel;
-  const fwKey = state.framework;
-  const fw  = ch==='email' ? EMAIL_FW[fwKey] : STORY_FW[fwKey];
-  const topic = TOPIC_BANK.find(t=>t.id===state.topicId);
-  const cta   = CTA_LIBRARY.find(c=>c.id===state.ctaId);
-  const custom = (document.getElementById('studio-topic-custom').value||'').trim();
-
-  if(!fwKey) { document.getElementById('studio-output').textContent='Select a framework first.'; return; }
-  if(!topic && !custom) { document.getElementById('studio-output').textContent='Select or type a topic first.'; return; }
-
-  const channelLabel = ch==='email' ? 'email broadcast' : 'Instagram story sequence';
-  const topicLabel   = topic ? topic.label : custom;
-  const topicAngle   = topic ? topic.angle : '';
-  const ctaText      = cta ? cta.text : '[No CTA — end with pure value.]';
-  const fwStructure  = fw.structure.map((s,i)=>`  ${i+1}. ${s}`).join('\n');
-  const wordCount    = ch==='email' ? '150-400 words' : '10-15 words per frame';
-
-  const prompt = `Draft a ${channelLabel} for Joseph Khateri using Framework ${fwKey}.
-
-FRAMEWORK ${fwKey}: ${fw.label}
-${fw.desc}
-
-Structure to follow:
-${fwStructure}
-
-TOPIC: ${topicLabel}
-${topicAngle ? `Angle: ${topicAngle}` : ''}
-${custom ? `Additional context: ${custom}` : ''}
-
-CTA: ${ctaText}
-
-VOICE RULES (non-negotiable):
-- Direct, confident, conversational. Never corporate, never generic.
-- Specific numbers, timelines, and named examples where possible.
-  Named students to draw on: Yasir, Sarah, Marcus, Giorgio, David, Jennifer.
-  Marcus's tenant: 3+ years, zero damage. Giorgio: 0 to 9 properties, $14K/month in 5 months.
-- No em dashes. Use commas, periods, or parentheses instead.
-- No hype words: unlock, transform, leverage, elevate, harness, streamline,
-  game-changer, revolutionary, cutting-edge, empower, skyrocket.
-- No sycophantic openers. Never start with "Great question", "I'd love to", "Absolutely".
-- Do not start the email with "I" as the first word.
-- Length: ${wordCount}. Tight beats long. People skim.
-- Some emails should have NO CTA at all. Pure value builds more trust than any pitch.
-- Joseph's philosophy: "Get rich for sure, not get rich quick."
-- Authority anchor when relevant: "I have a legal obligation to tell you the truth" (licensed realtor).
-- Core stats available to use:
-  - $4,000 (6-month program) / $6,000 (12-month BRRRR program)
-  - $70K-$100K property prices in Cleveland, Birmingham, Detroit
-  - $1,250-$1,450/month government rent
-  - $350-$900/month net cash flow per property
-  - 70+ clients, 100+ Section 8 properties helped
-  - Joseph's own portfolio: $2.4M, generating $30K/month gross
-  - Parents' portfolio: $1.9M built from scratch starting age 18
-
-LOAD FOR CONTEXT: Clients/joseph-khateri/knowledge.md
-(student wins, offer details, ICP language, testimonials)`;
-
-  document.getElementById('studio-output').textContent=prompt;
-}
-
-function copyPrompt() {
-  const txt=document.getElementById('studio-output').textContent;
-  if(!txt||txt==='Select your channel, framework, topic, and CTA, then click "Build Prompt".') return;
-  navigator.clipboard.writeText(txt).then(()=>{
-    const btn=document.getElementById('copy-btn');
-    btn.textContent='Copied!';
-    setTimeout(()=>btn.textContent='Copy',1800);
+// ─── Phase switching ──────────────────────────────────────────────────────────
+const PHASE_MAP = {
+  'loading': 'stateLoading',
+  'ready': 'stateReady',
+  'topics-loading': 'stateTopicsLoading',
+  'topic-select': 'stateTopicSelect',
+  'content-loading': 'stateContentLoading',
+  'content-view': 'stateContentView',
+};
+function setPhase(phase) {
+  S.phase = phase;
+  Object.keys(PHASE_MAP).forEach(p => {
+    const el = document.getElementById(PHASE_MAP[p]);
+    if (el) el.classList.toggle('hidden', p !== phase);
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// VOICE CHECKER
-// ═══════════════════════════════════════════════════════════
-const VOICE_RULES = [
-  { re:/—/g,                                                                                    type:'error',   label:'Em dash',              fix:'Remove — use comma, period, or parentheses' },
-  { re:/\b(unlock|skyrocket|explode|revolutionary|game[\s-]?changer|transform(?:ation)?|leverage|elevate|harness|streamline|navigate|cutting[\s-]?edge|empower)\b/gi, type:'warning', label:'Hype word', fix:'Replace with plain language' },
-  { re:/\b(great question|i'?d love to|absolutely!?|certainly!?|of course!?)\b/gi,             type:'warning', label:'Sycophantic opener',    fix:'Cut it. Start with substance.' },
-  { re:/\b(limited time|act now|don'?t miss out|last chance|hurry|today only)\b/gi,           type:'warning', label:'Hard-sell language',    fix:'Remove or reframe' },
-  { re:/\b(many people|some investors|various studies|experts say|research shows|studies show)\b/gi, type:'info', label:'Vague claim', fix:'Name the source or person specifically' },
-  { re:/^I\b/m,                                                                                 type:'info',    label:'Email opens with "I"',  fix:'Restructure the opening line' },
-];
+// ─── Header ───────────────────────────────────────────────────────────────────
+function renderHeader(data) {
+  if (data.generated_at) {
+    const d = new Date(data.generated_at);
+    document.getElementById('researchDate').textContent =
+      `Research: ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+  }
+  const s = data.stats;
+  const chips = [
+    { label: `${(s.yt_comments || 0) + (s.yt_questions || 0)} YT`, color: '#ef4444' },
+    { label: `${s.reddit_items || 0} Reddit`, color: '#ff4500' },
+    { label: `${s.news_items || 0} News`, color: '#3b82f6' },
+  ];
+  document.getElementById('statsChips').innerHTML = chips
+    .map(c => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${c.color}22;color:${c.color}">${c.label}</span>`)
+    .join('');
+}
 
-function runVoiceCheck() {
-  const text=document.getElementById('voice-input').value;
-  const el=document.getElementById('voice-results');
-  if(!text.trim()){ el.innerHTML='<div style="font-size:12.5px;color:#6b7280;">Paste your content above, then click Check.</div>'; return; }
+function renderResearchBreakdown(data) {
+  const s = data.stats;
+  const r = data.research;
+  const items = [
+    { label: 'YouTube', value: `${(s.yt_comments || 0) + (s.yt_questions || 0)} comments` },
+    { label: 'Reddit',  value: `${s.reddit_items || 0} posts` },
+    { label: 'News',    value: `${s.news_items || 0} items` },
+    { label: 'Student Wins', value: `${(r.student_wins || []).length} recent` },
+  ];
+  document.getElementById('researchBreakdown').innerHTML = items
+    .map(item => `<div class="card p-4"><div class="text-gray-500 text-xs mb-1">${item.label}</div><div class="text-white font-semibold text-sm">${item.value}</div></div>`)
+    .join('');
+}
 
-  const issues=[];
-  VOICE_RULES.forEach(rule=>{
-    const matches=[...text.matchAll(rule.re)];
-    if(matches.length){
-      const unique=[...new Set(matches.map(m=>m[0]))];
-      issues.push({...rule, found:unique, count:matches.length});
+// ─── Topics ───────────────────────────────────────────────────────────────────
+async function generateTopics(previousTopics) {
+  setPhase('topics-loading');
+  document.getElementById('topicsError').classList.add('hidden');
+  try {
+    const res = await fetch('/.netlify/functions/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'generate_topics', research: S.research, previous_topics: previousTopics || [] }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      throw new Error(err.error || `HTTP ${res.status}`);
     }
-  });
-
-  if(!issues.length){
-    el.innerHTML='<div style="padding:10px 14px;background:rgba(16,185,129,0.08);border-left:3px solid #10b981;border-radius:7px;font-size:13px;color:#34d399;">Clean. No voice violations found.</div>';
-    return;
+    const data = await res.json();
+    if (!data.topics?.length) throw new Error('No topics returned');
+    S.topics = data.topics;
+    renderTopics(data.topics);
+    setPhase('topic-select');
+  } catch (err) {
+    setPhase('topic-select');
+    const el = document.getElementById('topicsError');
+    el.textContent = `Error: ${err.message}`;
+    el.classList.remove('hidden');
+    if (!S.topics) document.getElementById('topicCards').innerHTML = '';
   }
+}
 
-  const typeIcon={error:'✕',warning:'⚠',info:'ℹ'};
-  el.innerHTML=issues.map(i=>`
-    <div class="voice-issue voice-${i.type}">
-      <span style="font-size:13px;flex-shrink:0;">${typeIcon[i.type]}</span>
-      <div>
-        <div style="font-size:12.5px;font-weight:600;color:${i.type==='error'?'#f87171':i.type==='warning'?'#fbbf24':'#60a5fa'};">${esc(i.label)} (${i.count}x)</div>
-        <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Found: ${i.found.map(f=>`<code style="background:#1a1a1a;padding:1px 5px;border-radius:4px;">${esc(f)}</code>`).join(', ')}</div>
-        <div style="font-size:11.5px;color:#6b7280;margin-top:2px;">${esc(i.fix)}</div>
+async function regenerateTopics() {
+  const btn = document.getElementById('btnRegen');
+  const spin = document.getElementById('regenSpinner');
+  btn.disabled = true; spin.classList.remove('hidden');
+  await generateTopics(S.topics || []);
+  spin.classList.add('hidden'); btn.disabled = false;
+}
+
+const TYPE_BADGES = {
+  myth_busting:   { label: 'Myth Busting',   cls: 'badge-myth'   },
+  pure_value:     { label: 'Pure Value',      cls: 'badge-value'  },
+  market_insight: { label: 'Market Insight',  cls: 'badge-market' },
+  social_proof:   { label: 'Social Proof',    cls: 'badge-social' },
+  story:          { label: 'Story',           cls: 'badge-story'  },
+};
+
+function renderTopics(topics) {
+  document.getElementById('topicCards').innerHTML = topics.map((t, i) => {
+    const badge = TYPE_BADGES[t.type] || TYPE_BADGES.pure_value;
+    const ctaBadge = t.cta !== 'none'
+      ? `<span class="badge" style="background:#1a120a;color:#d97706">Soft CTA</span>`
+      : `<span class="badge" style="background:#111;color:#374151">No CTA</span>`;
+    return `
+    <div class="card card-hover p-5" id="topicCard${i}" onclick="selectTopic(${i})">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="badge ${badge.cls}">${badge.label}</span>
+        ${ctaBadge}
       </div>
-    </div>`).join('');
-}
-
-// ═══════════════════════════════════════════════════════════
-// CTA LIBRARY VIEW
-// ═══════════════════════════════════════════════════════════
-let ctaLibStage='all';
-function buildCTALibrary() {
-  const stages=['all',...new Set(CTA_LIBRARY.map(c=>c.stage))];
-  document.getElementById('cta-stage-filter').innerHTML=stages.map(s=>`
-    <button class="cta-stage-pill ${ctaLibStage===s?'active':''}" onclick="setCTALibStage('${s}')">${s==='all'?'All':s}</button>`).join('');
-  renderCTALibrary();
-}
-
-function setCTALibStage(s) {
-  ctaLibStage=s;
-  buildCTALibrary();
-}
-
-function renderCTALibrary() {
-  const filtered=ctaLibStage==='all'?CTA_LIBRARY:CTA_LIBRARY.filter(c=>c.stage===ctaLibStage);
-  document.getElementById('cta-library-grid').innerHTML=filtered.map(c=>`
-    <div class="cta-card-lib">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:11.5px;font-weight:600;color:#e5e7eb;">${c.id}. ${esc(c.label)}</span>
-          <span class="badge ${STAGE_COLORS[c.stage]||'badge-gray'}" style="font-size:10px;">${esc(c.stage)}</span>
-        </div>
-        <button onclick="copyCTA(${c.id})" id="ctacopy-${c.id}"
-          style="font-size:11px;color:#6b7280;background:transparent;border:1px solid #272727;padding:3px 10px;border-radius:6px;cursor:pointer;font-family:Inter;transition:all 0.12s;"
-          onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#6b7280'">Copy</button>
+      <h3 class="text-white font-semibold text-base mb-2 leading-snug">${esc(t.title)}</h3>
+      <p class="text-gray-400 text-sm mb-3 leading-relaxed">${esc(t.hook)}</p>
+      <div class="text-amber-600 text-xs mb-3 flex items-start gap-1">
+        <span class="text-gray-600 flex-shrink-0">Signal:</span>
+        <span>${esc(t.source)}</span>
       </div>
-      <div style="font-size:13px;color:#d1d5db;line-height:1.5;">${esc(c.text)}</div>
-    </div>`).join('');
-}
-
-function copyCTA(id) {
-  const cta=CTA_LIBRARY.find(c=>c.id===id);
-  if(!cta) return;
-  navigator.clipboard.writeText(cta.text).then(()=>{
-    const btn=document.getElementById('ctacopy-'+id);
-    btn.textContent='Copied!';
-    setTimeout(()=>btn.textContent='Copy',1600);
-  });
-}
-
-// ═══════════════════════════════════════════════════════════
-// TOPIC BANK VIEW
-// ═══════════════════════════════════════════════════════════
-let topicsCat='all';
-function buildTopicsView() {
-  const cats=['all',...new Set(TOPIC_BANK.map(t=>t.cat))];
-  document.getElementById('topics-cat-filter').innerHTML=cats.map(c=>`
-    <button class="cta-stage-pill ${topicsCat===c?'active':''}" onclick="setTopicsCat('${c}')">${c==='all'?'All':c}</button>`).join('');
-  filterTopics();
-}
-
-function setTopicsCat(c) {
-  topicsCat=c;
-  buildTopicsView();
-}
-
-function filterTopics() {
-  const q=(document.getElementById('topics-search').value||'').toLowerCase();
-  const filtered=TOPIC_BANK.filter(t=>{
-    const catMatch=topicsCat==='all'||t.cat===topicsCat;
-    const qMatch=!q||t.label.toLowerCase().includes(q)||t.angle.toLowerCase().includes(q);
-    return catMatch&&qMatch;
-  });
-  document.getElementById('topics-grid').innerHTML=filtered.map(t=>`
-    <div style="background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:16px;transition:border-color 0.12s;" onmouseover="this.style.borderColor='#2a2a2a'" onmouseout="this.style.borderColor='#1e1e1e'">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;">
-        <div style="font-size:13.5px;font-weight:600;color:#fff;line-height:1.4;">${esc(t.label)}</div>
-        <span class="badge badge-gray" style="font-size:10px;flex-shrink:0;">${esc(t.cat)}</span>
+      <div class="border-t border-gray-900 pt-3 mt-1 mb-4">
+        <div class="text-gray-600 text-xs mb-1">Joseph's angle</div>
+        <div class="text-gray-500 text-xs leading-relaxed">${esc(t.joseph_angle)}</div>
       </div>
-      <div style="font-size:12.5px;color:#9ca3af;line-height:1.6;margin-bottom:12px;">${esc(t.angle)}</div>
-      <button onclick="useTopicInStudio('${t.id}')"
-        style="font-size:12px;color:#f59e0b;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);padding:5px 14px;border-radius:7px;cursor:pointer;font-family:Inter;transition:all 0.12s;"
-        onmouseover="this.style.background='rgba(245,158,11,0.15)'" onmouseout="this.style.background='rgba(245,158,11,0.08)'">
-        Use in Studio
+      <button class="btn-primary text-xs py-2 px-4" onclick="event.stopPropagation(); selectTopic(${i})">
+        Use this topic →
       </button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-function useTopicInStudio(id) {
-  state.topicId=id;
-  // Switch to studio view
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('view-studio').classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>{
-    if(n.textContent.trim().startsWith('Content Studio')) n.classList.add('active');
+// ─── Content generation ───────────────────────────────────────────────────────
+async function selectTopic(idx) {
+  S.selectedTopic = S.topics[idx];
+  document.querySelectorAll('[id^="topicCard"]').forEach(el => el.classList.remove('card-selected'));
+  document.getElementById(`topicCard${idx}`).classList.add('card-selected');
+  await generateContent();
+}
+
+async function generateContent() {
+  setPhase('content-loading');
+  document.getElementById('contentError').classList.add('hidden');
+  try {
+    const res = await fetch('/.netlify/functions/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'generate_content', research: S.research, topic: S.selectedTopic }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    if (!data.email || !data.stories || !data.skool) throw new Error('Incomplete content returned');
+    S.content = data;
+    S.activeTab = 'email';
+    S.activeVersion = 0;
+    document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
+    document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
+    renderContentView();
+    setPhase('content-view');
+  } catch (err) {
+    if (!S.content) { setPhase('topic-select'); return; }
+    setPhase('content-view');
+    const el = document.getElementById('contentError');
+    el.textContent = `Error: ${err.message}`;
+    el.classList.remove('hidden');
+  }
+}
+
+async function regenerateContent() {
+  const btn = document.getElementById('btnRegenContent');
+  const spin = document.getElementById('regenContentSpinner');
+  btn.disabled = true; spin.classList.remove('hidden');
+  await generateContent();
+  spin.classList.add('hidden'); btn.disabled = false;
+}
+
+function backToTopics() { setPhase('topic-select'); }
+
+// ─── Content view ─────────────────────────────────────────────────────────────
+function renderContentView() {
+  updateTabUI(); updatePillUI();
+  renderEmailPanel(); renderStoriesPanel(); renderSkoolPanel();
+  showActivePanel();
+}
+
+function switchTab(tab) {
+  S.activeTab = tab; updateTabUI(); showActivePanel();
+}
+
+function switchVersion(idx) {
+  S.activeVersion = idx; updatePillUI(); applyVersionVisibility();
+}
+
+function updateTabUI() {
+  ['email', 'stories', 'skool'].forEach(t => {
+    const id = 'tab' + t.charAt(0).toUpperCase() + t.slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = (S.activeTab === t ? 'tab-active' : 'tab-inactive') + ' px-4 py-2 rounded-lg text-sm font-medium transition-all';
   });
-  filterStudioTopics();
-  // Scroll to topic section
-  setTimeout(()=>document.getElementById('studio-topic-list').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function updatePillUI() {
+  [0, 1, 2].forEach(i => {
+    const el = document.getElementById(`pill${i + 1}`);
+    if (!el) return;
+    el.className = (S.activeVersion === i ? 'pill-active' : 'pill-inactive') + ' px-3 py-1.5 rounded-full text-xs font-semibold transition-all';
+  });
+}
+
+function showActivePanel() {
+  ['email', 'stories', 'skool'].forEach(t => {
+    const id = 'panel' + t.charAt(0).toUpperCase() + t.slice(1);
+    document.getElementById(id).classList.toggle('hidden', S.activeTab !== t);
+  });
+}
+
+function applyVersionVisibility() {
+  const i = S.activeVersion;
+  ['email', 'stories', 'skool'].forEach(t => {
+    const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
+    panel.querySelectorAll(`[data-version]`).forEach(el => {
+      el.style.display = parseInt(el.dataset.version) === i ? '' : 'none';
+    });
+  });
+}
+
+// ─── Panel renderers ──────────────────────────────────────────────────────────
+function renderEmailPanel() {
+  document.getElementById('panelEmail').innerHTML = S.content.email.map((e, i) => `
+    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+      <div class="card p-5 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div>
+          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.subject)})">Copy</button>
+        </div>
+        <div class="text-white font-medium text-sm">${esc(e.subject)}</div>
+      </div>
+      <div class="card p-5 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div>
+          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.alt_subject)})">Copy</button>
+        </div>
+        <div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div>
+      </div>
+      <div class="card p-5 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div>
+          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.preview)})">Copy</button>
+        </div>
+        <div class="text-gray-300 text-sm">${esc(e.preview)}</div>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div>
+          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(e.body)})">Copy body</button>
+        </div>
+        <div class="email-body">${esc(e.body)}</div>
+        <div class="border-t border-gray-900 mt-5 pt-4 flex justify-end">
+          <button class="btn-primary text-xs py-2" onclick="copyFullEmail(this, ${i})">Copy full email</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderStoriesPanel() {
+  document.getElementById('panelStories').innerHTML = S.content.stories.map((seq, i) => `
+    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">${seq.slides.length} Slides</div>
+          <button class="copy-btn" onclick="copyAllSlides(this, ${i})">Copy all slides</button>
+        </div>
+        <div class="flex flex-col gap-5">
+          ${seq.slides.map((slide, si) => `
+            <div class="flex gap-3 items-start">
+              <div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si + 1}</div>
+              <div class="flex-1 min-w-0">
+                <div class="slide-label">${esc(slide.label)}</div>
+                <div class="slide-text">${esc(slide.text)}</div>
+              </div>
+              <button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this, ${JSON.stringify(slide.text)})">Copy</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSkoolPanel() {
+  document.getElementById('panelSkool').innerHTML = S.content.skool.map((p, i) => `
+    <div data-version="${i}" style="display:${i === 0 ? '' : 'none'}">
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div>
+          <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(p.body)})">Copy post</button>
+        </div>
+        <div class="email-body">${esc(p.body)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── Copy helpers ─────────────────────────────────────────────────────────────
+async function copyText(btn, text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+  } catch { /* silent fail */ }
+}
+
+async function copyFullEmail(btn, vIdx) {
+  const e = S.content.email[vIdx];
+  const text = `Subject: ${e.subject}\nAlt Subject: ${e.alt_subject}\nPreview: ${e.preview}\n\n${e.body}`;
+  await copyText(btn, text);
+}
+
+async function copyAllSlides(btn, vIdx) {
+  const seq = S.content.stories[vIdx];
+  const text = seq.slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n');
+  await copyText(btn, text);
+}
+
+function esc(str = '') {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 </script>
 </body>

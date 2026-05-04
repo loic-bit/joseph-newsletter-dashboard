@@ -1,21 +1,12 @@
 {
-  "generated_at": "2026-05-03T11:37:08.728326+00:00",
+  "generated_at": "2026-05-04T08:24:53.547176+00:00",
   "research": {
     "reddit_questions": [
-      {
-        "source": "r/landlord",
-        "type": "comment",
-        "text": "What do you think were you supposed to do? The tenant should have called 911 immediately.",
-        "score": 331,
-        "url": "https://reddit.com/r/Landlord/comments/1sz3q52/landlord_usxx_tenants_ac_caught_fire_at_2am_she/",
-        "parent_title": "[Landlord US-XX] Tenant’s AC caught fire at 2am. She texted me. I didn’t see it until morning. I don’t know how to feel about this.",
-        "is_question": true
-      },
       {
         "source": "r/financialindependence",
         "type": "comment",
         "text": "Why not try a 1 year sabbatical first?",
-        "score": 305,
+        "score": 306,
         "url": "https://reddit.com/r/financialindependence/comments/1sr9hi5/is_it_a_bad_idea_to_take_a_2_year_sabbatical_for/",
         "parent_title": "Is it a bad idea to take a 2 year sabbatical for burnout?",
         "is_question": true
@@ -24,7 +15,7 @@
         "source": "r/financialindependence",
         "type": "comment",
         "text": "What would be more interesting is how you manage to increase savings and investments - did you get raises or promotions or another higher paying job? \n\nAnd a 500k windfall hidden inside all those words. ",
-        "score": 300,
+        "score": 301,
         "url": "https://reddit.com/r/financialindependence/comments/1ssoc8m/12_year_update_married_couple_in_our_40s_200k_to/",
         "parent_title": "[12 YEAR UPDATE] Married couple in our 40s. $200k to $1.81m NW.",
         "is_question": true
@@ -33,7 +24,7 @@
         "source": "r/financialindependence",
         "type": "comment",
         "text": "Yeah.\n\nPortfolio growth is exponential and chaotic. That makes having a consistent portfolio size totally impractical. Over the long run, your portfolio is either going to zero, or infinity. If you're conservative enough to be confident you're not going to zero, then the odds are you're going to have a lot more than you need when you die.\n\n&gt; How do you avoid overstaying in your career?\n\nThe way to think about it is that you're not retiring when you have enough money - you're retiring when your risk of failure is low enough. If you've set your risk of failure right you haven't overstayed you",
-        "score": 218,
+        "score": 217,
         "url": "https://reddit.com/r/financialindependence/comments/1stbryf/do_your_retirement_models_show_you_leaving_with/",
         "parent_title": "Do your retirement models show you leaving with tens of millions on the table?",
         "is_question": true
@@ -43,51 +34,33 @@
         "type": "post",
         "title": "What are you doing to \"live life\" while in the boring middle?",
         "text": "Everyone says to not forget to live life during the \"boring middle\" while you accumulate.\n\nI'm curious as to what people do with their time and money during this stage. For myself I've been doing arts like pottery, woodworking, and drawing. I've also started getting into photography. While some of these hobbies have high upfront costs, they are cheap to maintain and you can always get used equipment.\n\nAnd for vacations I've been getting into camping locally. We live in a beautiful area with lots of forest and wildlife. Camping is fairly cheap and honestly I'm enjoying it way more than our prev",
-        "score": 157,
-        "num_comments": 139,
+        "score": 161,
+        "num_comments": 140,
         "url": "https://reddit.com/r/financialindependence/comments/1sxe8ld/what_are_you_doing_to_live_life_while_in_the/",
         "is_question": true,
-        "age_days": 5.7
-      },
-      {
-        "source": "r/financialindependence",
-        "type": "post",
-        "title": "Is it a bad idea to take a 2 year sabbatical for burnout?",
-        "text": "I’m 42M, no kids, no debt, paid-off condo living in HCOL area. My business has not been doing so well this year because of the economy and I am stressed out and burnt out. So, I will be closing it down by December. I want to take a 2 year sabbatical to improve my health and do some traveling. 12 years of doing my business has taken a toll on me and never really got to travel too much because of the time constraints.\n\nCurrent portfolio: $764K: $560K in VTI, $204K cash. I plan to invest $150K of the $204K cash into VXUS or QQQM and leave the rest in cash or bonds.\n\nPaid off condo worth around \\~",
-        "score": 130,
-        "num_comments": 124,
-        "url": "https://reddit.com/r/financialindependence/comments/1sr9hi5/is_it_a_bad_idea_to_take_a_2_year_sabbatical_for/",
-        "is_question": true,
-        "age_days": 12.4
-      },
-      {
-        "source": "r/landlord",
-        "type": "comment",
-        "text": "Even if you did see the message on time, you would have hurried there to put out the fire yourself?\n\nIf you had a property manager, do you think they would have done anything besides recommending to call 911?\n\nWhat you need to do right now is follow up, check on the property, on the damage, if the tenants are ok, figure out the repairs needed and then the responsibility of the fire (if you have to deal with the tenant’s insurance or yours if the damage are substantial)",
-        "score": 118,
-        "url": "https://reddit.com/r/Landlord/comments/1sz3q52/landlord_usxx_tenants_ac_caught_fire_at_2am_she/",
-        "parent_title": "[Landlord US-XX] Tenant’s AC caught fire at 2am. She texted me. I didn’t see it until morning. I don’t know how to feel about this.",
-        "is_question": true
+        "age_days": 6.5
       },
       {
         "source": "r/passive_income",
         "type": "post",
         "title": "What is  a good passive income idea for someone with a 9-5 job?",
         "text": "I work full time but want to earn extra income on the side. any ideas for passive income that doesn’t take up too much time but still adds up over time?",
-        "score": 111,
-        "num_comments": 94,
+        "score": 144,
+        "num_comments": 113,
         "url": "https://reddit.com/r/passive_income/comments/1t18bk4/what_is_a_good_passive_income_idea_for_someone/",
         "is_question": true,
-        "age_days": 1.5
+        "age_days": 2.4
       },
       {
-        "source": "r/landlord",
-        "type": "comment",
-        "text": "Your tenant, if they felt it was an emergency for YOU to deal with, should have CALLED you, not texted.\n\nThat said, what were you supposed to have done?  A fire is what 9-1-1 is literally there for...",
-        "score": 93,
-        "url": "https://reddit.com/r/Landlord/comments/1sz3q52/landlord_usxx_tenants_ac_caught_fire_at_2am_she/",
-        "parent_title": "[Landlord US-XX] Tenant’s AC caught fire at 2am. She texted me. I didn’t see it until morning. I don’t know how to feel about this.",
-        "is_question": true
+        "source": "r/financialindependence",
+        "type": "post",
+        "title": "Is it a bad idea to take a 2 year sabbatical for burnout?",
+        "text": "I’m 42M, no kids, no debt, paid-off condo living in HCOL area. My business has not been doing so well this year because of the economy and I am stressed out and burnt out. So, I will be closing it down by December. I want to take a 2 year sabbatical to improve my health and do some traveling. 12 years of doing my business has taken a toll on me and never really got to travel too much because of the time constraints.\n\nCurrent portfolio: $764K: $560K in VTI, $204K cash. I plan to invest $150K of the $204K cash into VXUS or QQQM and leave the rest in cash or bonds.\n\nPaid off condo worth around \\~",
+        "score": 135,
+        "num_comments": 124,
+        "url": "https://reddit.com/r/financialindependence/comments/1sr9hi5/is_it_a_bad_idea_to_take_a_2_year_sabbatical_for/",
+        "is_question": true,
+        "age_days": 13.3
       },
       {
         "source": "r/financialindependence",
@@ -98,7 +71,27 @@
         "num_comments": 211,
         "url": "https://reddit.com/r/financialindependence/comments/1stbryf/do_your_retirement_models_show_you_leaving_with/",
         "is_question": true,
-        "age_days": 10.2
+        "age_days": 11.0
+      },
+      {
+        "source": "r/landlord",
+        "type": "post",
+        "title": "[Landlord US-IL] Tenant lying about who is actually living there, what should we do?",
+        "text": "We are new landlords and recently signed a tenant for our first floor unit (we live upstairs). The woman who applied through Zillow and who came to view the property twice was very nice and well qualified. She signed paperwork and was handed the keys and we haven’t seen her since. There is another woman who seems to be occupying the unit (and there’s a lot of noise). Today I had to go into the unit to check on a maintenance issue and when I asked who the woman was clearly living there she gave the name of the woman technically on the lease who I’d met before. When I said she wasn’t who I’d met",
+        "score": 67,
+        "num_comments": 63,
+        "url": "https://reddit.com/r/Landlord/comments/1t1xuwy/landlord_usil_tenant_lying_about_who_is_actually/",
+        "is_question": true,
+        "age_days": 1.6
+      },
+      {
+        "source": "r/landlord",
+        "type": "comment",
+        "text": "You need a face to face visit. This is a TERRIBLE way to start. \n\nWhat was their background check like? Income source verification? Why did the payment fail?",
+        "score": 64,
+        "url": "https://reddit.com/r/Landlord/comments/1t1yiwp/landlord_ncusa_rented_out_my_home_for_first_of/",
+        "parent_title": "[Landlord -NC-USA] Rented out my home for first of the month. I check today to see that the tenant’s payments for security deposit and first month rent failed. They already have access to the house",
+        "is_question": true
       },
       {
         "source": "r/financialindependence",
@@ -110,19 +103,10 @@
         "is_question": true
       },
       {
-        "source": "r/landlord",
-        "type": "comment",
-        "text": "You need a face to face visit. This is a TERRIBLE way to start. \n\nWhat was their background check like? Income source verification? Why did the payment fail?",
-        "score": 57,
-        "url": "https://reddit.com/r/Landlord/comments/1t1yiwp/landlord_ncusa_rented_out_my_home_for_first_of/",
-        "parent_title": "[Landlord -NC-USA] Rented out my home for first of the month. I check today to see that the tenant’s payments for security deposit and first month rent failed. They already have access to the house",
-        "is_question": true
-      },
-      {
         "source": "r/financialindependence",
         "type": "comment",
         "text": "What time and money? I got kids in daycare. 😑",
-        "score": 57,
+        "score": 53,
         "url": "https://reddit.com/r/financialindependence/comments/1sxe8ld/what_are_you_doing_to_live_life_while_in_the/",
         "parent_title": "What are you doing to \"live life\" while in the boring middle?",
         "is_question": true
@@ -132,22 +116,44 @@
         "type": "post",
         "title": "Ready to quit at 48 with $3.3M but most money is locked up. Viable SEPP 72(t) plan or wait for layoff?",
         "text": "I’m 48, have roughly $3.3M net worth, and about 90% of it ($3M) is in pretax retirement accounts (traditional 401k + IRA). The rest is $330k in a taxable brokerage. Zero debt.  My annual expenses run $70-80k, gross $205k and live in a HCOL neighborhood.\n\nI’m not miserable at work, but the mandatory return-to-office has turned my 30-mile commute into 1–1.5 hours each way in traffic and I can feel my soul draining. I’d love to stop working later this year and focus on health, family, and actually enjoying life while I’m still relatively young.\n\nThe catch is I only have enough truly liquid money ",
-        "score": 51,
-        "num_comments": 46,
+        "score": 50,
+        "num_comments": 47,
         "url": "https://reddit.com/r/financialindependence/comments/1sx7q55/ready_to_quit_at_48_with_33m_but_most_money_is/",
         "is_question": true,
-        "age_days": 5.8
+        "age_days": 6.7
       },
       {
         "source": "r/realestateinvesting",
         "type": "post",
         "title": "Has anyone transitioned from a small landlord to becoming a full time Property Manager?",
         "text": "I was thinking the other day, I am already self managing 10 units, it has its ups and downs, but managing someone elses property has crossed my mind. Has anyone went from being a small time landlord to a full time property manager? Worth it? ",
-        "score": 41,
-        "num_comments": 78,
+        "score": 43,
+        "num_comments": 81,
         "url": "https://reddit.com/r/realestateinvesting/comments/1su2kql/has_anyone_transitioned_from_a_small_landlord_to/",
         "is_question": true,
-        "age_days": 9.4
+        "age_days": 10.3
+      },
+      {
+        "source": "r/realestateinvesting",
+        "type": "post",
+        "title": "Should I sell my investment property?",
+        "text": "Our primary residence purchased in 2020 was converted to a rental in 2021 after work sent me away.  We've never had a chance to move back in.  The current renters will be moving out soon.\n\nPurchase price: $364k\n\nCurrently Owed: $302k\n\nApproximate Sale Price: $525k-$550k\n\nRent: $2,900 - $3,000\n\nMortgage &amp; HOA: $2,493\n\nMonthly Cash Flow: $407 - $507\n\nMaintenance and Repairs are not included in these numbers.\n\nI'm showing that the ideal time to sell would be in about 7 years assuming a 4% appreciation rate and a 10% growth rate for the S&amp;P 500.  I have a feeling a lot of maintenance will ",
+        "score": 35,
+        "num_comments": 149,
+        "url": "https://reddit.com/r/realestateinvesting/comments/1sufcqs/should_i_sell_my_investment_property/",
+        "is_question": true,
+        "age_days": 9.8
+      },
+      {
+        "source": "r/financialindependence",
+        "type": "post",
+        "title": "Has anyone shifted jobs with more PTO/WLB after hitting a certain financial milestone?",
+        "text": "Im Canadian if it helps! I value PTO/WLB since I like to travel. I hit a milestone where I basically dont have to invest into my retirement accounts anymore. Im in tech, but Id like to move on from it, the interview process, and corporate stuff behind it makes my head dizzy.\n\nI still like to work - especially helping people. I dont know where I could work with my skillsets. But I dont mind if the salary is lower since I only need it for expenses only now. Anyone had the same experience and where did you switch to? 6 weeks PTO or more would be nice :)",
+        "score": 34,
+        "num_comments": 19,
+        "url": "https://reddit.com/r/financialindependence/comments/1sxa26z/has_anyone_shifted_jobs_with_more_ptowlb_after/",
+        "is_question": true,
+        "age_days": 6.6
       }
     ],
     "reddit_top_posts": [
@@ -156,33 +162,55 @@
         "type": "post",
         "title": "Just Joined the Two Comma Club",
         "text": "I think I joined the two comma club today. My total balance at Fidelity is $934k. I have about $70k net worth outside of Fidelity that I include in my calculations ($30k cash + $27k KBB trade-in value of my car + $14k Rolex watch). That puts me just over.\n\nI might be out of the club next week, but still, it's a great feeling. The gains have been insane. Fidelity shows you a 3 year history of your balances. I was in the low $300k's 3 years ago and now in the low $900k's. My total account value on 3/30/26 was at $799k due to the market downturn. Just 4 weeks later it gained $134k!\n\nAnyway, if th",
-        "score": 288,
-        "num_comments": 108,
+        "score": 289,
+        "num_comments": 109,
         "url": "https://reddit.com/r/financialindependence/comments/1suws0v/just_joined_the_two_comma_club/",
         "is_question": false,
-        "age_days": 8.5
+        "age_days": 9.3
       },
       {
         "source": "r/financialindependence",
         "type": "post",
         "title": "What are you doing to \"live life\" while in the boring middle?",
         "text": "Everyone says to not forget to live life during the \"boring middle\" while you accumulate.\n\nI'm curious as to what people do with their time and money during this stage. For myself I've been doing arts like pottery, woodworking, and drawing. I've also started getting into photography. While some of these hobbies have high upfront costs, they are cheap to maintain and you can always get used equipment.\n\nAnd for vacations I've been getting into camping locally. We live in a beautiful area with lots of forest and wildlife. Camping is fairly cheap and honestly I'm enjoying it way more than our prev",
-        "score": 157,
-        "num_comments": 139,
+        "score": 161,
+        "num_comments": 140,
         "url": "https://reddit.com/r/financialindependence/comments/1sxe8ld/what_are_you_doing_to_live_life_while_in_the/",
         "is_question": true,
-        "age_days": 5.7
+        "age_days": 6.5
+      },
+      {
+        "source": "r/passive_income",
+        "type": "post",
+        "title": "What is  a good passive income idea for someone with a 9-5 job?",
+        "text": "I work full time but want to earn extra income on the side. any ideas for passive income that doesn’t take up too much time but still adds up over time?",
+        "score": 144,
+        "num_comments": 113,
+        "url": "https://reddit.com/r/passive_income/comments/1t18bk4/what_is_a_good_passive_income_idea_for_someone/",
+        "is_question": true,
+        "age_days": 2.4
       },
       {
         "source": "r/financialindependence",
         "type": "post",
         "title": "Is it a bad idea to take a 2 year sabbatical for burnout?",
         "text": "I’m 42M, no kids, no debt, paid-off condo living in HCOL area. My business has not been doing so well this year because of the economy and I am stressed out and burnt out. So, I will be closing it down by December. I want to take a 2 year sabbatical to improve my health and do some traveling. 12 years of doing my business has taken a toll on me and never really got to travel too much because of the time constraints.\n\nCurrent portfolio: $764K: $560K in VTI, $204K cash. I plan to invest $150K of the $204K cash into VXUS or QQQM and leave the rest in cash or bonds.\n\nPaid off condo worth around \\~",
-        "score": 130,
+        "score": 135,
         "num_comments": 124,
         "url": "https://reddit.com/r/financialindependence/comments/1sr9hi5/is_it_a_bad_idea_to_take_a_2_year_sabbatical_for/",
         "is_question": true,
-        "age_days": 12.4
+        "age_days": 13.3
+      },
+      {
+        "source": "r/passive_income",
+        "type": "post",
+        "title": "I built a video ad production system that costs $2 per video and I have been selling the output to local businesses for $300 to $500 a piece",
+        "text": "I want to be upfront. This takes real work to set up and learn. But once the system is running it is repeatable and the margins are hard to argue with.\n\nHere is the basic math:\n\n\\- Cost per video: approximately $2 in tool fees  \n\\- What local businesses will pay: $300 to $500 per video  \n\\- Time per video once the workflow is learned: one afternoon  \n\\- Overhead: none beyond a laptop and internet\n\nThe style I produce is AI claymation. It looks handcrafted, textured, and premium. Local businesses love it because it looks nothing like the stock footage and phone camera content flooding their com",
+        "score": 118,
+        "num_comments": 75,
+        "url": "https://reddit.com/r/passive_income/comments/1t2b876/i_built_a_video_ad_production_system_that_costs_2/",
+        "is_question": false,
+        "age_days": 1.2
       },
       {
         "source": "r/financialindependence",
@@ -193,18 +221,18 @@
         "num_comments": 133,
         "url": "https://reddit.com/r/financialindependence/comments/1ssoc8m/12_year_update_married_couple_in_our_40s_200k_to/",
         "is_question": false,
-        "age_days": 10.9
+        "age_days": 11.7
       },
       {
-        "source": "r/passive_income",
+        "source": "r/landlord",
         "type": "post",
-        "title": "What is  a good passive income idea for someone with a 9-5 job?",
-        "text": "I work full time but want to earn extra income on the side. any ideas for passive income that doesn’t take up too much time but still adds up over time?",
-        "score": 111,
-        "num_comments": 94,
-        "url": "https://reddit.com/r/passive_income/comments/1t18bk4/what_is_a_good_passive_income_idea_for_someone/",
-        "is_question": true,
-        "age_days": 1.5
+        "title": "[Landlord -NC-USA] Rented out my home for first of the month. I check today to see that the tenant’s payments for security deposit and first month rent failed. They already have access to the house",
+        "text": "Okay so as the title says, I rented out my house for May 1st, I already allowed access to the home and the tenant has moved in. I check today to see that the security deposit and first month rent failed. I texted them to let them know those payment has failed and to please updated on when I should expect the payment. After not getting a response I call to while they ignored. But then texted me that they will look into why the payment failed. I again asked to keep me updated on when I should expect it to be resolved. They have been taking sometime to respond. I’m getting a bit nervous about the",
+        "score": 80,
+        "num_comments": 217,
+        "url": "https://reddit.com/r/Landlord/comments/1t1yiwp/landlord_ncusa_rented_out_my_home_for_first_of/",
+        "is_question": false,
+        "age_days": 1.6
       },
       {
         "source": "r/financialindependence",
@@ -215,51 +243,29 @@
         "num_comments": 211,
         "url": "https://reddit.com/r/financialindependence/comments/1stbryf/do_your_retirement_models_show_you_leaving_with/",
         "is_question": true,
-        "age_days": 10.2
+        "age_days": 11.0
       },
       {
         "source": "r/landlord",
         "type": "post",
-        "title": "[Landlord US-XX] Tenant’s AC caught fire at 2am. She texted me. I didn’t see it until morning. I don’t know how to feel about this.",
-        "text": "I have 6 units. Been self-managing for 6 years. I respond to everything, I’m not one of those landlords.  \nShe texted me at 2:14am. Smoke coming from the unit. I was asleep.\n\nShe waited 20 minutes for me to respond, didn’t hear back, then called 911 herself.\n\nBy the time I saw the message it was 6am. Fire was out. Minor damage. She was okay.\n\nThe text she sent me after I finally responded was just: “ok.”\n\nThat “ok” is going to bother me for a long time.  \nI don’t really have a question. I just don’t know what the solution is here. I can’t afford a property manager for 6 units. But I also can’t",
-        "score": 65,
-        "num_comments": 108,
-        "url": "https://reddit.com/r/Landlord/comments/1sz3q52/landlord_usxx_tenants_ac_caught_fire_at_2am_she/",
-        "is_question": false,
-        "age_days": 3.8
+        "title": "[Landlord US-IL] Tenant lying about who is actually living there, what should we do?",
+        "text": "We are new landlords and recently signed a tenant for our first floor unit (we live upstairs). The woman who applied through Zillow and who came to view the property twice was very nice and well qualified. She signed paperwork and was handed the keys and we haven’t seen her since. There is another woman who seems to be occupying the unit (and there’s a lot of noise). Today I had to go into the unit to check on a maintenance issue and when I asked who the woman was clearly living there she gave the name of the woman technically on the lease who I’d met before. When I said she wasn’t who I’d met",
+        "score": 67,
+        "num_comments": 63,
+        "url": "https://reddit.com/r/Landlord/comments/1t1xuwy/landlord_usil_tenant_lying_about_who_is_actually/",
+        "is_question": true,
+        "age_days": 1.6
       },
       {
         "source": "r/financialindependence",
         "type": "post",
         "title": "72(t) Isn’t Always as Rigid as It Looks to Access Funds Before 59.5",
         "text": "I’ve been digging into 72(t) SEPP withdrawals (a method to access pre-tax funds before 59.5) and one thing that stands out is how rigid withdrawals can be and how you have to get the math correct or face substantial penalties. \n\nThat said, there's a “partial escape hatch” that I don't see discussed very often. **The IRS allows a one-time switch from the amortization (or annuitization) method to the RMD method during your SEPP schedule.**\n\nHere’s a simplified example:\n\nYou start a 72(t) at age 45. You isolate $1.5M of your pre-tax accounts into a separate IRA, use a 5% interest rate, and set up",
-        "score": 63,
+        "score": 67,
         "num_comments": 28,
         "url": "https://reddit.com/r/financialindependence/comments/1sr804h/72t_isnt_always_as_rigid_as_it_looks_to_access/",
         "is_question": false,
-        "age_days": 12.5
-      },
-      {
-        "source": "r/landlord",
-        "type": "post",
-        "title": "[Landlord -NC-USA] Rented out my home for first of the month. I check today to see that the tenant’s payments for security deposit and first month rent failed. They already have access to the house",
-        "text": "Okay so as the title says, I rented out my house for May 1st, I already allowed access to the home and the tenant has moved in. I check today to see that the security deposit and first month rent failed. I texted them to let them know those payment has failed and to please updated on when I should expect the payment. After not getting a response I call to while they ignored. But then texted me that they will look into why the payment failed. I again asked to keep me updated on when I should expect it to be resolved. They have been taking sometime to respond. I’m getting a bit nervous about the",
-        "score": 61,
-        "num_comments": 199,
-        "url": "https://reddit.com/r/Landlord/comments/1t1yiwp/landlord_ncusa_rented_out_my_home_for_first_of/",
-        "is_question": false,
-        "age_days": 0.7
-      },
-      {
-        "source": "r/financialindependence",
-        "type": "post",
-        "title": "Ready to quit at 48 with $3.3M but most money is locked up. Viable SEPP 72(t) plan or wait for layoff?",
-        "text": "I’m 48, have roughly $3.3M net worth, and about 90% of it ($3M) is in pretax retirement accounts (traditional 401k + IRA). The rest is $330k in a taxable brokerage. Zero debt.  My annual expenses run $70-80k, gross $205k and live in a HCOL neighborhood.\n\nI’m not miserable at work, but the mandatory return-to-office has turned my 30-mile commute into 1–1.5 hours each way in traffic and I can feel my soul draining. I’d love to stop working later this year and focus on health, family, and actually enjoying life while I’m still relatively young.\n\nThe catch is I only have enough truly liquid money ",
-        "score": 51,
-        "num_comments": 46,
-        "url": "https://reddit.com/r/financialindependence/comments/1sx7q55/ready_to_quit_at_48_with_33m_but_most_money_is/",
-        "is_question": true,
-        "age_days": 5.8
+        "age_days": 13.3
       }
     ],
     "youtube_questions": [
@@ -310,6 +316,14 @@
         "likes": 0,
         "is_question": true,
         "url": "https://youtube.com/watch?v=Iu7ERqvwRpQ"
+      },
+      {
+        "video_id": "pv2VMLjixAo",
+        "video_title": "The Government Pays Me Every Month (Here's How I Set It Up)",
+        "text": "Off topic… did you purposefully get your canines to look more pointy? 😅 I couldn’t but notice your canine are are super pointy hahahaha 😂",
+        "likes": 0,
+        "is_question": true,
+        "url": "https://youtube.com/watch?v=pv2VMLjixAo"
       }
     ],
     "youtube_comments": [
@@ -356,17 +370,17 @@
       {
         "video_id": "Iu7ERqvwRpQ",
         "video_title": "He Bought His First Rental for $80K. The Government Now Pays Him $1,250/Month.",
-        "text": "$80K purchase and $1,250 per month in Section 8 rent is a solid first deal. I own 4 Section 8 doors in Birmingham AL (10 total across 3 states) and the real unlock on Section 8 is not the rent amount, it is the payment reliability. HAP hits the same day every month and you never chase a tenant for rent on the voucher portion. The part that trips up new Section 8 landlords is the HQS inspection. It is not a suggestion. GFCI outlets in kitchens and baths, working smoke alarms in every bedroom, han",
+        "text": "Hey! Just have a collaboration offer. How can I reach out to you?",
         "likes": 0,
-        "is_question": false,
+        "is_question": true,
         "url": "https://youtube.com/watch?v=Iu7ERqvwRpQ"
       },
       {
         "video_id": "Iu7ERqvwRpQ",
         "video_title": "He Bought His First Rental for $80K. The Government Now Pays Him $1,250/Month.",
-        "text": "Hey! Just have a collaboration offer. How can I reach out to you?",
+        "text": "$80K purchase and $1,250 per month in Section 8 rent is a solid first deal. I own 4 Section 8 doors in Birmingham AL (10 total across 3 states) and the real unlock on Section 8 is not the rent amount, it is the payment reliability. HAP hits the same day every month and you never chase a tenant for rent on the voucher portion. The part that trips up new Section 8 landlords is the HQS inspection. It is not a suggestion. GFCI outlets in kitchens and baths, working smoke alarms in every bedroom, han",
         "likes": 0,
-        "is_question": true,
+        "is_question": false,
         "url": "https://youtube.com/watch?v=Iu7ERqvwRpQ"
       },
       {
@@ -418,12 +432,20 @@
         "url": "https://youtube.com/watch?v=6T3jkx4uTlY"
       },
       {
-        "video_id": "52GxrlJZUeI",
-        "video_title": "How to Go From $0 → $1,000,000 In Real Estate (FREE COURSE 2026)",
-        "text": "Do you need an SEO service provider and thumbnail designer<br> SEO will increase your channel views, subscribers, watch time and ranking.",
+        "video_id": "pv2VMLjixAo",
+        "video_title": "The Government Pays Me Every Month (Here's How I Set It Up)",
+        "text": "This was very informative thank you!",
         "likes": 0,
         "is_question": false,
-        "url": "https://youtube.com/watch?v=52GxrlJZUeI"
+        "url": "https://youtube.com/watch?v=pv2VMLjixAo"
+      },
+      {
+        "video_id": "pv2VMLjixAo",
+        "video_title": "The Government Pays Me Every Month (Here's How I Set It Up)",
+        "text": "How do you do property showings when you’re out of state and if you have a realtor what do you pay per house",
+        "likes": 0,
+        "is_question": false,
+        "url": "https://youtube.com/watch?v=pv2VMLjixAo"
       }
     ],
     "news_items": [
@@ -471,6 +493,13 @@
       },
       {
         "source": "Google News: Section 8 vouchers",
+        "title": "New HUD rules will stop sheltering illegals in public housing. Here's who really benefits - Fox News",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcFJSUkhtSEhVdXlfcFpNYzdQczBfQTByVGF6aGRrNHA1aUFDb1RPV0RwdjNZeVhwZmtnbkhNTkF2c3hvSEpzbXQyWjEtNzBZRHhCVUpJRmdnNURrS1BKTU1HSlU4S0FpYnRyeTF4VzBudzNIZEtSWUhPTzQ5QWJXRUtrYmwySEJuUGdRY3Y4VjEzQXBhNlFCUHhqd0pxRE9jck9od3BBMTBsLW_SAbABQVVfeXFMTi11RE4zb1NLMzk4bkw1YlZacUM1MmRxU0lZWGl3dlpzYk1fanhaUUI0cHNGWHNHM0duam01TTJtdkJwVGdvVDRtVGEzMmt1OXVnQ1dFN2",
+        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcFJSUkhtSEhVdXlfcFpNYzdQczBfQTByVGF6aGRrNHA1aUFDb1RPV0RwdjNZeVhwZmtnbkhNTkF2c3hvSEpzbXQyWjEtNzBZRHhCVUpJRmdnNURrS1BKTU1HSlU4S0FpYnRyeTF4VzBudzNIZEtSWUhPTzQ5QWJXRUtrYmwySEJuUGdRY3Y4VjEzQXBhNlFCUHhqd0pxRE9jck9od3BBMTBsLW_SAbABQVVfeXFMTi11RE4zb1NLMzk4bkw1YlZacUM1MmRxU0lZWGl3dlpzYk1fanhaUUI0cHNGWHNHM0duam01TTJtdkJwVGdvVDRtVGEzMmt1OXVnQ1dFN2Q1M1JOVHJsQi02cEs4MmMtb3RqOVhXYjl6S1JKQnVBa0RaclJGcm43WkpGV3paZW5tYTVpVFlsbWktNVl5LS1hb283WW12d19MNWtPNEk2c2xXRDBlNGtQVUE?oc=5",
+        "date": "Fri, 24 Apr 2026 07:00:00 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
         "title": "After director resigns, Concordia Parish moves to keep its Section 8 housing voucher program going - The Natchez Democrat",
         "description": "<a href=\"https://news.google.com/rss/articles/CBMi2wFBVV95cUxPaldBTWxJLXZUb2pZRUlSTVRzWkVfMS1oX0VTdE5XaEVVYWJxcFlqZWpiclZpTzZPb0x6VUJ4dTJZdHdVR1ZGOEZLTjRrMHFfYlV2aVlHOV9mRzFZLU1Nd3E5V3NielgtTmoxMDBUVFZUaWM4VVVaazh4ODZBQ0xjSjhzUDdObFR4VjRkZ3ZwdkRHcmk4SU1ESVVIaWNVcHBVRU5xdThaOFU5SGFwcXNpOF8yMjNyOVJUUXdkZ2pVV3ZBZnpqOHlyamNHa01RajdfcXBjUHZoTVp5OGs?oc=5\" target=\"_blank\">After director resigns, Concordi",
         "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPaldBTWxJLXZUb2pZRUlSTVRzWkVfMS1oX0VTdE5XaEVVYWJxcFlqZWpiclZpTzZPb0x6VUJ4dTJZdHdVR1ZGOEZLTjRrMHFfYlV2aVlHOV9mRzFZLU1Nd3E5V3NielgtTmoxMDBUVFZUaWM4VVVaazh4ODZBQ0xjSjhzUDdObFR4VjRkZ3ZwdkRHcmk4SU1ESVVIaWNVcHBVRU5xdThaOFU5SGFwcXNpOF8yMjNyOVJUUXdkZ2pVV3ZBZnpqOHlyamNHa01RajdfcXBjUHZoTVp5OGs?oc=5",
@@ -485,13 +514,6 @@
       },
       {
         "source": "Google News: Section 8 vouchers",
-        "title": "New HUD rules will stop sheltering illegals in public housing. Here's who really benefits - Fox News",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcFJSUkhtSEhVdXlfcFpNYzdQczBfQTByVGF6aGRrNHA1aUFDb1RPV0RwdjNZeVhwZmtnbkhNTkF2c3hvSEpzbXQyWjEtNzBZRHhCVUpJRmdnNURrS1BKTU1HSlU4S0FpYnRyeTF4VzBudzNIZEtSWUhPTzQ5QWJXRUtrYmwySEJuUGdRY3Y4VjEzQXBhNlFCUHhqd0pxRE9jck9od3BBMTBsLW_SAbABQVVfeXFMTi11RE4zb1NLMzk4bkw1YlZacUM1MmRxU0lZWGl3dlpzYk1fanhaUUI0cHNGWHNHM0duam01TTJtdkJwVGdvVDRtVGEzMmt1OXVnQ1dFN2",
-        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQcFJSUkhtSEhVdXlfcFpNYzdQczBfQTByVGF6aGRrNHA1aUFDb1RPV0RwdjNZeVhwZmtnbkhNTkF2c3hvSEpzbXQyWjEtNzBZRHhCVUpJRmdnNURrS1BKTU1HSlU4S0FpYnRyeTF4VzBudzNIZEtSWUhPTzQ5QWJXRUtrYmwySEJuUGdRY3Y4VjEzQXBhNlFCUHhqd0pxRE9jck9od3BBMTBsLW_SAbABQVVfeXFMTi11RE4zb1NLMzk4bkw1YlZacUM1MmRxU0lZWGl3dlpzYk1fanhaUUI0cHNGWHNHM0duam01TTJtdkJwVGdvVDRtVGEzMmt1OXVnQ1dFN2Q1M1JOVHJsQi02cEs4MmMtb3RqOVhXYjl6S1JKQnVBa0RaclJGcm43WkpGV3paZW5tYTVpVFlsbWktNVl5LS1hb283WW12d19MNWtPNEk2c2xXRDBlNGtQVUE?oc=5",
-        "date": "Fri, 24 Apr 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
         "title": "Appellate court finds law unconstitutional that protects Section 8 housing voucher users - The Ithaca Voice",
         "description": "<a href=\"https://news.google.com/rss/articles/CBMivgFBVV95cUxOMnIwTDJkanlVM18ybEI0Z0cwQldWcHZwNFNfYUVpSWEtbmwtN3QyM0kzOGdnNF9uRnFHUzRaMmJOcTBPZ0hQdVFTVzlHVmM0Q1dyMDBwTkZ4TUdTb1E2MTRvYVZMNUwxR2prZ0d3WFptRW1EWjRHUDJHcXBYM1Q4WDNGYTNhY3RlV2FXTl9JTGR4YmFXMTZMTXRMV2I3NWxZdEs0VV9CT1lBcGxuM3lhVVQxOWZYbjIxNVZBd2lB?oc=5\" target=\"_blank\">Appellate court finds law unconstitutional that protects Section 8 hous",
         "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOMnIwTDJkanlVM18ybEI0Z0cwQldWcHZwNFNfYUVpSWEtbmwtN3QyM0kzOGdnNF9uRnFHUzRaMmJOcTBPZ0hQdVFTVzlHVmM0Q1dyMDBwTkZ4TUdTb1E2MTRvYVZMNUwxR2prZ0d3WFptRW1EWjRHUDJHcXBYM1Q4WDNGYTNhY3RlV2FXTl9JTGR4YmFXMTZMTXRMV2I3NWxZdEs0VV9CT1lBcGxuM3lhVVQxOWZYbjIxNVZBd2lB?oc=5",
@@ -499,17 +521,17 @@
       },
       {
         "source": "Google News: Section 8 vouchers",
-        "title": "Emergency housing voucher program ending for CSRA families - WRDW",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMikAFBVV95cUxNS1AxZTR4RDJ4ekZ6eW1Ha3hXWWtOOE5HclJIMnpQV0VrQTZHRXlUSFYyS0w4RnBaMXA3MnlKT0ZTY0NkYmtZVFcwUVVmVTRnZnlOVDduQnVPTEtzWFowb0UyUWFvVzRvN2J3NFhWN1dyMnVuVzdoTnBLMmJaNDJLU2xzOGZ2bmZsajdEOG05UWfSAaQBQVVfeXFMTTRpV1dVVS1VUVVUQ3RsX2M2Nlk4R012eEtfR19lTFVDaXlRRmhaZzVQbFBHM3d0Q0lVV3A3UnViTDQ5V1VuWTZ0eGZPRHNzRFl1ZFRTeVFoVEwtYlMzSHpkR1JVWHR0SFZsM3ZQck1RU0",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNS1AxZTR4RDJ4ekZ6eW1Ha3hXWWtOOE5HclJIMnpQV0VrQTZHRXlUSFYyS0w4RnBaMXA3MnlKT0ZTY0NkYmtZVFcwUVVmVTRnZnlOVDduQnVPTEtzWFowb0UyUWFvVzRvN2J3NFhWN1dyMnVuVzdoTnBLMmJaNDJLU2xzOGZ2bmZsajdEOG05UWfSAaQBQVVfeXFMTTRpV1dVVS1VUVVUQ3RsX2M2Nlk4R012eEtfR19lTFVDaXlRRmhaZzVQbFBHM3d0Q0lVV3A3UnViTDQ5V1VuWTZ0eGZPRHNzRFl1ZFRTeVFoVEwtYlMzSHpkR1JVWHR0SFZsM3ZQck1RU0pCSWE5Vnh6anpyeEViRHdIZ2NTUDN5bVRTV2pQcHZkbFo0U2VlQ2l1OGZpM2tmSVlfX2o?oc=5",
-        "date": "Mon, 23 Mar 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
         "title": "Section 8 voucher ruling shocks housing community - Spectrum News",
         "description": "<a href=\"https://news.google.com/rss/articles/CBMijAFBVV95cUxOR3JsUXdUaDFESEh5MzkzRXFHakx2Z2F1ZUJhRkY5Nkk0UVdrS2JyWkdsYmN5OFg5b190Qk5taVZ1ODJsN2UtNHQ1NllPY1kzclQ1ZlQxUEgzZTdOOTBOam9IOTdBdUo5QmhTU1MtUkhZdDhhaEZOMm1NQTlyU2Q1Q3hTc1JEcGxKUEhxUA?oc=5\" target=\"_blank\">Section 8 voucher ruling shocks housing community</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Spectrum News</font>",
         "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOR3JsUXdUaDFESEh5MzkzRXFHakx2Z2F1ZUJhRkY5Nkk0UVdrS2JyWkdsYmN5OFg5b190Qk5taVZ1ODJsN2UtNHQ1NllPY1kzclQ1ZlQxUEgzZTdOOTBOam9IOTdBdUo5QmhTU1MtUkhZdDhhaEZOMm1NQTlyU2Q1Q3hTc1JEcGxKUEhxUA?oc=5",
         "date": "Thu, 05 Mar 2026 08:00:00 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Landlords could not deny housing to tenants because of their Section 8 voucher. Now they can. - Central Current",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxQSXQ1SUpoM0NOaWlRWWF2c3lLQm5rSVM0YjJjU2MtaVY3T05FNFRtemdqdU5RQUdJRUpuWWtZemtjS2RPdXhNeHdxNVpsN2trSWJSZWJERFlOZk95OHJwNTdiQjlUSXNKRUsxc21idTVvV1ZGTFg0UGtqX3daTDczWWoyVmFwN1A1NDdkWU1SZjNkUy1yX1F5VHV3UWJjZGFhdk5mSlRFOWlydy14S0QyOExYaUNqazFIeGFR?oc=5\" target=\"_blank\">Landlords could not deny housing to tenants because of their Section 8 vouc",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQSXQ1SUpoM0NOaWlRWWF2c3lLQm5rSVM0YjJjU2MtaVY3T05FNFRtemdqdU5RQUdJRUpuWWtZemtjS2RPdXhNeHdxNVpsN2trSWJSZWJERFlOZk95OHJwNTdiQjlUSXNKRUsxc21idTVvV1ZGTFg0UGtqX3daTDczWWoyVmFwN1A1NDdkWU1SZjNkUy1yX1F5VHV3UWJjZGFhdk5mSlRFOWlydy14S0QyOExYaUNqazFIeGFR?oc=5",
+        "date": "Mon, 23 Mar 2026 07:00:00 GMT"
       }
     ],
     "joseph_videos": [
@@ -528,7 +550,7 @@
         "title": "Give Me 12 Minutes, I'll Show You How to Make $5,200/Month From $70K Homes",
         "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/5xvDyMR\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
         "published_at": "2026-03-19T19:56:17Z",
-        "view_count": 540,
+        "view_count": 541,
         "like_count": 15,
         "comment_count": 6,
         "url": "https://youtube.com/watch?v=hJkvjJ6DsxY"
@@ -538,7 +560,7 @@
         "title": "He Bought His First Rental for $80K. The Government Now Pays Him $1,250/Month.",
         "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/7hs8iJ4\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
         "published_at": "2026-04-13T20:40:06Z",
-        "view_count": 470,
+        "view_count": 471,
         "like_count": 20,
         "comment_count": 7,
         "url": "https://youtube.com/watch?v=Iu7ERqvwRpQ"
@@ -548,17 +570,27 @@
         "title": "How I Use AI as a Real Estate Investor (My Complete Workflow)",
         "description": "Work with me 1:1 - http://investingsection8.com/\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/6HFok8d\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Bank ",
         "published_at": "2026-03-26T19:00:04Z",
-        "view_count": 455,
+        "view_count": 461,
         "like_count": 27,
         "comment_count": 3,
         "url": "https://youtube.com/watch?v=6T3jkx4uTlY"
+      },
+      {
+        "video_id": "pv2VMLjixAo",
+        "title": "The Government Pays Me Every Month (Here's How I Set It Up)",
+        "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/1Ihf5iP\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
+        "published_at": "2026-04-30T19:00:54Z",
+        "view_count": 398,
+        "like_count": 16,
+        "comment_count": 4,
+        "url": "https://youtube.com/watch?v=pv2VMLjixAo"
       },
       {
         "video_id": "52GxrlJZUeI",
         "title": "How to Go From $0 → $1,000,000 In Real Estate (FREE COURSE 2026)",
         "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/GIQACmx\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
         "published_at": "2026-04-07T19:02:22Z",
-        "view_count": 377,
+        "view_count": 378,
         "like_count": 21,
         "comment_count": 1,
         "url": "https://youtube.com/watch?v=52GxrlJZUeI"
@@ -568,42 +600,89 @@
         "title": "The 5 Best (and 3 Worst) Cities for Section 8 Investing in 2026",
         "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/EHa2Uxc\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
         "published_at": "2026-04-16T19:04:57Z",
-        "view_count": 371,
+        "view_count": 372,
         "like_count": 26,
         "comment_count": 2,
         "url": "https://youtube.com/watch?v=jFjyCqRmCrw"
-      },
-      {
-        "video_id": "pv2VMLjixAo",
-        "title": "The Government Pays Me Every Month (Here's How I Set It Up)",
-        "description": "Work with me 1:1 - https://investingsection8.com/yt\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/1Ihf5iP\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Ba",
-        "published_at": "2026-04-30T19:00:54Z",
-        "view_count": 339,
-        "like_count": 14,
-        "comment_count": 3,
-        "url": "https://youtube.com/watch?v=pv2VMLjixAo"
       },
       {
         "video_id": "u6r2mYub4MI",
         "title": "Once You Master Real Estate, You Master Money",
         "description": "Work with me 1:1 - http://investingsection8.com/\n\nDealFinder AI: https://dealfinderai.org/\n\nLearn how to start investing in Section 8 for FREE - https://link.investingsection8.com/8zZkvdU\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunkzyyp3jp\nBusiness Bank ",
         "published_at": "2026-03-24T19:00:48Z",
-        "view_count": 311,
+        "view_count": 312,
         "like_count": 21,
         "comment_count": 2,
         "url": "https://youtube.com/watch?v=u6r2mYub4MI"
       }
+    ],
+    "student_wins": [
+      {
+        "name": "Yozsef Ramos",
+        "cash_collected": 1333,
+        "lead_source": "Skool (Organic)",
+        "call_date": "2026-04-23T22:00:00.000Z",
+        "product": "Investing Section 8"
+      },
+      {
+        "name": "Garvely Guillaume",
+        "cash_collected": 3500,
+        "lead_source": "",
+        "call_date": "2026-04-13T00:00:00.000Z",
+        "product": "Investing Section 8"
+      },
+      {
+        "name": "Elijah Sokolov",
+        "cash_collected": 0,
+        "lead_source": "TikTok (Organic)",
+        "call_date": "2026-05-03T14:00:00.000Z",
+        "product": "Investing Section 8"
+      },
+      {
+        "name": "Gerald Boyland",
+        "cash_collected": 0,
+        "lead_source": "SMS Blast",
+        "call_date": "2026-04-22T20:30:00.000Z",
+        "product": "Investing Section 8"
+      },
+      {
+        "name": "Mark Jon",
+        "cash_collected": 0,
+        "lead_source": "SMS Blast",
+        "call_date": "2026-04-25T16:00:00.000Z",
+        "product": "Investing Section 8"
+      }
     ]
   },
-  "drafts": [],
+  "drafts": [
+    {
+      "filename": "2026-05-03-section8-voucher-cuts.md",
+      "date": "2026-05-03",
+      "slug": "section8-voucher-cuts",
+      "topic": "Section 8 Voucher Cuts",
+      "subject": "they're trying to cut section 8 vouchers",
+      "alt_subject": "3.7 million vouchers at risk. does that change your math?",
+      "preview": "My phone's been blowing up about this all week.",
+      "source": "\"Nearly 3.7 Million People at Risk of Losing Needed Rental Assistance\" — Center on Budget and Policy Priorities, surfaced via Google News RSS feed (Section 8 vouchers). Supported by 5 additional news items in the same feed: emergency housing voucher program ending in CSRA, appellate court rulings reshaping Section 8 housing obligations, Montgomery residents facing delays, LMHA changing payment structures.",
+      "cta": false,
+      "email_body": "My phone's been blowing up with the same question all week.\n\n\"Joseph, Congress is trying to cut 3.7 million housing vouchers. Is Section 8 still a good investment?\"\n\nFair question. Here's my honest answer.\n\nYes, there's a real proposal. Work requirements for housing assistance recipients that could remove millions of people from the program. I'm not going to spin it.\n\nBut here's what the headlines aren't telling you.\n\nRight now, 7 million families are sitting on the Housing Choice Voucher waiting list. Seven million people who qualify and can't get a voucher because there aren't enough of them. That list has grown every single year for two decades.\n\nIf 3.7 million vouchers disappeared tomorrow, there are still 7 million people behind them.\n\nThe Section 8 program survived Ronald Reagan's budget cuts. It survived the 2008 financial crisis. It survived every spending fight in Washington for the last 50 years. Through every single one of those cycles, one thing stayed constant: the government kept depositing rent into landlords' accounts.\n\nI've been investing since 2018. Government rent has hit my account every single month. Not once delayed. Not once missed.\n\nYasir was asking the same questions you're asking right now. Instead of waiting for the news to get better, he bought 4 properties in Birmingham and Cleveland while everyone else was \"watching to see what happens.\" He's at $3,700 per month now. That income deposited last month too.\n\nThe news doesn't know your deal. It doesn't know your market. It doesn't know the 7 million families who still need a place to live.\n\nIf scary headlines have been keeping you on the fence, the math hasn't changed. The only thing that changed is your competition got smaller.",
+      "stories": [
+        {
+          "label": "",
+          "text": "**Story 1 — Hook**\nCongress is trying to cut 3.7 million Section 8 vouchers.\n\nShould you still invest?\n\n(keep reading)"
+        }
+      ],
+      "status": "draft"
+    }
+  ],
   "stats": {
-    "total_drafts": 0,
+    "total_drafts": 1,
     "this_week_drafts": 0,
     "weekly_goal": 3,
-    "reddit_items": 103,
+    "reddit_items": 107,
     "reddit_questions": 20,
-    "yt_comments": 14,
-    "yt_questions": 6,
-    "news_items": 164
+    "yt_comments": 16,
+    "yt_questions": 7,
+    "news_items": 165
   }
 }
