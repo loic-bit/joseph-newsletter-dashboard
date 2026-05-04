@@ -376,7 +376,7 @@ function buildEmailPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected, source: ${w.lead_source || 'direct'}`).join('\n')
     : 'None available for this cycle.';
-  return `Write 3 email newsletter variations for Joseph Khateri. These emails do NOT read like marketing. They read like a voice note from someone the reader respects who also happens to invest in real estate.
+  return `Write 3 one-off newsletter email variations for Joseph Khateri. Each email is completely standalone — not part of a sequence, no "next email" teases, no open loops. It lands in the inbox, delivers one idea, and is done. These do NOT read like marketing. They read like a voice note from someone the reader respects who also happens to invest in real estate.
 
 TOPIC: ${topic.title}
 SIGNAL QUOTE: "${topic.signal_quote}"
@@ -428,7 +428,8 @@ PROOF FORMULA (apply to every win used):
 
 PS RULES — always include a PS:
 - One line only
-- Use for: second CTA angle / tease next email / reply hook / real scarcity
+- Use for: second CTA angle, reply hook ("got a question? just reply"), or real scarcity
+- Never tease a "next email" — this is a standalone send
 - Never skip it
 
 SIGN-OFF: "Joseph" only. No title, no company, no links.
