@@ -377,86 +377,93 @@ function buildEmailPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected, source: ${w.lead_source || 'direct'}`).join('\n')
     : 'None available for this cycle.';
-  return `Write 3 one-off newsletter email variations for Joseph Khateri. Each email is a standalone send — no sequences, no open loops, no "next email" teases. It arrives in someone's inbox, gives them something real to think about, and closes.
+  return `Write 3 fully developed newsletter email variations for Joseph Khateri. Each is a standalone send. No sequences, no "reply to this email", no open loops.
 
-These are NOT short punchy social posts. They are NEWSLETTER EMAILS. They need to be fully developed, readable from top to bottom, and feel like a letter from someone the reader genuinely respects. Think of the best newsletter you've ever read — the kind where you get to the end and feel like you actually learned something. That is the standard.
+The goal of every email is to educate the reader on Section 8 investing, break a limiting belief or misconception, and leave them feeling like they just learned something real from someone who has actually done this. Every email should move the reader one step closer to wanting to invest in Section 8.
 
 TOPIC: ${topic.title}
 JOSEPH'S ANGLE: ${topic.joseph_angle}
 ICP FIT: ${topic.icp_fit}
 CTA TYPE: ${topic.cta}
 
-PROVEN STUDENT RESULTS (use these, never invent — always name + disadvantage BEFORE win):
-- Yasir Tariq: data analyst, GA, had a full-time W2 job (couldn't quit). 4 properties in Birmingham+Cleveland, $3,700/mo, 6 months.
-- Daniel Bier: 26, Orange County CA, expensive market (couldn't invest locally). $76K Detroit purchase, $1,120/mo Section 8 rent, 17.53% cash-on-cash ROI, 4 months.
-- Sarah: teacher in California, terrified of managing tenants remotely. 4 Cleveland properties, $3,500/mo, 18 months — never visited her properties.
-- Marcus: 2 years stuck in research mode, hadn't pulled the trigger once. First deal in 6 weeks, $650/mo, now $1,800/mo.
-- David: only $30K saved (thought it wasn't enough). First property in 3 months, 19% ROI, now 5 properties at $2,400/mo.
-- Giorgio: 0 experience. 0 to 9 properties using BRRRR, $14K/mo gross in 5 months.
+PROVEN STUDENT RESULTS — use ONE different student per variation. Spread the proof across all 3 emails. Do not use Sarah in all three. Rotate:
+- Yasir Tariq: data analyst in GA, had a full-time W2 job and thought he couldn't invest while employed. 4 properties in Birmingham and Cleveland, $3,700/mo cash flow, 6 months.
+- Daniel Bier: 26 years old in Orange County CA, thought expensive local markets made investing impossible. Bought a $76K property in Detroit, now collects $1,120/mo Section 8 rent, 17.53% cash-on-cash ROI, closed in 4 months.
+- Sarah: teacher in California, terrified of managing tenants she couldn't see in person. Bought 4 Cleveland properties. Collects $3,500/mo. Has never once visited any of them. (18 months in.)
+- Marcus: spent 2 full years reading about real estate without buying a single property. First deal closed in 6 weeks after joining, now at $1,800/mo.
+- David: had only $30K saved and assumed it wasn't enough to invest. Bought his first property in 3 months, 19% ROI, now at 5 properties and $2,400/mo.
+- Giorgio: zero real estate experience coming in. Used BRRRR strategy to go from 0 to 9 properties in 5 months, grossing $14,000/mo.
 
-RECENT AIRTABLE WINS (supplement above if relevant, never invent):
+RECENT AIRTABLE WINS (use if relevant, never invent):
 ${winsText}
 
-LENGTH AND READABILITY:
-- 450 to 650 words for the body. This is non-negotiable. These emails must be fully developed.
-- Every thought gets completed. No half-built sentences left hanging. No idea introduced and then abandoned.
-- Write in complete, developed paragraphs. 3 to 5 sentences per paragraph as a baseline.
-- Use white space between paragraphs for readability, but each paragraph carries a full thought, not a fragment.
-- The reader should be able to follow the logic of the email from the opening line to the closing CTA without confusion.
-- Read the email back like a human would. If a sentence doesn't connect to the one before it, rewrite it.
+LENGTH — non-negotiable:
+- 500 to 700 words per email body.
+- If you write fewer than 500 words, the email is not finished. Keep writing.
+- Every section below needs to be fully written out, not summarized or abbreviated.
 
-THE 6-PART EMAIL STRUCTURE — every variation follows this arc:
+THE 7-PART EMAIL STRUCTURE — follow this in order, every variation:
 
-1. HOOK (2-3 paragraphs): Opens with a scene, story, or situation that has nothing to do with real estate yet. Pull the reader into a moment. Give it context. Let it breathe. The hook should be fully told, not just referenced. NEVER starts with "I". NEVER starts with "In today's email".
+1. HOOK (2-3 full paragraphs)
+Open with a scene, story, or moment that has nothing to do with real estate yet. Drop the reader into something specific and human — a conversation Joseph overheard, a situation a friend was in, a moment from Joseph's own past, a thing that happened in a completely unrelated context. Give it enough detail that the reader can picture it. Do not rush to the point. Let the scene breathe. NEVER start with "I". NEVER start with "In today's email". The hook should feel like the opening of a short story, not an email.
 
-2. BRIDGE (1 paragraph): Connect the hook to the lesson. This is the pivot. "Here is the thing about that..." or "The same thing happens in real estate..." Make the connection explicit and logical.
+2. BRIDGE (1 full paragraph)
+Now pivot. Connect what just happened in the hook to the topic of this email. Make the connection explicit and logical. "Here's the thing about that..." or "Real estate works the same way..." or "That's actually the same mistake most landlords make with Section 8." The reader should feel the gear shift and understand why the hook mattered.
 
-3. LESSON (2-3 paragraphs): The one idea this email is built around. A belief shift, a mechanism, a hidden truth about Section 8 investing. This is not a bullet list. It is a fully developed argument. Explain WHY it's true. Give context. Walk the reader through the logic. This is the heart of the email and should feel like genuine education, not a teaser.
+3. TOPIC INTRODUCTION (1-2 paragraphs)
+Before diving into the lesson, introduce the topic directly. Name what this email is actually about. Explain why it matters to the reader. Establish the problem, misconception, or question that this email is going to address. Give the reader enough context to understand the stakes. Do not assume they already understand the topic. Write this like you're introducing it to someone who is interested but not yet informed.
 
-4. PROOF (2 paragraphs): One named student from the list above. First paragraph: who they were before and why they seemed unlikely to succeed — the specific disadvantage. Second paragraph: what happened, with exact numbers and timeframe. Never invent numbers. Never combine two students into one paragraph.
+4. LESSON (2-3 full paragraphs)
+This is the core of the email. One idea, fully developed. A belief shift, a mechanism, a hidden truth about Section 8 investing. Explain WHY it's true. Give the reasoning, the context, the real-world mechanics. If it's myth-busting, dismantle the myth with logic and specifics. If it's a concept, explain how it actually works step by step. If it's a mindset shift, walk the reader through the logic of the shift. This should feel like genuine education. Someone should finish this section and actually understand something new.
 
-5. READER TIE (1 paragraph): Bring it back to the person reading. "If that sounds like where you are right now..." or "The people I work with who feel this most are usually..." This should feel like Joseph is speaking directly to the reader's specific situation, not making a generic pivot.
+5. PROOF (2 paragraphs)
+Pick one student from the list above (use a different one in each of the 3 variations). First paragraph: who they were before, and the specific disadvantage that made them seem unlikely to succeed. Paint the picture. Second paragraph: what happened after they took action — exact numbers, exact timeframe. No invented numbers. No blending two students together.
 
-6. CTA (1 short paragraph): One action. Soft and natural, not a sales pitch. Real scarcity only. Never pushy. Do NOT ask readers to reply to the email — the inbox is not monitored.
+6. READER TIE (1 paragraph)
+Bring it back to the person reading. Speak directly to the situation they're in right now. "If that sounds like where you are right now..." or "Most of the people I work with who feel this hesitation are..." Make it feel like Joseph wrote this paragraph specifically for them.
 
-THE 3 VARIATIONS USE DIFFERENT OPENING TYPES:
-- Variation 1: Scene-setter hook — drop into a specific physical moment from Joseph's real life: his early 20s, a conversation with a client, buying his first property, a moment on the phone with a property manager. Set the scene fully. Let the reader picture it.
-- Variation 2: Third-party story hook — open with a named student from the proof list. Start at the moment before they took action — where they were stuck, what they were afraid of, what they kept telling themselves. Hold the lesson back until the bridge.
-- Variation 3: Confession or counter-punch hook — Joseph admits something counterintuitive, shares a mistake he made, or opens by quoting the common belief the reader holds and immediately examining why it falls apart.
+7. CTA (1 short paragraph)
+One clear, soft action. Natural, not pushy. Zero fake urgency. Do NOT ask the reader to reply to this email — the inbox is not monitored and replies will not be answered.
 
-SUBJECT LINE RULES — different types across the 3:
-- Under 8 words. One idea only.
-- Incomplete thought that creates curiosity: "this part no one talks about" / "the number that changed everything"
-- Specific result: "4 properties in 6 months" / "19% ROI on $30K"
-- Lowercase, conversational: sounds like a text, not a broadcast
-- Test: would Joseph say this in a voice note to a friend?
+CASE STUDY DIVERSITY RULE: Variation 1, 2, and 3 must each use a different student from the proof list. Do not repeat the same name across variations.
+
+THE 3 VARIATIONS USE DIFFERENT OPENING HOOKS:
+- Variation 1: Scene-setter — drop into a specific physical moment from Joseph's life. His early 20s. A phone call with a property manager. A conversation at a real estate meetup. A moment during his first property purchase. Let the reader see and feel the scene.
+- Variation 2: Third-party story — open with a named student before they took action. Show who they were, what they were afraid of, what was holding them back. Don't reveal the outcome yet. Save that for the proof section.
+- Variation 3: Confession or counter-punch — Joseph admits something counterintuitive, owns a mistake, or opens by stating the belief the reader probably holds right now and then calmly dismantling it.
+
+SUBJECT LINE RULES:
+- Under 8 words. One idea only. Different type per variation.
+- Curiosity: "the part nobody explains" / "what I got wrong at 18"
+- Specific outcome: "4 properties, never visited them"
+- Lowercase conversational: reads like a text, not a broadcast
+- Test: would Joseph say this to a friend on a voice note?
 
 TONE AND VOICE:
-- Warm but direct. Not corporate. Not motivational-speaker. Not a guru on a stage.
-- Joseph is writing to people who are interested in Section 8 investing but haven't started or haven't scaled. He respects them. He talks to them like adults.
-- Use specific details, not generalities. "A 3-bed 1-bath in Cleveland" beats "a property." "HUD pays directly to the landlord's bank account" beats "the government pays."
-- Parenthetical asides add personality when used sparingly: (this still deposited every month.) / (she has never been to Ohio.)
-- Bold one line per email maximum — the single most important sentence.
+- Warm, direct, and educated. Not a guru on a stage. Not a motivational speaker. A person who has done this and talks to other people like adults.
+- Specific always beats vague. "A 3-bed 1-bath in Cleveland" beats "a property." "HUD deposits directly into the landlord's bank account on the 1st" beats "the government pays the rent."
+- Parenthetical asides add personality when used once or twice: (it still deposited that month.) / (she has never been to Ohio.)
+- Bold the single most important sentence in the entire email. Only once. Not three times.
 
 PS RULES:
 - Always include a PS.
 - One or two sentences only.
-- Use for a second angle on the CTA, a relevant stat, or a short thought that didn't fit in the body.
-- Never ask the reader to reply to the email. Never tease a next email. Never skip the PS.
+- Use for a second angle on the CTA, a surprising stat, or a thought that didn't fit in the body.
+- NEVER ask readers to reply to the email. NEVER tease a next email. NEVER skip the PS.
 
-SIGN-OFF: "Joseph" only. No title, no company name, no social links.
+SIGN-OFF: "Joseph" only. No title. No company. No links.
 
-BANNED:
-- Em dashes (— or --) anywhere in the email
+BANNED — these will disqualify the output if present:
+- Em dashes (— or --)
 - "game-changer", "transform", "unlock", "leverage", "elevate", "journey", "revolutionary", "empower", "streamline"
 - "In today's email I'm going to..."
-- Bullet lists anywhere in the body
-- Multiple bolded lines
+- Bullet lists inside the email body
+- More than one bolded line
 - Fake urgency or invented scarcity
-- Starting the body with "I"
-- Asking readers to reply to the email
-- Half-developed thoughts or fragment-heavy writing
-- Referencing any source — never mention Reddit, YouTube, comments, "a post I saw", "someone asked", r/anything, or any platform. The ideas are Joseph's own.
+- Starting the first sentence with "I"
+- Any instruction telling the reader to reply to this email
+- Choppy one-sentence paragraphs that don't develop a thought
+- Referencing any outside source — no Reddit, YouTube, news articles, forums, comments, "a post I saw", or any platform name. Joseph's ideas are Joseph's own.
 
 Return exactly this JSON — body uses \\n for line breaks:
 {
