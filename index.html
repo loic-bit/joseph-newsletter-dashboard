@@ -376,33 +376,78 @@ function buildEmailPrompt(topic, studentWins) {
   const winsText = studentWins.length > 0
     ? studentWins.map(w => `${w.name}: $${w.cash_collected} collected, source: ${w.lead_source || 'direct'}`).join('\n')
     : 'None available for this cycle.';
-  return `Generate 3 distinct email newsletter variations for Joseph Khateri on this topic.
+  return `Write 3 email newsletter variations for Joseph Khateri. These emails do NOT read like marketing. They read like a voice note from someone the reader respects who also happens to invest in real estate.
 
 TOPIC: ${topic.title}
-SOURCE SIGNAL: ${topic.source}
 SIGNAL QUOTE: "${topic.signal_quote}"
 JOSEPH'S ANGLE: ${topic.joseph_angle}
 ICP FIT: ${topic.icp_fit}
 CTA TYPE: ${topic.cta}
 
-RECENT STUDENT WINS (use if relevant, never invent):
+PROVEN STUDENT RESULTS (use these, never invent — always name + disadvantage BEFORE win):
+- Yasir Tariq: data analyst, GA, had a full-time W2 job (couldn't quit). 4 properties in Birmingham+Cleveland, $3,700/mo, 6 months.
+- Daniel Bier: 26, Orange County CA, expensive market (couldn't invest locally). $76K Detroit purchase, $1,120/mo Section 8 rent, 17.53% cash-on-cash ROI, 4 months.
+- Sarah: teacher in California, terrified of managing tenants remotely. 4 Cleveland properties, $3,500/mo, 18 months — never visited her properties.
+- Marcus: 2 years stuck in research mode, hadn't pulled the trigger once. First deal in 6 weeks, $650/mo, now $1,800/mo.
+- David: only $30K saved (thought it wasn't enough). First property in 3 months, 19% ROI, now 5 properties at $2,400/mo.
+- Giorgio: 0 experience. 0 to 9 properties using BRRRR, $14K/mo gross in 5 months.
+
+RECENT AIRTABLE WINS (supplement above if relevant, never invent):
 ${winsText}
 
-Email rules:
-- Subject line: under 8 words, all lowercase, sounds like a text to a friend not a marketing email
-- Preview text: continues or contrasts with the subject line
-- Body: 150-300 words. Open with a scene, a question, or a story about a specific person — NEVER start with "I"
-- Short paragraphs: 1-3 sentences each
-- Include one named student result if it fits naturally
-- No em dashes, no hype words
-- The 3 versions must use different structural approaches (not just synonym swaps)
+THE 6-PART EMAIL SKELETON — every variation follows this in order:
+1. HOOK: unrelated scene-setter, third-party story, or confession — NEVER starts with "I", NEVER "In today's email..."
+2. BRIDGE: pivot from the hook to the business point ("here's the thing" / "business works the same way")
+3. LESSON: one specific idea, belief shift, or mechanism — not a list
+4. PROOF: one named student — disadvantage FIRST, then win, then number + timeframe
+5. READER TIE: "so if you're in a similar spot..." — bridge to the reader's situation
+6. CTA: one soft action, almost an afterthought. Real scarcity only.
 
-Return exactly this JSON:
+THE 3 VARIATIONS MUST USE DIFFERENT OPENING TYPES:
+- Variation 1: Scene-setter hook (drop into a physical moment from Joseph's real life — early 20s, building a portfolio, investing out-of-state, talking to clients)
+- Variation 2: Third-party story hook (open with a named student's situation — name them, describe where they were stuck, DON'T explain the lesson yet)
+- Variation 3: Confession or anti-guru counter-punch (Joseph admits something, or opens by quoting the common fear/myth and immediately punching it)
+
+SUBJECT LINE RULES — pick different types across the 3:
+- Incomplete thought that creates open loop: "this part sucks" / "they're watching to see what happens"
+- Specific number + timeframe: "4 properties in 6 months" / "19% ROI on $30K"
+- Intentional lowercase casual: sounds like a text, not a Mailchimp template
+- Anti-promise: quote the common guru claim, then the email punches it
+- Under 8 words. One idea only. Test: "would Joseph say this in a voice note?"
+
+SENTENCE STRUCTURE RULES:
+- Short. Then shorter. Fragments are tools, not errors.
+- One idea per paragraph. Max 3-4 lines.
+- Heavy white space — reads on a phone screen.
+- Parenthetical asides for personality: (it still deposited.) / (while working full-time.)
+- Bold the single most important line — once per email, not three times.
+- 150-300 words total body.
+
+PROOF FORMULA (apply to every win used):
+[Name] [started/joined/came in] [specific timeframe]. [The disadvantage — what made them unlikely to succeed]. Since then, [what happened]. [Specific number]. [Specific timeframe]. Optional: "I can't take full credit."
+
+PS RULES — always include a PS:
+- One line only
+- Use for: second CTA angle / tease next email / reply hook / real scarcity
+- Never skip it
+
+SIGN-OFF: "Joseph" only. No title, no company, no links.
+
+BANNED:
+- Em dashes (— or --) anywhere
+- "game-changer", "transform", "unlock", "leverage", "elevate", "journey", "revolutionary", "empower"
+- "In today's email I'm going to show you..."
+- Bullet lists inside the body for proof or storytelling
+- Multiple bold lines
+- Fake urgency or fake scarcity
+- Starting the body with "I"
+
+Return exactly this JSON — body uses \\n for line breaks:
 {
   "email": [
-    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
-    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
-    { "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." }
+    { "hook_type": "scene_setter", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
+    { "hook_type": "third_party_story", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." },
+    { "hook_type": "confession", "subject": "...", "alt_subject": "...", "preview": "...", "body": "..." }
   ]
 }`;
 }
@@ -910,9 +955,19 @@ function applyVersionVisibility() {
 }
 
 function renderEmailPanel() {
+  const hookLabel = h => h ? h.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
   document.getElementById('panelEmail').innerHTML = S.content.email.map((e, i) => `
     <div data-version="${i}" style="display:${i===0?'':'none'}">
-      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button></div><div class="text-white font-medium text-sm">${esc(e.subject)}</div></div>
+      <div class="card p-5 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div>
+            ${e.hook_type ? `<span class="badge" style="background:#0a1a10;color:#4ade80">${esc(hookLabel(e.hook_type))}</span>` : ''}
+          </div>
+          <button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button>
+        </div>
+        <div class="text-white font-medium text-sm">${esc(e.subject)}</div>
+      </div>
       <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div></div>
       <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.preview)}</div></div>
       <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div><div class="email-body">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex justify-end"><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
