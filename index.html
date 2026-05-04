@@ -293,31 +293,54 @@ VOICE RULES — NON-NEGOTIABLE:
 
 You output ONLY valid JSON. No text, no explanation, no markdown — just the JSON object.`;
 
+// ─── Phase switching ──────────────────────────────────────────────────────────
+const PHASE_MAP = {
+  'loading': 'stateLoading', 'ready': 'stateReady',
+  'topics-loading': 'stateTopicsLoading', 'topic-select': 'stateTopicSelect',
+  'content-loading': 'stateContentLoading', 'content-view': 'stateContentView',
+};
+function setPhase(phase) {
+  S.phase = phase;
+  Object.keys(PHASE_MAP).forEach(p => {
+    document.getElementById(PHASE_MAP[p]).classList.toggle('hidden', p !== phase);
+  });
+}
+
 // ─── Claude API caller ────────────────────────────────────────────────────────
 async function callClaude(model, userPrompt, maxTokens) {
   const apiKey = getApiKey();
   if (!apiKey) { showApiKeyModal(true); throw new Error('API key not set'); }
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: maxTokens,
-      system: JOSEPH_SYSTEM,
-      messages: [{ role: 'user', content: userPrompt }],
-    }),
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Claude API ${res.status}: ${err}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 120000);
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      signal: controller.signal,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: maxTokens,
+        system: JOSEPH_SYSTEM,
+        messages: [{ role: 'user', content: userPrompt }],
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Claude API ${res.status}: ${err}`);
+    }
+    const data = await res.json();
+    return data.content[0].text;
+  } catch (err) {
+    if (err.name === 'AbortError') throw new Error('Request timed out after 2 minutes. Try again.');
+    throw err;
+  } finally {
+    clearTimeout(timer);
   }
-  const data = await res.json();
-  return data.content[0].text;
 }
 
 function parseJSON(raw) {
@@ -750,18 +773,6 @@ function switchNav(nav) {
   if (nav === 'history') renderHistoryList();
 }
 
-// ─── Phase switching ──────────────────────────────────────────────────────────
-const PHASE_MAP = {
-  'loading': 'stateLoading', 'ready': 'stateReady',
-  'topics-loading': 'stateTopicsLoading', 'topic-select': 'stateTopicSelect',
-  'content-loading': 'stateContentLoading', 'content-view': 'stateContentView',
-};
-function setPhase(phase) {
-  S.phase = phase;
-  Object.keys(PHASE_MAP).forEach(p => {
-    document.getElementById(PHASE_MAP[p]).classList.toggle('hidden', p !== phase);
-  });
-}
 
 // ─── Header ───────────────────────────────────────────────────────────────────
 function renderHeader(data) {
@@ -951,9 +962,9 @@ async function generateContent(force) {
   try {
     const studentWins = S.research.student_wins || [];
     const [emailRaw, storiesRaw, skoolRaw] = await Promise.all([
-      callClaude(SONNET, buildEmailPrompt(S.selectedTopic, studentWins), 5000),
+      callClaude(SONNET, buildEmailPrompt(S.selectedTopic, studentWins), 7000),
       callClaude(SONNET, buildStoriesPrompt(S.selectedTopic, studentWins), 3000),
-      callClaude(HAIKU,  buildSkoolPrompt(S.selectedTopic), 2000),
+      callClaude(HAIKU,  buildSkoolPrompt(S.selectedTopic), 2500),
     ]);
     const data = { ...parseJSON(emailRaw), ...parseJSON(storiesRaw), ...parseJSON(skoolRaw) };
     if (!data.email || !data.stories || !data.skool) throw new Error('Incomplete content returned');
@@ -967,10 +978,17 @@ async function generateContent(force) {
     renderContentView();
     setPhase('content-view');
   } catch (err) {
-    if (!S.content) { setPhase('topic-select'); return; }
-    setPhase('content-view');
-    document.getElementById('contentError').textContent = `Error: ${err.message}`;
-    document.getElementById('contentError').classList.remove('hidden');
+    setPhase('content-loading');
+    document.getElementById('stateContentLoading').innerHTML =
+      `<div style="color:#f87171;text-align:center;padding:2rem;max-width:440px;margin:auto">
+        <b>Content generation failed</b><br>
+        <span style="font-size:.75rem;color:#9ca3af;display:block;margin:.5rem 0">${err.message}</span>
+        <div style="display:flex;gap:.75rem;justify-content:center;margin-top:1rem">
+          <button onclick="backToTopics()" style="background:#374151;color:#fff;border:none;padding:.5rem 1.25rem;border-radius:8px;cursor:pointer;font-weight:600">Back to Topics</button>
+          <button onclick="generateContent(true)" style="background:#f59e0b;color:#000;border:none;padding:.5rem 1.25rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button>
+        </div>
+      </div>`;
+    console.error('generateContent error:', err);
   }
 }
 
