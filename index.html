@@ -562,8 +562,13 @@ async function init() {
     renderVideosPanel();
     setPhase('ready');
   } catch (err) {
-    document.getElementById('stateLoading').innerHTML =
-      `<div class="error-box max-w-sm text-center mx-auto">Failed to load research data.<br><span class="text-gray-500 text-xs block mt-1">${esc(err.message)}</span><button class="btn-primary mt-4 justify-center" onclick="init()">Retry</button></div>`;
+    console.error('init error:', err);
+    const el = document.getElementById('stateLoading');
+    if (el) el.innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto">
+      <div style="font-weight:600;margin-bottom:.5rem">Failed to load research data</div>
+      <div style="font-size:.75rem;color:#6b7280;margin-bottom:1rem">${String(err.message)}</div>
+      <button onclick="init()" style="background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button>
+    </div>`;
   }
 }
 
