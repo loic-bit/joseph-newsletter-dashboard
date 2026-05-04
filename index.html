@@ -548,12 +548,36 @@ if (sessionStorage.getItem('ns_auth') === '1') {
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+function loadingMsg(msg) {
+  const el = document.getElementById('stateLoading');
+  if (el) el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 2rem;gap:1rem">
+    <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+    <div style="color:#9ca3af;font-size:.875rem">${msg}</div>
+  </div>`;
+}
 async function init() {
   setPhase('loading');
+  loadingMsg('Fetching dashboard-data.json...');
+  let res, data;
   try {
-    const res = await fetch('./dashboard-data.json');
-    if (!res.ok) throw new Error('dashboard-data.json not found');
-    const data = await res.json();
+    res = await fetch('./dashboard-data.json?v=' + Date.now());
+  } catch (err) {
+    document.getElementById('stateLoading').innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto"><b>Network error</b><br><span style="font-size:.75rem;color:#9ca3af">${err.message}</span><br><button onclick="init()" style="margin-top:1rem;background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button></div>`;
+    return;
+  }
+  if (!res.ok) {
+    document.getElementById('stateLoading').innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto"><b>HTTP ${res.status}</b> — dashboard-data.json not found<br><span style="font-size:.75rem;color:#9ca3af">Check that the file is committed and Netlify deployed it.</span><br><button onclick="init()" style="margin-top:1rem;background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button></div>`;
+    return;
+  }
+  loadingMsg('Parsing data...');
+  try {
+    data = await res.json();
+  } catch (err) {
+    document.getElementById('stateLoading').innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto"><b>JSON parse error</b><br><span style="font-size:.75rem;color:#9ca3af">${err.message} — server may have returned HTML instead of JSON</span><br><button onclick="init()" style="margin-top:1rem;background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button></div>`;
+    return;
+  }
+  loadingMsg('Rendering...');
+  try {
     S.research = data.research;
     renderHeader(data);
     renderResearchBreakdown(data);
@@ -562,13 +586,8 @@ async function init() {
     renderVideosPanel();
     setPhase('ready');
   } catch (err) {
-    console.error('init error:', err);
-    const el = document.getElementById('stateLoading');
-    if (el) el.innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto">
-      <div style="font-weight:600;margin-bottom:.5rem">Failed to load research data</div>
-      <div style="font-size:.75rem;color:#6b7280;margin-bottom:1rem">${String(err.message)}</div>
-      <button onclick="init()" style="background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button>
-    </div>`;
+    console.error('render error:', err);
+    document.getElementById('stateLoading').innerHTML = `<div style="color:#f87171;text-align:center;padding:2rem;max-width:400px;margin:auto"><b>Render error</b><br><span style="font-size:.75rem;color:#9ca3af">${err.message}</span><br><button onclick="init()" style="margin-top:1rem;background:#f59e0b;color:#000;border:none;padding:.5rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600">Retry</button></div>`;
   }
 }
 
