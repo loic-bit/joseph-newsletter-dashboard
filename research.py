@@ -9,8 +9,12 @@ Run manually: python research.py
 Run via GitHub Actions: scheduled Mon/Wed/Fri at 9am ET
 
 Secrets required (GitHub Actions):
-    JOSEPH_YT_API_KEY  — YouTube Data API v3 key
-    AIRTABLE_TOKEN     — Airtable personal access token
+    JOSEPH_YT_API_KEY   — YouTube Data API v3 key
+    AIRTABLE_TOKEN      — Airtable personal access token
+    REDDIT_CLIENT_ID    — Reddit script app client ID
+    REDDIT_CLIENT_SECRET— Reddit script app client secret
+    REDDIT_USERNAME     — Reddit account username
+    REDDIT_PASSWORD     — Reddit account password
 """
 
 import json
@@ -35,6 +39,11 @@ YOUTUBE_CHANNEL_ID = "UCQXnWqNYluoUnm3IpzeRMuw"
 AIRTABLE_TOKEN    = os.environ.get("AIRTABLE_TOKEN", "")
 AIRTABLE_BASE_ID  = "apppAaY1mCbpmXSGd"
 AIRTABLE_PIPELINE = "tblRt7VOLkoT5KPEO"
+
+REDDIT_CLIENT_ID     = os.environ.get("REDDIT_CLIENT_ID", "")
+REDDIT_CLIENT_SECRET = os.environ.get("REDDIT_CLIENT_SECRET", "")
+REDDIT_USERNAME      = os.environ.get("REDDIT_USERNAME", "")
+REDDIT_PASSWORD      = os.environ.get("REDDIT_PASSWORD", "")
 
 REDDIT_SUBREDDITS = [
     "realestateinvesting",
@@ -75,6 +84,48 @@ def get_xml(url: str) -> ET.Element:
     return ET.fromstring(get(url))
 
 # ---------------------------------------------------------------------------
+# REDDIT AUTH
+# Uses OAuth password grant (script app) so requests work from datacenter IPs.
+# Falls back to unauthenticated if credentials are missing (works locally).
+# ---------------------------------------------------------------------------
+
+_reddit_token: str = ""
+
+def get_reddit_token() -> str:
+    global _reddit_token
+    if _reddit_token:
+        return _reddit_token
+    if not all([REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USERNAME, REDDIT_PASSWORD]):
+        return ""
+    import base64
+    credentials = base64.b64encode(f"{REDDIT_CLIENT_ID}:{REDDIT_CLIENT_SECRET}".encode()).decode()
+    req = urllib.request.Request(
+        "https://www.reddit.com/api/v1/access_token",
+        data=urllib.parse.urlencode({
+            "grant_type": "password",
+            "username":   REDDIT_USERNAME,
+            "password":   REDDIT_PASSWORD,
+        }).encode(),
+        headers={
+            "Authorization": f"Basic {credentials}",
+            "User-Agent":    f"newsletter-research/1.0 by /u/{REDDIT_USERNAME}",
+            "Content-Type":  "application/x-www-form-urlencoded",
+        },
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+            _reddit_token = data.get("access_token", "")
+            if _reddit_token:
+                print(f"  [reddit] OAuth token acquired")
+            else:
+                print(f"  [reddit] OAuth failed: {data}", file=sys.stderr)
+    except Exception as e:
+        print(f"  [reddit] OAuth token request failed: {e}", file=sys.stderr)
+    return _reddit_token
+
+# ---------------------------------------------------------------------------
 # SOURCE 1 — REDDIT
 # ---------------------------------------------------------------------------
 
@@ -95,10 +146,20 @@ def _is_reddit_relevant(sub: str, title: str, text: str) -> bool:
 
 def fetch_reddit() -> list:
     items = []
+    token = get_reddit_token()
+    if token:
+        reddit_base = "https://oauth.reddit.com"
+        reddit_headers = {
+            "Authorization": f"Bearer {token}",
+            "User-Agent": f"newsletter-research/1.0 by /u/{REDDIT_USERNAME}",
+        }
+    else:
+        reddit_base = "https://www.reddit.com"
+        reddit_headers = {}
 
     for sub in REDDIT_SUBREDDITS:
         try:
-            data = get_json(f"https://www.reddit.com/r/{sub}/hot.json?limit=50")
+            data = get_json(f"{reddit_base}/r/{sub}/hot.json?limit=50", headers=reddit_headers)
         except Exception as e:
             print(f"  [reddit] r/{sub} failed: {e}", file=sys.stderr)
             continue
@@ -134,8 +195,9 @@ def fetch_reddit() -> list:
             if p.get("score", 0) >= 50:
                 try:
                     thread = get_json(
-                        f"https://www.reddit.com/r/{sub}/comments/{p['id']}.json"
-                        f"?limit=20&sort=top&depth=1"
+                        f"{reddit_base}/r/{sub}/comments/{p['id']}.json"
+                        f"?limit=20&sort=top&depth=1",
+                        headers=reddit_headers
                     )
                     for c in thread[1]["data"]["children"][:10]:
                         cd = c.get("data", {})
