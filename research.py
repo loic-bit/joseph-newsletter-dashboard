@@ -144,82 +144,82 @@ def _is_reddit_relevant(sub: str, title: str, text: str) -> bool:
     combined = (title + " " + text).lower()
     return any(kw in combined for kw in REDDIT_RELEVANCE_KEYWORDS)
 
-def fetch_reddit() -> list:
-    items = []
-    token = get_reddit_token()
+def _fetch_reddit_json(sub: str, token: str) -> list:
     if token:
-        reddit_base = "https://oauth.reddit.com"
-        reddit_headers = {
-            "Authorization": f"Bearer {token}",
-            "User-Agent": f"newsletter-research/1.0 by /u/{REDDIT_USERNAME}",
-        }
+        base    = "https://oauth.reddit.com"
+        headers = {"Authorization": f"Bearer {token}", "User-Agent": f"newsletter-research/1.0 by /u/{REDDIT_USERNAME}"}
     else:
-        reddit_base = "https://www.reddit.com"
-        reddit_headers = {}
+        base    = "https://www.reddit.com"
+        headers = {}
+
+    data = get_json(f"{base}/r/{sub}/hot.json?limit=50", headers=headers)
+    items = []
+    for child in data["data"]["children"]:
+        p = child["data"]
+        if p.get("stickied"):
+            continue
+        if p.get("score", 0) < REDDIT_MIN_POST_SCORE:
+            continue
+        age_days = (time.time() - p.get("created_utc", 0)) / 86400
+        if age_days > REDDIT_POST_MAX_AGE_DAYS:
+            continue
+        if not _is_reddit_relevant(sub, p.get("title", ""), p.get("selftext", "")):
+            continue
+        items.append({
+            "source":       f"r/{sub}",
+            "type":         "post",
+            "title":        p.get("title", ""),
+            "text":         p.get("selftext", "")[:600],
+            "score":        p.get("score", 0),
+            "num_comments": p.get("num_comments", 0),
+            "url":          f"https://reddit.com{p.get('permalink', '')}",
+            "is_question":  "?" in p.get("title", ""),
+            "age_days":     round(age_days, 1),
+        })
+    return items
+
+def _fetch_reddit_rss(sub: str) -> list:
+    ns = {"atom": "http://www.w3.org/2005/Atom", "media": "http://search.yahoo.com/mrss/"}
+    root = get_xml(f"https://www.reddit.com/r/{sub}/hot.rss")
+    items = []
+    for entry in root.findall("atom:entry", ns):
+        title   = entry.findtext("atom:title", "", ns)
+        link_el = entry.find("atom:link", ns)
+        url     = link_el.get("href", "") if link_el is not None else ""
+        content = entry.findtext("atom:content", "", ns)
+        author  = entry.findtext("atom:author/atom:name", "", ns)
+        if not _is_reddit_relevant(sub, title, content):
+            continue
+        items.append({
+            "source":      f"r/{sub}",
+            "type":        "post",
+            "title":       title,
+            "text":        content[:600],
+            "score":       0,
+            "url":         url,
+            "is_question": "?" in title,
+            "age_days":    0,
+        })
+    return items
+
+def fetch_reddit() -> list:
+    token = get_reddit_token()
+    items = []
 
     for sub in REDDIT_SUBREDDITS:
         try:
-            data = get_json(f"{reddit_base}/r/{sub}/hot.json?limit=50", headers=reddit_headers)
+            sub_items = _fetch_reddit_json(sub, token)
+            items.extend(sub_items)
         except Exception as e:
-            print(f"  [reddit] r/{sub} failed: {e}", file=sys.stderr)
-            continue
-
-        for child in data["data"]["children"]:
-            p = child["data"]
-
-            if p.get("stickied"):
-                continue
-            if p.get("score", 0) < REDDIT_MIN_POST_SCORE:
-                continue
-
-            age_days = (time.time() - p.get("created_utc", 0)) / 86400
-            if age_days > REDDIT_POST_MAX_AGE_DAYS:
-                continue
-
-            if not _is_reddit_relevant(sub, p.get("title", ""), p.get("selftext", "")):
-                continue
-
-            post = {
-                "source":       f"r/{sub}",
-                "type":         "post",
-                "title":        p.get("title", ""),
-                "text":         p.get("selftext", "")[:600],
-                "score":        p.get("score", 0),
-                "num_comments": p.get("num_comments", 0),
-                "url":          f"https://reddit.com{p.get('permalink', '')}",
-                "is_question":  "?" in p.get("title", ""),
-                "age_days":     round(age_days, 1),
-            }
-            items.append(post)
-
-            if p.get("score", 0) >= 50:
+            if "403" in str(e):
+                # JSON API blocked from this IP — fall back to RSS feed
                 try:
-                    thread = get_json(
-                        f"{reddit_base}/r/{sub}/comments/{p['id']}.json"
-                        f"?limit=20&sort=top&depth=1",
-                        headers=reddit_headers
-                    )
-                    for c in thread[1]["data"]["children"][:10]:
-                        cd = c.get("data", {})
-                        body = cd.get("body", "")
-                        if (
-                            cd.get("score", 0) >= REDDIT_MIN_COMMENT_SCORE
-                            and body
-                            and body != "[deleted]"
-                            and body != "[removed]"
-                        ):
-                            items.append({
-                                "source":       f"r/{sub}",
-                                "type":         "comment",
-                                "text":         body[:600],
-                                "score":        cd.get("score", 0),
-                                "url":          f"https://reddit.com{p.get('permalink', '')}",
-                                "parent_title": p.get("title", ""),
-                                "is_question":  "?" in body,
-                            })
-                    time.sleep(0.5)
-                except Exception:
-                    pass
+                    sub_items = _fetch_reddit_rss(sub)
+                    items.extend(sub_items)
+                except Exception as e2:
+                    print(f"  [reddit] r/{sub} RSS also failed: {e2}", file=sys.stderr)
+            else:
+                print(f"  [reddit] r/{sub} failed: {e}", file=sys.stderr)
 
     items.sort(key=lambda x: x.get("score", 0), reverse=True)
     print(f"  [reddit] {len(items)} items ({sum(1 for i in items if i['is_question'])} questions)")
