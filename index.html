@@ -5,6 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-store" />
 <title>Newsletter Studio — Joseph Khateri</title>
+<!-- REFINE CHAT PANEL -->
+<div id="refinePanel">
+  <div class="flex items-center justify-between px-5 py-3 border-b border-gray-900 flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <span class="text-purple-400 font-semibold text-sm">Refine</span>
+      <span id="refinePanelLabel" class="text-gray-500 text-xs"></span>
+    </div>
+    <button onclick="closeRefinePanel()" class="text-gray-600 hover:text-gray-300 text-lg leading-none">&times;</button>
+  </div>
+  <div id="refineMsgs"></div>
+  <div class="flex-shrink-0 border-t border-gray-900 px-4 py-3">
+    <div id="refineChips" class="flex gap-2 mb-3 overflow-x-auto pb-1 flex-wrap">
+      <button class="chip" onclick="sendChip('Strengthen the hook')">Stronger hook</button>
+      <button class="chip" onclick="sendChip('Make it longer and more developed')">Make it longer</button>
+      <button class="chip" onclick="sendChip('Tighten it up, remove anything unnecessary')">Tighten it up</button>
+      <button class="chip" onclick="sendChip('Make the tone less formal, more conversational')">Less formal</button>
+      <button class="chip" onclick="sendChip('Use a different student case study')">Different case study</button>
+      <button class="chip" onclick="sendChip('Make the CTA softer and less pushy')">Softer CTA</button>
+    </div>
+    <div class="flex gap-2">
+      <textarea id="refineInput" rows="2" placeholder="What do you want to change?" style="resize:none;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendRefineMessage();}"></textarea>
+      <button id="refineSendBtn" class="btn-primary flex-shrink-0 self-end" onclick="sendRefineMessage()">
+        <span id="refineSendSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+        Send
+      </button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,6 +87,20 @@
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #111; }
   ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+
+  /* ── Refine chat panel ── */
+  #refinePanel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; background: #0f0f0f; border-top: 1px solid #2a2a2a; transform: translateY(100%); transition: transform .25s cubic-bezier(.4,0,.2,1); max-height: 70vh; display: flex; flex-direction: column; }
+  #refinePanel.open { transform: translateY(0); }
+  #refineMsgs { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .rmsg-user { align-self: flex-end; background: #1a1a1a; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 10px 14px; border-radius: 12px 12px 4px 12px; max-width: 75%; font-size: 13px; line-height: 1.5; }
+  .rmsg-ai { align-self: flex-start; max-width: 85%; }
+  .rmsg-ai-text { background: #111; border: 1px solid #1f1f1f; color: #d1d5db; padding: 12px 14px; border-radius: 12px 12px 12px 4px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; }
+  .rmsg-use-btn { margin-top: 6px; font-size: 11px; padding: 4px 10px; background: #0a1a10; border: 1px solid #4ade80; color: #4ade80; border-radius: 6px; cursor: pointer; transition: all .15s; }
+  .rmsg-use-btn:hover { background: #4ade80; color: #000; }
+  .chip { font-size: 12px; padding: 5px 11px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 20px; color: #9ca3af; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .chip:hover { border-color: #f59e0b; color: #f59e0b; }
+  .refine-btn { font-size: 12px; padding: 5px 12px; background: transparent; border: 1px solid #2a2a2a; border-radius: 6px; color: #6b7280; cursor: pointer; transition: all .15s; }
+  .refine-btn:hover { border-color: #a78bfa; color: #a78bfa; }
 </style>
 </head>
 <body class="min-h-screen">
@@ -306,11 +349,14 @@ function setPhase(phase) {
 }
 
 // ─── Claude API caller ────────────────────────────────────────────────────────
-async function callClaude(model, userPrompt, maxTokens) {
+async function callClaude(model, userPrompt, maxTokens, systemOverride, priorMessages) {
   const apiKey = getApiKey();
   if (!apiKey) { showApiKeyModal(true); throw new Error('API key not set'); }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 300000);
+  const messages = priorMessages
+    ? [...priorMessages, { role: 'user', content: userPrompt }]
+    : [{ role: 'user', content: userPrompt }];
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       signal: controller.signal,
@@ -324,8 +370,8 @@ async function callClaude(model, userPrompt, maxTokens) {
       body: JSON.stringify({
         model,
         max_tokens: maxTokens,
-        system: JOSEPH_SYSTEM,
-        messages: [{ role: 'user', content: userPrompt }],
+        system: systemOverride || JOSEPH_SYSTEM,
+        messages,
       }),
     });
     if (!res.ok) {
@@ -1013,7 +1059,7 @@ function renderEmailPanel() {
       </div>
       <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div></div>
       <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.preview)}</div></div>
-      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div><div class="email-body">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex justify-end"><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
+      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div><div class="email-body">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex items-center justify-between"><button class="refine-btn" onclick="openRefinePanel('email',${i})">✦ Refine this email</button><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
     </div>`).join('');
 }
 
@@ -1030,6 +1076,7 @@ function renderStoriesPanel() {
           <button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button>
         </div>
         <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button></div>`).join('')}</div>
+        <div class="border-t border-gray-900 mt-5 pt-4"><button class="refine-btn" onclick="openRefinePanel('stories',${i})">✦ Refine this sequence</button></div>
       </div>
     </div>`).join('');
 }
@@ -1044,6 +1091,7 @@ function renderSkoolPanel() {
         </div>
         ${p.title ? `<div class="text-white font-semibold text-base mb-3 leading-snug">${esc(p.title)}</div>` : ''}
         <div class="email-body">${esc(p.body)}</div>
+        <div class="border-t border-gray-900 mt-4 pt-4"><button class="refine-btn" onclick="openRefinePanel('skool',${i})">✦ Refine this post</button></div>
       </div>
     </div>`).join('');
 }
@@ -1131,6 +1179,124 @@ async function copyAllSlides(btn, vIdx) {
 }
 function esc(str = '') {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Refine chat ──────────────────────────────────────────────────────────────
+const REFINE = { type: null, vIdx: null, history: [] };
+
+function getRefineContext() {
+  const { type, vIdx } = REFINE;
+  if (!S.content || vIdx === null) return '';
+  if (type === 'email') {
+    const e = S.content.email[vIdx];
+    return `Subject: ${e.subject}\nPreview: ${e.preview}\n\nBody:\n${e.body}`;
+  }
+  if (type === 'stories') {
+    const seq = S.content.stories[vIdx];
+    return seq.slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n');
+  }
+  if (type === 'skool') {
+    const p = S.content.skool[vIdx];
+    return (p.title ? `Title: ${p.title}\n\n` : '') + p.body;
+  }
+  return '';
+}
+
+function openRefinePanel(type, vIdx) {
+  REFINE.type = type;
+  REFINE.vIdx = vIdx;
+  REFINE.history = [];
+  const labels = { email: 'Email', stories: 'IG Story Sequence', skool: 'Skool Post' };
+  const vLabels = ['Version 1', 'Version 2'];
+  document.getElementById('refinePanelLabel').textContent = `${labels[type]} · ${vLabels[vIdx] || ''}`;
+  const msgs = document.getElementById('refineMsgs');
+  msgs.innerHTML = `<div class="rmsg-ai"><div class="rmsg-ai-text" style="color:#9ca3af;font-style:italic">Current copy loaded. What do you want to change?</div></div>`;
+  document.getElementById('refineInput').value = '';
+  document.getElementById('refinePanel').classList.add('open');
+  document.getElementById('refineInput').focus();
+}
+
+function closeRefinePanel() {
+  document.getElementById('refinePanel').classList.remove('open');
+}
+
+function sendChip(text) {
+  document.getElementById('refineInput').value = text;
+  sendRefineMessage();
+}
+
+async function sendRefineMessage() {
+  const input = document.getElementById('refineInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('refineSendBtn');
+  const spinner = document.getElementById('refineSendSpinner');
+  btn.disabled = true; spinner.classList.remove('hidden');
+  input.value = '';
+
+  const msgs = document.getElementById('refineMsgs');
+  msgs.innerHTML += `<div class="rmsg-user">${esc(text)}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  REFINE.history.push({ role: 'user', content: text });
+
+  const typeLabels = { email: 'newsletter email', stories: 'Instagram Story sequence', skool: 'Skool community post' };
+  const systemPrompt = `You are a copywriting assistant refining a ${typeLabels[REFINE.type]} for Joseph Khateri's Section 8 investing brand. All content is written in first person as Joseph.
+
+VOICE RULES: No em dashes. No hype words (game-changer, transform, unlock, leverage, elevate, revolutionary, empower). No asking readers to reply. No source references. Specific beats vague. Warm and direct.
+
+The current copy is:
+---
+${getRefineContext()}
+---
+
+When the user asks for a change, return ONLY the revised copy — no explanation, no preamble, no "Here's the revised version:". Just the copy itself, ready to use.`;
+
+  const messages = REFINE.history.map(m => ({ role: m.role, content: m.content }));
+
+  try {
+    const raw = await callClaude(SONNET, messages[messages.length - 1].content, 4000, systemPrompt, messages.slice(0, -1));
+    REFINE.history.push({ role: 'assistant', content: raw });
+
+    const msgId = `rmsg-${Date.now()}`;
+    msgs.innerHTML += `<div class="rmsg-ai" id="${msgId}">
+      <div class="rmsg-ai-text">${esc(raw)}</div>
+      <button class="rmsg-use-btn" onclick="applyRefinedCopy(${JSON.stringify(raw)})">Use this version</button>
+    </div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  } catch (err) {
+    msgs.innerHTML += `<div class="rmsg-ai"><div class="rmsg-ai-text" style="color:#f87171">Error: ${esc(err.message)}</div></div>`;
+  }
+  btn.disabled = false; spinner.classList.add('hidden');
+}
+
+function applyRefinedCopy(raw) {
+  const { type, vIdx } = REFINE;
+  if (type === 'email') {
+    S.content.email[vIdx].body = raw;
+    renderEmailPanel(); applyVersionVisibility();
+  } else if (type === 'stories') {
+    // Parse slide blocks if formatted, otherwise put in first slide
+    try {
+      const slides = [];
+      const blocks = raw.split(/\n\n+/);
+      blocks.forEach(b => {
+        const m = b.match(/^\[(.+?)\]\n([\s\S]+)$/);
+        if (m) slides.push({ label: m[1], text: m[2].trim() });
+      });
+      if (slides.length >= 2) S.content.stories[vIdx].slides = slides;
+      else S.content.stories[vIdx].slides[1].text = raw;
+    } catch { S.content.stories[vIdx].slides[1].text = raw; }
+    renderStoriesPanel(); applyVersionVisibility();
+  } else if (type === 'skool') {
+    S.content.skool[vIdx].body = raw;
+    renderSkoolPanel(); applyVersionVisibility();
+  }
+  // Flash the panel label to confirm
+  const lbl = document.getElementById('refinePanelLabel');
+  const orig = lbl.textContent;
+  lbl.textContent = 'Applied!'; lbl.style.color = '#4ade80';
+  setTimeout(() => { lbl.textContent = orig; lbl.style.color = ''; }, 1500);
 }
 </script>
 </body>
