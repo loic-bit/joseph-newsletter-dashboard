@@ -33,7 +33,7 @@ from pathlib import Path
 # CONFIG
 # ---------------------------------------------------------------------------
 
-YOUTUBE_API_KEY    = os.environ.get("JOSEPH_YT_API_KEY", "REMOVED_KEY")
+YOUTUBE_API_KEY    = os.environ.get("JOSEPH_YT_API_KEY", "")
 YOUTUBE_CHANNEL_ID = "UCQXnWqNYluoUnm3IpzeRMuw"
 
 AIRTABLE_TOKEN    = os.environ.get("AIRTABLE_TOKEN", "")
