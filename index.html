@@ -148,6 +148,10 @@
       <div class="flex items-center gap-3">
         <div id="researchDate" class="text-gray-700 text-xs"></div>
         <div id="statsChips" class="flex gap-2"></div>
+        <button id="refreshBtn" class="copy-btn" style="font-size:11px" onclick="refreshResearch()">
+          <span id="refreshSpinner" class="hidden spinner" style="width:10px;height:10px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:4px"></span>
+          <span id="refreshLabel">Refresh Data</span>
+        </button>
         <button class="copy-btn" style="font-size:11px" onclick="handleClearCache()">Clear Cache</button>
         <button class="copy-btn" style="font-size:11px" onclick="showApiKeyModal()">API Key</button>
       </div>
@@ -346,6 +350,69 @@ function setPhase(phase) {
   Object.keys(PHASE_MAP).forEach(p => {
     document.getElementById(PHASE_MAP[p]).classList.toggle('hidden', p !== phase);
   });
+}
+
+// ─── Research refresh (triggers GitHub Actions workflow) ─────────────────────
+const GH_REPO          = 'loic-bit/joseph-newsletter-dashboard';
+const GH_WORKFLOW      = 'research.yml';
+const GH_DISPATCH_TOKEN = '';  // fill in: fine-grained PAT, Actions:write on this repo only
+
+async function refreshResearch() {
+  if (!GH_DISPATCH_TOKEN) {
+    alert('Add a GH_DISPATCH_TOKEN to the dashboard to enable manual refresh.');
+    return;
+  }
+  const btn     = document.getElementById('refreshBtn');
+  const spinner = document.getElementById('refreshSpinner');
+  const label   = document.getElementById('refreshLabel');
+  btn.disabled  = true;
+  spinner.classList.remove('hidden');
+  label.textContent = 'Running...';
+
+  try {
+    // Trigger the workflow
+    const triggerRes = await fetch(
+      `https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
+      { method: 'POST',
+        headers: { Authorization: `token ${GH_DISPATCH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: 'main' }) }
+    );
+    if (!triggerRes.ok) throw new Error(`Dispatch failed: ${triggerRes.status}`);
+
+    label.textContent = 'Fetching sources...';
+    await new Promise(r => setTimeout(r, 6000));  // give GitHub time to queue the run
+
+    // Poll until completed
+    const start = Date.now();
+    while (Date.now() - start < 180000) {
+      await new Promise(r => setTimeout(r, 6000));
+      const runsRes = await fetch(
+        `https://api.github.com/repos/${GH_REPO}/actions/runs?per_page=5`,
+        { headers: { Authorization: `token ${GH_DISPATCH_TOKEN}`, Accept: 'application/vnd.github.v3+json' } }
+      );
+      const { workflow_runs } = await runsRes.json();
+      const run = workflow_runs.find(r => r.path?.includes(GH_WORKFLOW) || r.name === 'Newsletter Research');
+      if (!run) continue;
+      const elapsed = Math.round((Date.now() - start) / 1000);
+      label.textContent = `Running... ${elapsed}s`;
+      if (run.status === 'completed') {
+        if (run.conclusion === 'success') {
+          label.textContent = 'Done! Reloading...';
+          await new Promise(r => setTimeout(r, 1200));
+          window.location.reload();
+          return;
+        } else {
+          throw new Error(`Workflow ended with: ${run.conclusion}`);
+        }
+      }
+    }
+    throw new Error('Timed out after 3 minutes');
+  } catch (e) {
+    label.textContent = 'Refresh Data';
+    spinner.classList.add('hidden');
+    btn.disabled = false;
+    alert(`Refresh failed: ${e.message}`);
+  }
 }
 
 // ─── Claude API caller ────────────────────────────────────────────────────────
