@@ -355,12 +355,15 @@ function setPhase(phase) {
 // ─── Research refresh (triggers GitHub Actions workflow) ─────────────────────
 const GH_REPO          = 'loic-bit/joseph-newsletter-dashboard';
 const GH_WORKFLOW      = 'research.yml';
-const GH_DISPATCH_TOKEN = '';  // fill in: fine-grained PAT, Actions:write on this repo only
+function getDispatchToken() { return localStorage.getItem('ns_gh_dispatch_token') || ''; }
 
 async function refreshResearch() {
-  if (!GH_DISPATCH_TOKEN) {
-    alert('Add a GH_DISPATCH_TOKEN to the dashboard to enable manual refresh.');
-    return;
+  let token = getDispatchToken();
+  if (!token) {
+    token = window.prompt('Paste the GitHub dispatch token to enable Refresh Data:');
+    if (!token) return;
+    localStorage.setItem('ns_gh_dispatch_token', token.trim());
+    token = token.trim();
   }
   const btn     = document.getElementById('refreshBtn');
   const spinner = document.getElementById('refreshSpinner');
@@ -374,7 +377,7 @@ async function refreshResearch() {
     const triggerRes = await fetch(
       `https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
       { method: 'POST',
-        headers: { Authorization: `token ${GH_DISPATCH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ ref: 'main' }) }
     );
     if (!triggerRes.ok) throw new Error(`Dispatch failed: ${triggerRes.status}`);
