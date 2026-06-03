@@ -1,7 +1,17 @@
 {
-  "generated_at": "2026-06-01T19:19:45.135792+00:00",
+  "generated_at": "2026-06-03T18:21:19.596861+00:00",
   "research": {
     "reddit_questions": [
+      {
+        "source": "r/realestateinvesting",
+        "type": "post",
+        "title": "Should we sell the 5 properties we inherited or continue renting them out?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>The houses are located in Eastvale, CA. They are comparable to this one on the market:</p> <p><a href=\"https://www.zillow.com/homedetails/14807-Meadows-Way-Corona-CA-92880/89235042%5C_zpid/?utm%5C_campaign=androidappmessage&amp;utm%5C_medium=referral&amp;utm%5C_source=txtshare\">https://www.zillow.com/homedetails/14807-Meadows-Way-Corona-CA-92880/89235042\\_zpid/?utm\\_campaign=androidappmessage&amp;utm\\_medium=referral&amp;utm\\_source=txtshare</a></p> <p>My brother and I inherited this from our grandfather. We have no taxes to pay. They are owned free &amp; clea",
+        "score": 0,
+        "url": "https://www.reddit.com/r/realestateinvesting/comments/1tvty77/should_we_sell_the_5_properties_we_inherited_or/",
+        "is_question": true,
+        "age_days": 0
+      },
       {
         "source": "r/realestateinvesting",
         "type": "post",
@@ -83,26 +93,6 @@
         "age_days": 0
       },
       {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "Who ruined BiggerPockets?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>Basically the title. I know PE got involved… but man it sucks compared to what it was back in the day. </p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/Top-Cockroach4352\"> /u/Top-Cockroach4352 </a> <br/> <span><a href=\"https://www.reddit.com/r/realestateinvesting/comments/1tgogil/who_ruined_biggerpockets/\">[link]</a></span> &#32; <span><a href=\"https://www.reddit.com/r/realestateinvesting/comments/1tgogil/who_ruined_biggerpockets/\">[comments]</a></span>",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1tgogil/who_ruined_biggerpockets/",
-        "is_question": true,
-        "age_days": 0
-      },
-      {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "One metric you wish you'd weighted more on your last deal?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>Curious how people here actually decide. Every time I finish underwriting something there&#39;s almost always one input I wish I&#39;d been harder on. Vacancy, exit cap, rehab, rent. Sometimes I catch it, sometimes I don&#39;t.</p> <p>A few things I&#39;m trying to figure out:</p> <p>Last deal — what&#39;s the one input you&#39;d change if you could re-run it? And honestly, was it because the number didn&#39;t push back, or because you didn&#39;t want to see the problem?</p> <p>Which of these do you actually trust most when you pull the trigger — cap rate, CoC",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1th9pto/one_metric_you_wish_youd_weighted_more_on_your/",
-        "is_question": true,
-        "age_days": 0
-      },
-      {
         "source": "r/section8landlord",
         "type": "post",
         "title": "Rokujouma no Shinryakusha !?",
@@ -115,40 +105,50 @@
       {
         "source": "r/landlord",
         "type": "post",
-        "title": "[Landlord-US-Texas] Just received the email from a tenant that’s 2 months into a 1-year lease. How would you handle?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>We came to Houston so [Tenant’s Wife] could get better care for her severe congestive heart failure at [Hospital in Town]. As it turns out, she is not able to get an appointment with the cardiologist for several months. We will, of course, honor our side of the lease agreement. However, we would appreciate if we could be released from the lease July 31. I hope you understand our situation. We will have your house professionally cleaned. Could you give us a name for a cleaner please? We will be returning to [Home City/Out of State] this Wednesday June 3.</p> <p",
+        "title": "[Landlord US-PA] What's the most expensive lesson a tenant has taught you?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>Every landlord I know has at least one story they wish they&#39;d learned the easy way.</p> <p>Maybe it was screening.</p> <p>Maybe it was maintenance.</p> <p>Maybe it was assuming something &quot;wouldn&#39;t be a problem.&quot;</p> <p>What&#39;s the most expensive lesson you&#39;ve learned from being a landlord?</p> <p>And if you could go back, what would you do differently?</p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/douxee\"> /u/douxee </a> <br/> <span><a href=\"https://www.reddit.com/r/Landlord/comments/1tvr68e/lan",
         "score": 0,
-        "url": "https://www.reddit.com/r/Landlord/comments/1tttn4q/landlordustexas_just_received_the_email_from_a/",
+        "url": "https://www.reddit.com/r/Landlord/comments/1tvr68e/landlord_uspa_whats_the_most_expensive_lesson_a/",
         "is_question": true,
         "age_days": 0
       },
       {
         "source": "r/landlord",
         "type": "post",
-        "title": "[Tenant - US - CA] has anyone had a holding deposit situation like this?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>My partner and I saw a unit we really loved and met with the current tenant. The leasing agent wanted us to give a holding deposit (wrote the terms over email but not in a contract), we didn’t send it, he offered us a lease, we said we’d like to move forward, and then said he can’t draft a lease until we send the $1000 holding deposit. Every time I try to call it says he’s on the phone, and now we’ve said we are open to sending a holding fee once we see a drafted lease and tried to schedule a time to talk, he said he offered the place to someone else. I know t",
+        "title": "[Tenant US-MI] Any advice? We want to ask our landlord if they’ll sell to us!",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>Hey! We’ve been renting from our current landlord for two years now, and our lease is coming up in about three months. We have a great relationship with them; our family knows our landlord&#39;s parents, and they actually live down the street from us, so we run into them from time to time. Our landlord and their fiancé were just over the other day doing small updates required by the city, and they mentioned how much they love having us here. In fact, our landlord, their parents, and their fiancé have all consistently commented on how happy they are that we liv",
         "score": 0,
-        "url": "https://www.reddit.com/r/Landlord/comments/1ttzx02/tenant_us_ca_has_anyone_had_a_holding_deposit/",
+        "url": "https://www.reddit.com/r/Landlord/comments/1tvufab/tenant_usmi_any_advice_we_want_to_ask_our/",
         "is_question": true,
         "age_days": 0
       },
       {
         "source": "r/landlord",
         "type": "post",
-        "title": "[Tenant-US-CA] Best way to prove income as someone self-employed?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>Hey all. Would love to get some insight from landlords as my partner and I are about to begin our apartment search together (we live separately, and are moving in together). </p> <p>I work a full time, 9-5 job and can easily share my paystubs. However, my partner does not have a traditional 9-5, and is a touring professional who also earns supplemental income when he&#39;s not on the road. I&#39;m wondering what the best way to prove his income and show stability on applications is? He makes about $20k per tour and is booked for multiple of them and one-off da",
+        "title": "[Landlord-US-OH] Rental demand slowing?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>I keep seeing headlines about rising rents, but I’m not seeing it on the ground.</p> <p>I listed my SFH in Columbus at the same rent as two years ago. It’s a small ranch, nothing fancy but solid, ideal for a blue-collar couple. In the past it would rent quickly, but now it’s been sitting for almost a month.</p> <p>I paid for a premium Zillow listing and I’m getting a lot of inquiries, but the quality has been rough. Most applicants are in the 500–550 credit range which is not a dealbreaker for me, a lot have evictions or barely making 2x the rent (these 2 are ",
         "score": 0,
-        "url": "https://www.reddit.com/r/Landlord/comments/1tu20np/tenantusca_best_way_to_prove_income_as_someone/",
+        "url": "https://www.reddit.com/r/Landlord/comments/1tvpqim/landlordusoh_rental_demand_slowing/",
         "is_question": true,
         "age_days": 0
       },
       {
         "source": "r/landlord",
         "type": "post",
-        "title": "[Landlord US-NJ] how has your experience been with the new BOB.ai in terms of rent increases in the city of Newark?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>I plan on increasing the rent of my section 8 units in the city of Newark. I would like to know your experience especially with the new BOB.ai integration. Lastly I have a tenant who has been living in the unit for about 5 to 6 years and rent is significantly below market price, what are some consideration beside asking her to leave. </p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/Delicious-Teach9692\"> /u/Delicious-Teach9692 </a> <br/> <span><a href=\"https://www.reddit.com/r/Landlord/comments/1ttxl5u/landlord_usnj_how_ha",
+        "title": "[Landlord - US] First time renting out a spare room in our house. What absolutely needs to be in the lease?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>My spouse and I are about to rent out a room in our home for the very first time. Since we’ll be sharing common areas, we want to make sure our lease agreement covers all our bases but isn&#39;t overly aggressive. What are the absolute must-haves or non-negotiables you include in a room-rental/lodger agreement? Appreciate any tips or lessons you learned the hard way!</p> <p><a href=\"https://www.reddit.com/submit/?source_id=t3_1tvln9m&amp;composer_entry=crosspost_prompt\"></a></p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user",
         "score": 0,
-        "url": "https://www.reddit.com/r/Landlord/comments/1ttxl5u/landlord_usnj_how_has_your_experience_been_with/",
+        "url": "https://www.reddit.com/r/Landlord/comments/1tvlp65/landlord_us_first_time_renting_out_a_spare_room/",
+        "is_question": true,
+        "age_days": 0
+      },
+      {
+        "source": "r/landlord",
+        "type": "post",
+        "title": "[Landlord - NYC] how do you guys deal with chronic late rent?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone I’m a landlord in Staten Island NY and my tenant in my 3bedroom unit have been late on rent for the past six months. We signed a one year lease back in 2023 and we have been doing month to month. (Haven’t raised any rent since 2023). For the past six months he’s been late with the rent. Sometimes he’d pay half on the first week of the month, then half before the month ends. For the month of May he only paid 1/4 of the rent despite many text reminders (which he ignores). It is now June and he hasn’t paid the remainder of May nor June. How should I a",
+        "score": 0,
+        "url": "https://www.reddit.com/r/Landlord/comments/1tvj377/landlord_nyc_how_do_you_guys_deal_with_chronic/",
         "is_question": true,
         "age_days": 0
       }
@@ -171,6 +171,26 @@
         "text": "<!-- SC_OFF --><div class=\"md\"><h1>Monthly Motivation Thread</h1> <p>Welcome to this monthly series. This post will repeat monthly, on the 21st of every month.</p> <p>This is your opportunity to share your successes, accomplishments, as well as provide us with an update on your goals and strategies as they pertain to Real Estate Investing.</p> <h1>Example Questions:</h1> <ol> <li>What are you hoping to accomplish this month?</li> <li>What method(s) are you using?</li> <li>Have you closed any interesting deals recently?</li> <li>What mistakes did you make, and what did they teach you?</li> <li>",
         "score": 0,
         "url": "https://www.reddit.com/r/realestateinvesting/comments/1tjckfw/monthly_motivation_thread_may_21_2026/",
+        "is_question": false,
+        "age_days": 0
+      },
+      {
+        "source": "r/realestateinvesting",
+        "type": "post",
+        "title": "Should we sell the 5 properties we inherited or continue renting them out?",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>The houses are located in Eastvale, CA. They are comparable to this one on the market:</p> <p><a href=\"https://www.zillow.com/homedetails/14807-Meadows-Way-Corona-CA-92880/89235042%5C_zpid/?utm%5C_campaign=androidappmessage&amp;utm%5C_medium=referral&amp;utm%5C_source=txtshare\">https://www.zillow.com/homedetails/14807-Meadows-Way-Corona-CA-92880/89235042\\_zpid/?utm\\_campaign=androidappmessage&amp;utm\\_medium=referral&amp;utm\\_source=txtshare</a></p> <p>My brother and I inherited this from our grandfather. We have no taxes to pay. They are owned free &amp; clea",
+        "score": 0,
+        "url": "https://www.reddit.com/r/realestateinvesting/comments/1tvty77/should_we_sell_the_5_properties_we_inherited_or/",
+        "is_question": true,
+        "age_days": 0
+      },
+      {
+        "source": "r/realestateinvesting",
+        "type": "post",
+        "title": "Those of you in the cold calling space here...",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>Is calling on Saturday worth it? </p> <p>I have zero issue grinding the phone Monday - Friday 10 hours a day... then Saturday comes around and the phone is 1000lbs. </p> <p>Anyone have a team or they themselves making calls on Saturday? Is it better or worse.. or am I just overthinking everything? </p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/WhizzyBurp\"> /u/WhizzyBurp </a> <br/> <span><a href=\"https://www.reddit.com/r/realestateinvesting/comments/1tv0vqs/those_of_you_in_the_cold_calling_space_here/\">[link]</a></span> ",
+        "score": 0,
+        "url": "https://www.reddit.com/r/realestateinvesting/comments/1tv0vqs/those_of_you_in_the_cold_calling_space_here/",
         "is_question": false,
         "age_days": 0
       },
@@ -231,26 +251,6 @@
         "text": "<!-- SC_OFF --><div class=\"md\"><p>I subdivided a land from a property of mine.<br/> Spent 30k in survey, zoning, planning, cutting trees, demolishing a garage which is in between both lots, paving driveway for existing property. Now, I have offers for 150k to sell the land(5k sft) with variances and planning board approvals.</p> <p>We’re building side by side duplex, hiring subs ourselves.<br/> Waiting for city permit approval, loan for construction @10%. Estimated Construction cost is 420k(2688 sf total) based on estimates we have for all trades, includes school and fire impact fees required ",
         "score": 0,
         "url": "https://www.reddit.com/r/realestateinvesting/comments/1tossxu/walkthrough_duplex_new_construction_deal/",
-        "is_question": false,
-        "age_days": 0
-      },
-      {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "Do you talk about your investments with non-REI friends?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>Growing wealth through real estate is kind of tricky from a social point of view. No one has ever asked me how much money I have saved, how much is in my 401K, or what my net worth is. But for real estate, people quite freely ask probing questions about it. I’m not shy about it, so I also play a role in it. But it’s interesting how socially acceptable it is to talk about how many houses someone has, but there’s no such question when it comes to liquid assets. </p> <p>We have a house here in Seattle and are renovating it to turn it into an Airbnb. People will t",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1toeuo9/do_you_talk_about_your_investments_with_nonrei/",
-        "is_question": true,
-        "age_days": 0
-      },
-      {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "Single Family Brrr Deal - Details",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>I want to share my recent deal details of a single family rehab project we finished recently.</p> <p>Purchase price: 100k<br/> Rehab: 200k(full gut and a 140 sf addition)<br/> Purchase Closing costs: 15k<br/> Rehab time: 6 months<br/> Location: 1 hr north of Boston, MA</p> <p>Appraised for 540k</p> <p>My plan has been to rent it out for 1-2 years, cash out refi to pull equity out, and then sell to 1031 into long term multifamily properties.</p> <p>Rented for 3500/month currently.<br/> Refi at 75 ltv, 7% interest<br/> While selling another 20k in closing costs.",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1tmwymp/single_family_brrr_deal_details/",
         "is_question": false,
         "age_days": 0
       }
@@ -430,17 +430,45 @@
     "news_items": [
       {
         "source": "Google News: Section 8 vouchers",
-        "title": "Union County Section 8's Housing Choice Voucher Waiting list Opens on June 1, 2026, at 9 am - TAPinto",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMi-AFBVV95cUxNaDVLWEx2Y2Z3R2IzYk5ZdloxbXFMUkRoYWFpYnBlUVV1QzRjWWs1b2VNQXBHU1B6RVVJNlg5NV9rV1NZT2dLanlKejF3NzdfVHl0bU1GZ3pDd09uT0kwYmlHZTlLc3ljdGhlVlZFQ2ZFeWlVOXozZXJTY0JaUUJTTENRVHhCOWhOT1ZDd0pnSzZSWmZWNWxSekVHcWVVMmVNbVdwM2NOM2RmcHEteHZLdEFHVWktTVI4TURmNHl4VEJkV0JmT0JLLUx5UFlQbG9JN0t4aHFVb2NFQkwtbDhnbGItaWhhODBMNGdvTFRTQXVyT3ZnMmFSSA?oc=5\" target=\"_",
-        "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNaDVLWEx2Y2Z3R2IzYk5ZdloxbXFMUkRoYWFpYnBlUVV1QzRjWWs1b2VNQXBHU1B6RVVJNlg5NV9rV1NZT2dLanlKejF3NzdfVHl0bU1GZ3pDd09uT0kwYmlHZTlLc3ljdGhlVlZFQ2ZFeWlVOXozZXJTY0JaUUJTTENRVHhCOWhOT1ZDd0pnSzZSWmZWNWxSekVHcWVVMmVNbVdwM2NOM2RmcHEteHZLdEFHVWktTVI4TURmNHl4VEJkV0JmT0JLLUx5UFlQbG9JN0t4aHFVb2NFQkwtbDhnbGItaWhhODBMNGdvTFRTQXVyT3ZnMmFSSA?oc=5",
-        "date": "Mon, 01 Jun 2026 16:23:11 GMT"
+        "title": "Atlanta Housing Authority Executive Gets Prison for Siphoning Section 8 Funds to Her Own Pocket - Yahoo",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMimgFBVV95cUxNQnhwRHMwb3dTa24zTXNFRk5xX0xvbXV2VWpWUDU1OUx1Y1FpTTg4T2pLTEVFRWhBQ1hTUjZkUW1DZUZBUXpqOFZIV1dIUzRNb0Z4TVd6dG40M1R5SldaQlRYM0s0eDFrdnl1UUFPRm1jdlZtd3RvYzY3OVQwcXB5dGlTaDRhSnI5YnBXc3ZqQW8xWG1PSjkwSGlR?oc=5\" target=\"_blank\">Atlanta Housing Authority Executive Gets Prison for Siphoning Section 8 Funds to Her Own Pocket</a>&nbsp;&nbsp;<font co",
+        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQnhwRHMwb3dTa24zTXNFRk5xX0xvbXV2VWpWUDU1OUx1Y1FpTTg4T2pLTEVFRWhBQ1hTUjZkUW1DZUZBUXpqOFZIV1dIUzRNb0Z4TVd6dG40M1R5SldaQlRYM0s0eDFrdnl1UUFPRm1jdlZtd3RvYzY3OVQwcXB5dGlTaDRhSnI5YnBXc3ZqQW8xWG1PSjkwSGlR?oc=5",
+        "date": "Wed, 03 Jun 2026 15:12:33 GMT"
       },
       {
         "source": "Google News: Section 8 vouchers",
-        "title": "Nearly 3.7 Million People at Risk of Losing Needed Rental Assistance to Harsh Time Limit and Work Requirement Proposal - Center on Budget and Policy Priorities",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxQdnpYWXZpRTllcWpLNDhVLW05X0RKSHkwWk8wRHZzWl9XWlVjaXczNXh2bVQ5d3FHVXFtd3dWODZnNkUzQmtOalZqY2V5YVpsTFJSeS1RcFI3N1NMTHd1Y0hWbG1QS3JHM3pucFh4OF9HWFlrc3FQbFh2VURLNE9sTFR0MkNaTHhVal9ycWg5SXZndlp1SXAtTThZQW9DY1JPTGVFOTliZGpIeGZILTNFLUE1SnBFUVVobVR3?oc=5\" target=\"_blank\">Nearly 3.7 Million People at Risk of Losing Needed Rental Assistance to Har",
-        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQdnpYWXZpRTllcWpLNDhVLW05X0RKSHkwWk8wRHZzWl9XWlVjaXczNXh2bVQ5d3FHVXFtd3dWODZnNkUzQmtOalZqY2V5YVpsTFJSeS1RcFI3N1NMTHd1Y0hWbG1QS3JHM3pucFh4OF9HWFlrc3FQbFh2VURLNE9sTFR0MkNaTHhVal9ycWg5SXZndlp1SXAtTThZQW9DY1JPTGVFOTliZGpIeGZILTNFLUE1SnBFUVVobVR3?oc=5",
-        "date": "Fri, 24 Apr 2026 07:00:00 GMT"
+        "title": "Former senior vice president of Atlanta Housing Authority sentenced to 9 months in prison for fraud scheme - WABE",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi1AFBVV95cUxQbWdqRFJteXVva05mU0FvQnJ5bkI3MHNmck1UeUNSS09PNFV1bGhpV3VtemRmUWEzQ28tMFZtSnlXdTJyUXRWczZDVlJqUWhWTjV2bWhUNTl0cFdyX3J4SmUxMi1sWDcxOGRzZ0ZCdEFpeDJXOUdubzJFT2lEd2d2ZVU0ZGpMRmFXYzkzQzJEOGNSLVo5LXc2SHlFV2pYNmU5RjdZdmViaHYzRm5nV2tjc0xKZm53ZU1jVmMxdkdZZDd5anI1U3dmRldrM0hCM0pGMTRYRA?oc=5\" target=\"_blank\">Former senior vice president of Atlanta H",
+        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQbWdqRFJteXVva05mU0FvQnJ5bkI3MHNmck1UeUNSS09PNFV1bGhpV3VtemRmUWEzQ28tMFZtSnlXdTJyUXRWczZDVlJqUWhWTjV2bWhUNTl0cFdyX3J4SmUxMi1sWDcxOGRzZ0ZCdEFpeDJXOUdubzJFT2lEd2d2ZVU0ZGpMRmFXYzkzQzJEOGNSLVo5LXc2SHlFV2pYNmU5RjdZdmViaHYzRm5nV2tjc0xKZm53ZU1jVmMxdkdZZDd5anI1U3dmRldrM0hCM0pGMTRYRA?oc=5",
+        "date": "Wed, 03 Jun 2026 00:01:27 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Former Atlanta Housing official sentenced for Section 8 and pandemic fraud - AJC.com",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxQODdIMEpoakhUSmp6Y2ZYeHpDUldROHltSnRQSlBWNy1qX3RKTkRJWkRQM05nSHlTcUpVaUQ1cE9USFJqd01zRGtXbXVqTlBYZXNTU0JUNFIyTGd1MHhKX3NZLUR5aXlqQXlHSUc3UVpBNjZxZXAyQWQ0SS0tejV4OE5xUzN4alprR3JOaEd4SVF6Y1V5Q2JvcXBLYzlScmxDSVQ4RC1rQzlDSGRx?oc=5\" target=\"_blank\">Former Atlanta Housing official sentenced for Section 8 and pandemic fraud</a>&nbsp;&nbsp;<font",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQODdIMEpoakhUSmp6Y2ZYeHpDUldROHltSnRQSlBWNy1qX3RKTkRJWkRQM05nSHlTcUpVaUQ1cE9USFJqd01zRGtXbXVqTlBYZXNTU0JUNFIyTGd1MHhKX3NZLUR5aXlqQXlHSUc3UVpBNjZxZXAyQWQ0SS0tejV4OE5xUzN4alprR3JOaEd4SVF6Y1V5Q2JvcXBLYzlScmxDSVQ4RC1rQzlDSGRx?oc=5",
+        "date": "Tue, 02 Jun 2026 09:34:10 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "HUD’s Fair Market Rent Update: Narrow Scope, Broad Stakes - Tax Credit Advisor",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMie0FVX3lxTE9PRWgzOGxYNm00bVBuMGRHRlIwN1htZFFwZDA5SjI1VklTYVFVZGVscW55dEJ1S1RTMnQxY3FCWUR0NVotRmhjNTFBTm1EeXZUZ3lzNDNPaklSMVhzMzEwQVdUM1J5cU0tTTNicV96SWY5bDFuTm9CbFpkTQ?oc=5\" target=\"_blank\">HUD’s Fair Market Rent Update: Narrow Scope, Broad Stakes</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Tax Credit Advisor</font>",
+        "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9PRWgzOGxYNm00bVBuMGRHRlIwN1htZFFwZDA5SjI1VklTYVFVZGVscW55dEJ1S1RTMnQxY3FCWUR0NVotRmhjNTFBTm1EeXZUZ3lzNDNPaklSMVhzMzEwQVdUM1J5cU0tTTNicV96SWY5bDFuTm9CbFpkTQ?oc=5",
+        "date": "Mon, 01 Jun 2026 16:00:00 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Former senior Atlanta housing executive sentenced in fraud scheme - FOX 5 Atlanta",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMimwFBVV95cUxNNnJCeDA0aEFCLV9YbnhrYVU1UG15MDRyUUhuSnhZeVRLR003dU5oa3hZSWNVSEMtM1AxRnBiYlo2WXVqUjhUd2o0MGZENkxVSWZIUVhmN3VFLTBkZkpWbDZjLV8wY2hOVmRXU1JxQVVKNWw5Z1pBQXdYX3lYMTRxRjJCX18zMnJwU2t2SlJCU192WHFDLUE2Zm9wZ9IBoAFBVV95cUxQWE1ZNzNoWklWNV9CRVFsUE9zMkxPdUd3MFlvV0dHYWpyLXg1dTRpV2ctcXB1ZC11ejFaZjdlUzlldFU5aTBaaDNZeXZ5QmpCbGFWNzZ1RlJDSHdBNFBLMXRCcXJ6TX",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNNnJCeDA0aEFCLV9YbnhrYVU1UG15MDRyUUhuSnhZeVRLR003dU5oa3hZSWNVSEMtM1AxRnBiYlo2WXVqUjhUd2o0MGZENkxVSWZIUVhmN3VFLTBkZkpWbDZjLV8wY2hOVmRXU1JxQVVKNWw5Z1pBQXdYX3lYMTRxRjJCX18zMnJwU2t2SlJCU192WHFDLUE2Zm9wZ9IBoAFBVV95cUxQWE1ZNzNoWklWNV9CRVFsUE9zMkxPdUd3MFlvV0dHYWpyLXg1dTRpV2ctcXB1ZC11ejFaZjdlUzlldFU5aTBaaDNZeXZ5QmpCbGFWNzZ1RlJDSHdBNFBLMXRCcXJ6TXNQNlI3OEV3RmQxMWYyMXVhSlY3aF95ajg2aHhGdzFDWDRNblExaFoxajZ6NzRwNHFNZjB6LURudV84?oc=5",
+        "date": "Tue, 02 Jun 2026 12:32:11 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Union County Section 8's Housing Choice Voucher Waiting list Opens on June 1, 2026, at 9 am - TAPinto",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi-AFBVV95cUxNaDVLWEx2Y2Z3R2IzYk5ZdloxbXFMUkRoYWFpYnBlUVV1QzRjWWs1b2VNQXBHU1B6RVVJNlg5NV9rV1NZT2dLanlKejF3NzdfVHl0bU1GZ3pDd09uT0kwYmlHZTlLc3ljdGhlVlZFQ2ZFeWlVOXozZXJTY0JaUUJTTENRVHhCOWhOT1ZDd0pnSzZSWmZWNWxSekVHcWVVMmVNbVdwM2NOM2RmcHEteHZLdEFHVWktTVI4TURmNHl4VEJkV0JmT0JLLUx5UFlQbG9JN0t4aHFVb2NFQkwtbDhnbGItaWhhODBMNGdvTFRTQXVyT3ZnMmFSSA?oc=5\" target=\"_",
+        "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNaDVLWEx2Y2Z3R2IzYk5ZdloxbXFMUkRoYWFpYnBlUVV1QzRjWWs1b2VNQXBHU1B6RVVJNlg5NV9rV1NZT2dLanlKejF3NzdfVHl0bU1GZ3pDd09uT0kwYmlHZTlLc3ljdGhlVlZFQ2ZFeWlVOXozZXJTY0JaUUJTTENRVHhCOWhOT1ZDd0pnSzZSWmZWNWxSekVHcWVVMmVNbVdwM2NOM2RmcHEteHZLdEFHVWktTVI4TURmNHl4VEJkV0JmT0JLLUx5UFlQbG9JN0t4aHFVb2NFQkwtbDhnbGItaWhhODBMNGdvTFRTQXVyT3ZnMmFSSA?oc=5",
+        "date": "Sat, 30 May 2026 20:18:46 GMT"
       },
       {
         "source": "Google News: Section 8 vouchers",
@@ -483,34 +511,6 @@
         "description": "<a href=\"https://news.google.com/rss/articles/CBMimAFBVV95cUxPM0FZeGFDLTBmcEQ0cmlVVUl6TGp3em5vemhyTmFrcFMyUEU3cGktYVV0aFBwNktUMHJYaEc4QURuWl91UE9zUXd1MjhoNmNSMnQxYlljS1ZxRG8tbGZEZzVmT3hEMzlZSDFtLWhpZmdUOEdoazlXX1E4YndTMW1YYThoaWRlTnlrSW1vdE9yZ2tDMVpaOHB1cw?oc=5\" target=\"_blank\">How Some of L.A.’s Biggest Apartment Owners Avoid Section 8 Tenants</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Capital & Main</",
         "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPM0FZeGFDLTBmcEQ0cmlVVUl6TGp3em5vemhyTmFrcFMyUEU3cGktYVV0aFBwNktUMHJYaEc4QURuWl91UE9zUXd1MjhoNmNSMnQxYlljS1ZxRG8tbGZEZzVmT3hEMzlZSDFtLWhpZmdUOEdoazlXX1E4YndTMW1YYThoaWRlTnlrSW1vdE9yZ2tDMVpaOHB1cw?oc=5",
         "date": "Tue, 16 Dec 2025 08:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Report: Massachusetts renters rely on Section 8 housing vouchers - NEPM",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMirgFBVV95cUxOOHpaUnNpS0c4ZDBtcXRhRlloVDhMR0d0Nlczci1CbkRXWmJ3blA1QjM4aWNLWnBCTVpLUlRRUnZ5c2p3bHh0UXNmT3NDX3BTb25SR2xuZURxbXc3WlBjZUFxS2thYVhLQUdjOWltNWVLODFOS0NQZTJSUmpabzZjWm9jZUhBcnZhckkzbHBWaGxLMkZPN0J3bGhsSU5ueVlVaVdmR2FzVjJKYm9OUGc?oc=5\" target=\"_blank\">Report: Massachusetts renters rely on Section 8 housing vouchers</a>&nbsp;&nbsp;<font color=",
-        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOOHpaUnNpS0c4ZDBtcXRhRlloVDhMR0d0Nlczci1CbkRXWmJ3blA1QjM4aWNLWnBCTVpLUlRRUnZ5c2p3bHh0UXNmT3NDX3BTb25SR2xuZURxbXc3WlBjZUFxS2thYVhLQUdjOWltNWVLODFOS0NQZTJSUmpabzZjWm9jZUhBcnZhckkzbHBWaGxLMkZPN0J3bGhsSU5ueVlVaVdmR2FzVjJKYm9OUGc?oc=5",
-        "date": "Fri, 13 Feb 2026 08:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Tucson to stop adding people to waitlists for Section 8 housing vouchers - Tucson Sentinel",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxOUWEtX3hYS19Ld1BUelJ6MnRyVkF6Rm43WkJQVU9RSUV0VTk3Umh5QTA2WEROSDJmbm5pWjcyVWlmVTd3X1Byc0VIUHgzRXJFbndpSkxWMDVZbkJfcnBwMnpuUk9nV29pMXI5RHJoOUFkNlUycV9QbmxuQ3lYR25OVWhyWWdxajA3ZE5IWjJjZVdpejR3Ri03LVVPc0dGVWVYMkpfdHpFU1MydEJNdkhaay1XRFR3UjF3cW9rZnA0SlBZejk4UXZqWg?oc=5\" target=\"_blank\">Tucson to stop adding people to waitlists for Section 8 h",
-        "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOUWEtX3hYS19Ld1BUelJ6MnRyVkF6Rm43WkJQVU9RSUV0VTk3Umh5QTA2WEROSDJmbm5pWjcyVWlmVTd3X1Byc0VIUHgzRXJFbndpSkxWMDVZbkJfcnBwMnpuUk9nV29pMXI5RHJoOUFkNlUycV9QbmxuQ3lYR25OVWhyWWdxajA3ZE5IWjJjZVdpejR3Ri03LVVPc0dGVWVYMkpfdHpFU1MydEJNdkhaay1XRFR3UjF3cW9rZnA0SlBZejk4UXZqWg?oc=5",
-        "date": "Tue, 23 Dec 2025 08:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Federal funding cuts force San Diego to halt Section 8 housing waitlist - NBC 7 San Diego",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxOUzVnYnRZMVlpVEtER3ZURlBOcm9fRVdidWVhMW1RaHNVcXYwNzFGUmlYdkUzYXRkYXdHWXVuYWVYZHY0NnNMcUpkNElKdXViOFNxOEc5RUtDN0hLQlVuNm1HRkFKZ0JwTHlZcGo5eU10Tkwxdnk3dDJuVGlJYmVOMXlFdjRoRldFWHB6SDFMWFlZNEtvbl9LUjRmeEoyYVE4cnpNeHo3R1dSZkFial9vNVFTRnhKQnN3Snlv0gHDAUFVX3lxTE9JOXhqMFFKSTFLc2ltTUNZcV9iNWFSY09pekZXekxPell3cHlaMjVycVRUYmg0YnlsTDBXV1hwd0RndUFITn",
-        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOUzVnYnRZMVlpVEtER3ZURlBOcm9fRVdidWVhMW1RaHNVcXYwNzFGUmlYdkUzYXRkYXdHWXVuYWVYZHY0NnNMcUpkNElKdXViOFNxOEc5RUtDN0hLQlVuNm1HRkFKZ0JwTHlZcGo5eU10Tkwxdnk3dDJuVGlJYmVOMXlFdjRoRldFWHB6SDFMWFlZNEtvbl9LUjRmeEoyYVE4cnpNeHo3R1dSZkFial9vNVFTRnhKQnN3Snlv0gHDAUFVX3lxTE9JOXhqMFFKSTFLc2ltTUNZcV9iNWFSY09pekZXekxPell3cHlaMjVycVRUYmg0YnlsTDBXV1hwd0RndUFITnliT2ZYNE8tVEhZcWdMbm0tTFRCWDhTSWxZWEJLNFRiakZXODVTd25oZTljSGxVR2hmVUpFSkVkNTNRT2tiQWVjUmZndHM5Y2p4SERYbDhja3lSNXNtUHl2cXVWbHhZSURiaUtSOXdxUkRGQ2syMDRDLXhJWWpucDhlXy04RQ?oc=5",
-        "date": "Fri, 16 Jan 2026 08:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "New York law banning Section 8 housing discrimination struck down - CBS News",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMikAFBVV95cUxNZFZCRHpQdEZZc1htOEgyTEVuU3k5eUVOcjdkdGctazBCeEFVVHN5eEtMSFJya29UUWp3aFN2bVdROWN6QXZKUTg2Q0hTc2JHRDZzb3NUU2xINTBZdWs3Znk1NXh0UW9KVThzcUJzd1B1bHpZZVpUYy1JajBBSEdiTVdoVHo5ZjF1bEkyRGpGWjY?oc=5\" target=\"_blank\">New York law banning Section 8 housing discrimination struck down</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CBS News</font>",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNZFZCRHpQdEZZc1htOEgyTEVuU3k5eUVOcjdkdGctazBCeEFVVHN5eEtMSFJya29UUWp3aFN2bVdROWN6QXZKUTg2Q0hTc2JHRDZzb3NUU2xINTBZdWs3Znk1NXh0UW9KVThzcUJzd1B1bHpZZVpUYy1JajBBSEdiTVdoVHo5ZjF1bEkyRGpGWjY?oc=5",
-        "date": "Fri, 06 Mar 2026 08:00:00 GMT"
       }
     ],
     "joseph_videos": [
@@ -519,7 +519,7 @@
         "title": "Licensed Realtor Reacts to Real Estate Gurus (They're Lying to You)",
         "description": "Work with me 1:1 - https://go.investingsection8.com/93deec57\n\nDealFinder AI: https://go.dealfinderai.org/c450a339\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/cc497cbd\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
         "published_at": "2026-05-07T19:00:17Z",
-        "view_count": 532,
+        "view_count": 537,
         "like_count": 22,
         "comment_count": 5,
         "url": "https://youtube.com/watch?v=AjPVQLvltfI"
@@ -529,7 +529,7 @@
         "title": "The Government Pays Me Every Month (Here's How I Set It Up)",
         "description": "Work with me 1:1 - https://go.investingsection8.com/40f46b0f\n\nDealFinder AI: https://go.dealfinderai.org/c08abd37\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/8541fd36\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
         "published_at": "2026-04-30T19:00:54Z",
-        "view_count": 515,
+        "view_count": 518,
         "like_count": 21,
         "comment_count": 4,
         "url": "https://youtube.com/watch?v=pv2VMLjixAo"
@@ -539,7 +539,7 @@
         "title": "He Bought His First Rental for $80K. The Government Now Pays Him $1,250/Month.",
         "description": "Work with me 1:1 - https://go.investingsection8.com/9fd96f7d\n\nDealFinder AI: https://go.dealfinderai.org/e8e0f02a\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/ed803374\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
         "published_at": "2026-04-13T20:40:06Z",
-        "view_count": 496,
+        "view_count": 497,
         "like_count": 21,
         "comment_count": 7,
         "url": "https://youtube.com/watch?v=Iu7ERqvwRpQ"
@@ -549,7 +549,7 @@
         "title": "NO ONE Wanted This Abandoned House… I Bought It for $30K (Full BRRRR Reveal)",
         "description": "Work with me 1:1 - https://go.investingsection8.com/9f2f7a99\n\nDealFinder AI: https://go.dealfinderai.org/f65b91e6\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/e2355059\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
         "published_at": "2026-05-04T23:34:32Z",
-        "view_count": 485,
+        "view_count": 487,
         "like_count": 15,
         "comment_count": 2,
         "url": "https://youtube.com/watch?v=G72zQEtVM-M"
@@ -569,79 +569,43 @@
         "title": "The Government Will Pay You $1,200/Month to Own This Type of Rental",
         "description": "Work with me 1:1 - https://go.investingsection8.com/d036c01d\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/5f7cad10\n\nDealFinder AI: https://go.investingsection8.com/73a7c686\n\nClaim Free HUD Inspection Checklist Guide: https://go.investingsection8.com/fbc98f0b\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealc",
         "published_at": "2026-05-19T19:00:20Z",
-        "view_count": 435,
-        "like_count": 15,
+        "view_count": 439,
+        "like_count": 16,
         "comment_count": 2,
         "url": "https://youtube.com/watch?v=HB40CwiBiVU"
-      },
-      {
-        "video_id": "-5iXY7R_5uo",
-        "title": "If you’re buying a rental in the next 5 years, please watch this…",
-        "description": "Work with me 1:1 - https://go.investingsection8.com/16c277fb\n\nDealFinder AI: https://go.dealfinderai.org/53ad9f6e\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/3f6c731a\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
-        "published_at": "2026-05-12T19:01:42Z",
-        "view_count": 287,
-        "like_count": 14,
-        "comment_count": 1,
-        "url": "https://youtube.com/watch?v=-5iXY7R_5uo"
       },
       {
         "video_id": "-Q5oOFGZ1w8",
         "title": "You Wire the Money. We Do Everything Else. (Section 8 Done For You)",
         "description": "Book a call for \"Done For You\" - https://go.investingsection8.com/a50ac0bf\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/e2ca5245\n\nDealFinder AI: https://go.investingsection8.com/48dfdbcd\n\nClaim Free HUD Inspection Checklist Guide: https://go.investingsection8.com/5878a350\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!):",
         "published_at": "2026-05-29T19:39:53Z",
-        "view_count": 286,
-        "like_count": 20,
+        "view_count": 305,
+        "like_count": 22,
         "comment_count": 4,
         "url": "https://youtube.com/watch?v=-Q5oOFGZ1w8"
+      },
+      {
+        "video_id": "-5iXY7R_5uo",
+        "title": "If you’re buying a rental in the next 5 years, please watch this…",
+        "description": "Work with me 1:1 - https://go.investingsection8.com/16c277fb\n\nDealFinder AI: https://go.dealfinderai.org/53ad9f6e\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/3f6c731a\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
+        "published_at": "2026-05-12T19:01:42Z",
+        "view_count": 291,
+        "like_count": 14,
+        "comment_count": 1,
+        "url": "https://youtube.com/watch?v=-5iXY7R_5uo"
       }
     ],
-    "student_wins": [
-      {
-        "name": "Franklin Collins",
-        "cash_collected": 0,
-        "lead_source": "IG DM",
-        "call_date": "2026-05-13T14:00:00.000Z",
-        "product": "Investing Section 8"
-      },
-      {
-        "name": "Niggerbuster Blaperbloopergon",
-        "cash_collected": 0,
-        "lead_source": "IG (Organic)",
-        "call_date": "2026-05-12T13:00:00.000Z",
-        "product": "Investing Section 8"
-      },
-      {
-        "name": "Jamil Rahemt",
-        "cash_collected": 0,
-        "lead_source": "IG DM",
-        "call_date": "2026-04-28T16:30:00.000Z",
-        "product": "Investing Section 8"
-      },
-      {
-        "name": "Emel Whittaker ",
-        "cash_collected": 0,
-        "lead_source": "IG DM",
-        "call_date": "2026-05-08T21:00:00.000Z",
-        "product": "Investing Section 8"
-      },
-      {
-        "name": "Justin Singh",
-        "cash_collected": 0,
-        "lead_source": "YouTube (Organic)",
-        "call_date": "2026-05-11T22:00:00.000Z",
-        "product": "Investing Section 8"
-      }
-    ]
+    "student_wins": []
   },
   "drafts": [],
   "stats": {
     "total_drafts": 0,
     "this_week_drafts": 0,
     "weekly_goal": 3,
-    "reddit_items": 77,
+    "reddit_items": 84,
     "reddit_questions": 20,
     "yt_comments": 15,
     "yt_questions": 6,
-    "news_items": 174
+    "news_items": 166
   }
 }
