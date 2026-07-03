@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-store" />
 <title>Newsletter Studio — Joseph Khateri</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Ctext x='16' y='23' font-size='20' font-family='Inter,sans-serif' font-weight='700' text-anchor='middle' fill='%23f59e0b'%3EN%3C/text%3E%3C/svg%3E" />
 <!-- REFINE CHAT PANEL -->
 <div id="refinePanel">
   <div class="flex items-center justify-between px-5 py-3 border-b border-gray-900 flex-shrink-0">
@@ -101,9 +102,41 @@
   .chip:hover { border-color: #f59e0b; color: #f59e0b; }
   .refine-btn { font-size: 12px; padding: 5px 12px; background: transparent; border: 1px solid #2a2a2a; border-radius: 6px; color: #6b7280; cursor: pointer; transition: all .15s; }
   .refine-btn:hover { border-color: #a78bfa; color: #a78bfa; }
+
+  /* ── Brand palette (edit here to re-theme) ── */
+  :root {
+    --brand: #f59e0b; --brand-tint: #161206; --bg: #0a0a0a; --surface: #111;
+    --border: #1f1f1f; --border-2: #2a2a2a; --text: #e5e7eb; --muted: #6b7280; --ok: #4ade80;
+  }
+
+  /* ── Inline editable content ── */
+  .editable { outline: none; border-radius: 6px; transition: background .12s, box-shadow .12s; cursor: text; }
+  .editable:hover { background: #16120622; box-shadow: inset 0 0 0 1px #2a2a2a; }
+  .editable:focus { background: #0d0d0d; box-shadow: inset 0 0 0 1px var(--brand); }
+  .editable:empty::before { content: attr(data-placeholder); color: #4b5563; }
+  .edit-hint { font-size: 10px; color: #4b5563; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── Saved toast ── */
+  #nsToast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 20px); z-index: 60;
+    background: #0a1a10; border: 1px solid var(--ok); color: var(--ok); font-size: 13px; font-weight: 600;
+    padding: 9px 18px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  #nsToast.show { opacity: 1; transform: translate(-50%, 0); }
+  #nsToast.warn { background: #1a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+
+  /* ── Filter / search inputs ── */
+  .filter-input { background: #111; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 8px 12px;
+    border-radius: 8px; outline: none; font-size: 13px; width: 100%; transition: border-color .15s; }
+  .filter-input:focus { border-color: var(--brand); }
+  .icon-btn { background: transparent; border: none; color: #4b5563; cursor: pointer; font-size: 15px;
+    line-height: 1; padding: 2px 6px; border-radius: 6px; transition: color .15s, background .15s; }
+  .icon-btn:hover { color: #f87171; background: #1a0a0a; }
+  .stale-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; margin-right: 4px; vertical-align: middle; }
 </style>
 </head>
 <body class="min-h-screen">
+
+<!-- SAVED TOAST -->
+<div id="nsToast"></div>
 
 <!-- AUTH GATE -->
 <div id="authGate" class="fixed inset-0 z-50 flex items-center justify-center" style="background:#0a0a0a">
@@ -139,20 +172,20 @@
 
   <!-- HEADER + NAV -->
   <header class="border-b border-gray-900 sticky top-0 z-10" style="background:#0a0a0a">
-    <div class="px-6 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="text-amber-400 font-bold text-base">Newsletter Studio</span>
-        <span class="text-gray-800">/</span>
-        <span class="text-gray-500 text-sm">Joseph Khateri</span>
+    <div class="px-4 sm:px-6 py-3 flex items-center justify-between flex-wrap gap-y-2 gap-x-3">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-amber-400 font-bold text-base whitespace-nowrap">Newsletter Studio</span>
+        <span class="text-gray-800 hidden sm:inline">/</span>
+        <span class="text-gray-500 text-sm hidden sm:inline">Joseph Khateri</span>
       </div>
-      <div class="flex items-center gap-3">
-        <div id="researchDate" class="text-gray-700 text-xs"></div>
-        <div id="statsChips" class="flex gap-2"></div>
+      <div class="flex items-center gap-2 flex-wrap justify-end">
+        <div id="researchDate" class="text-gray-700 text-xs whitespace-nowrap"></div>
+        <div id="statsChips" class="flex gap-2 flex-wrap"></div>
         <button id="refreshBtn" class="copy-btn" style="font-size:11px" onclick="refreshResearch()">
           <span id="refreshSpinner" class="hidden spinner" style="width:10px;height:10px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:4px"></span>
           <span id="refreshLabel">Refresh Data</span>
         </button>
-        <button class="copy-btn" style="font-size:11px" onclick="handleClearCache()">Clear Cache</button>
+        <button class="copy-btn" style="font-size:11px" onclick="handleClearCache(this)">Clear Cache</button>
         <button class="copy-btn" style="font-size:11px" onclick="showApiKeyModal()">API Key</button>
       </div>
     </div>
@@ -227,10 +260,15 @@
             </div>
             <div id="contentTopicSource" class="text-amber-600 text-xs mt-1"></div>
           </div>
-          <button class="btn-ghost flex-shrink-0" id="btnRegenContent" onclick="regenerateContent()">
-            <span id="regenContentSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
-            Regenerate
-          </button>
+          <div class="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
+            <button class="copy-btn" id="btnCopySession" onclick="copySession(this)">Copy session</button>
+            <button class="copy-btn" onclick="downloadSession()">Download .md</button>
+            <button class="copy-btn" id="btnRevert" onclick="revertContent()" title="Restore the originally generated copy">Revert edits</button>
+            <button class="btn-ghost" id="btnRegenContent" onclick="regenerateContent()">
+              <span id="regenContentSpinner" class="hidden spinner" style="width:13px;height:13px;border-width:2px"></span>
+              Regenerate
+            </button>
+          </div>
         </div>
         <div class="flex gap-2 mb-5">
           <button id="tabEmail"   class="tab-active   px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchTab('email')">Email</button>
@@ -261,6 +299,7 @@
         <button id="rTabYoutube" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchResearchTab('youtube')">YouTube</button>
         <button id="rTabNews"    class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="switchResearchTab('news')">News</button>
       </div>
+      <input id="researchSearch" class="filter-input mb-5" placeholder="Filter this list by keyword..." oninput="applyResearchFilter()" />
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div class="lg:col-span-2">
           <div id="researchPanel" class="card p-5"></div>
@@ -283,6 +322,7 @@
         </div>
         <button class="btn-ghost text-red-400 hover:border-red-800" style="font-size:12px;padding:6px 12px" onclick="clearHistory()">Clear all</button>
       </div>
+      <input id="historySearch" class="filter-input mb-5" placeholder="Search history by topic, source, or notes..." oninput="renderHistoryList()" />
       <div id="historyList"></div>
     </div>
 
@@ -391,7 +431,7 @@ async function refreshResearch() {
       await new Promise(r => setTimeout(r, 6000));
       const runsRes = await fetch(
         `https://api.github.com/repos/${GH_REPO}/actions/runs?per_page=5`,
-        { headers: { Authorization: `token ${GH_DISPATCH_TOKEN}`, Accept: 'application/vnd.github.v3+json' } }
+        { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' } }
       );
       const { workflow_runs } = await runsRes.json();
       const run = workflow_runs.find(r => r.path?.includes(GH_WORKFLOW) || r.name === 'Newsletter Research');
@@ -718,15 +758,16 @@ function clearAllCache() {
   const keys = [];
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
-    if (k && (k.startsWith('ns_topics_') || k.startsWith('ns_content_'))) keys.push(k);
+    if (k && (k.startsWith('ns_topics_') || k.startsWith('ns_content_') || k.startsWith('ns_orig_'))) keys.push(k);
   }
   keys.forEach(k => localStorage.removeItem(k));
 }
-function handleClearCache() {
+function handleClearCache(btn) {
   clearAllCache();
-  const btn = event.target;
-  btn.textContent = 'Cleared!';
-  setTimeout(() => { btn.textContent = 'Clear Cache'; }, 1500);
+  if (btn) {
+    btn.textContent = 'Cleared!';
+    setTimeout(() => { btn.textContent = 'Clear Cache'; }, 1500);
+  }
 }
 
 // ─── API Key modal ────────────────────────────────────────────────────────────
@@ -767,6 +808,7 @@ const S = {
   activeTab: 'email',
   activeVersion: 0,
   researchTab: 'reddit',
+  sessionId: null,
 };
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
@@ -848,38 +890,58 @@ function switchNav(nav) {
 
 
 // ─── Header ───────────────────────────────────────────────────────────────────
+// Counts are derived from the arrays actually shown, so headline numbers can never
+// disagree with the lists in the Research tab.
+function countsFrom(r) {
+  r = r || {};
+  const redditQ = (r.reddit_questions || []).length, redditP = (r.reddit_top_posts || []).length;
+  const ytC = (r.youtube_comments || []).length, ytQ = (r.youtube_questions || []).length;
+  return { reddit: redditQ + redditP, redditQ, yt: ytC + ytQ, ytQ,
+    news: (r.news_items || []).length, wins: (r.student_wins || []).length,
+    videos: (r.joseph_videos || []).length };
+}
+function daysAgo(iso) {
+  const t = new Date(iso); if (isNaN(t)) return null;
+  return Math.floor((Date.now() - t.getTime()) / 86400000);
+}
 function renderHeader(data) {
+  const el = document.getElementById('researchDate');
   if (data.generated_at) {
     const d = new Date(data.generated_at);
-    document.getElementById('researchDate').textContent =
-      `Research: ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    const label = `Research: ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    const n = daysAgo(data.generated_at);
+    const rel = n === null ? '' : n <= 0 ? ' · today' : n === 1 ? ' · 1 day ago' : ` · ${n} days ago`;
+    const stale = n !== null && n > 7;
+    el.innerHTML = `${stale ? '<span class="stale-dot" title="Data is over a week old"></span>' : ''}${label}${rel}`;
+    el.style.color = stale ? '#f59e0b' : '';
+    el.title = stale ? 'Research data is stale. Hit Refresh Data to pull a fresh run.' : '';
   }
-  const s = data.stats;
+  const c = countsFrom(data.research);
   document.getElementById('statsChips').innerHTML = [
-    { label: `${(s.yt_comments||0)+(s.yt_questions||0)} YT`, color: '#ef4444' },
-    { label: `${s.reddit_items||0} Reddit`, color: '#ff4500' },
-    { label: `${s.news_items||0} News`, color: '#3b82f6' },
-  ].map(c => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${c.color}22;color:${c.color}">${c.label}</span>`).join('');
+    { label: `${c.yt} YT`, color: '#ef4444' },
+    { label: `${c.reddit} Reddit`, color: '#ff4500' },
+    { label: `${c.news} News`, color: '#3b82f6' },
+  ].map(x => `<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:${x.color}22;color:${x.color}">${x.label}</span>`).join('');
 }
 
 function renderResearchBreakdown(data) {
-  const s = data.stats; const r = data.research;
+  const c = countsFrom(data.research);
   document.getElementById('researchBreakdown').innerHTML = [
-    { label: 'YouTube',      value: `${(s.yt_comments||0)+(s.yt_questions||0)} comments` },
-    { label: 'Reddit',       value: `${s.reddit_items||0} posts` },
-    { label: 'News',         value: `${s.news_items||0} items` },
-    { label: 'Student Wins', value: `${(r.student_wins||[]).length} recent` },
+    { label: 'YouTube',      value: `${c.yt} comments` },
+    { label: 'Reddit',       value: `${c.reddit} posts` },
+    { label: 'News',         value: `${c.news} items` },
+    { label: 'Student Wins', value: `${c.wins} recent` },
   ].map(i => `<div class="card p-4"><div class="text-gray-500 text-xs mb-1">${i.label}</div><div class="text-white font-semibold text-sm">${i.value}</div></div>`).join('');
 }
 
 // ─── Research tab ─────────────────────────────────────────────────────────────
 function renderResearchStatCards(data) {
-  const s = data.stats; const r = data.research;
+  const c = countsFrom(data.research);
   document.getElementById('researchStatCards').innerHTML = [
-    { label: 'REDDIT SIGNALS', value: s.reddit_items||0, sub: `${s.reddit_questions||0} questions` },
-    { label: 'YT COMMENTS',    value: (s.yt_comments||0)+(s.yt_questions||0), sub: `${s.yt_questions||0} questions` },
-    { label: 'NEWS ITEMS',     value: s.news_items||0, sub: 'Section 8 / HUD' },
-    { label: 'STUDENT WINS',   value: (r.student_wins||[]).length, sub: 'from Airtable' },
+    { label: 'REDDIT SIGNALS', value: c.reddit, sub: `${c.redditQ} questions` },
+    { label: 'YT COMMENTS',    value: c.yt,     sub: `${c.ytQ} questions` },
+    { label: 'NEWS ITEMS',     value: c.news,   sub: 'Section 8 / HUD' },
+    { label: 'STUDENT WINS',   value: c.wins,   sub: 'from Airtable' },
   ].map(i => `<div class="card p-4"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-1">${i.label}</div><div class="text-white font-bold text-2xl">${i.value}</div><div class="text-gray-600 text-xs mt-0.5">${i.sub}</div></div>`).join('');
 }
 
@@ -896,6 +958,9 @@ function renderResearchPanel() {
   if (!S.research) return;
   const panel = document.getElementById('researchPanel');
   const r = S.research; const tab = S.researchTab;
+  const empty = msg => `<div class="text-center py-12 text-gray-600 text-sm">${msg}</div>`;
+  if (tab === 'reddit' && !(r.reddit_questions||[]).length && !(r.reddit_top_posts||[]).length) { panel.innerHTML = empty('No Reddit signals in this run.'); return; }
+  if (tab === 'youtube' && !(r.youtube_questions||[]).length && !(r.youtube_comments||[]).length) { panel.innerHTML = empty('No YouTube signals in this run.'); return; }
   if (tab === 'reddit') {
     panel.innerHTML = `
       <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">Top Questions</div>
@@ -912,14 +977,18 @@ function renderResearchPanel() {
   }
   if (tab === 'news') {
     const items = (r.news_items||[]).slice(0,20);
-    panel.innerHTML = `<div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">${items.length} Items</div>${items.map(n => `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(n.title||'')}</div><div class="text-gray-600 text-xs mt-1">${esc(n.source||'')}${n.published ? ' · ' + new Date(n.published).toLocaleDateString() : ''}</div></div>`).join('')}`;
+    const fmtNewsDate = d => { if (!d) return ''; const t = new Date(d); return isNaN(t) ? '' : ' · ' + t.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); };
+    panel.innerHTML = items.length
+      ? `<div class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-4">${items.length} Items</div>${items.map(n => `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(n.title||'')}</div><div class="text-gray-600 text-xs mt-1">${esc(n.source||'')}${fmtNewsDate(n.date || n.published)}</div></div>`).join('')}`
+      : `<div class="text-center py-12 text-gray-600 text-sm">No news items in this research run.</div>`;
   }
+  applyResearchFilter();
 }
 
 function renderVideosPanel() {
   if (!S.research) return;
   document.getElementById('videosPanel').innerHTML = (S.research.joseph_videos||[]).slice(0,8).map(v =>
-    `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(v.title||'')}</div><div class="text-gray-600 text-xs mt-1">${(v.views||0).toLocaleString()} views · ${v.comment_count||0} comments</div></div>`).join('');
+    `<div class="signal-row"><div class="text-gray-200 text-sm leading-snug">${esc(v.title||'')}</div><div class="text-gray-600 text-xs mt-1">${(v.view_count||v.views||0).toLocaleString()} views · ${v.comment_count||0} comments</div></div>`).join('');
 }
 
 // ─── Topics ───────────────────────────────────────────────────────────────────
@@ -1018,6 +1087,7 @@ async function generateContent(force) {
     const cached = getCachedContent(S.selectedTopic.title);
     if (cached) {
       S.content = cached;
+      if (!getContentOrig(S.selectedTopic.title)) setContentOrig(S.selectedTopic.title, cached);
       document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
       document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
       document.getElementById('contentCacheStatus').classList.remove('hidden');
@@ -1048,6 +1118,7 @@ async function generateContent(force) {
     if (!data.email || !data.stories || !data.skool) throw new Error('Incomplete content returned');
     S.content = data;
     setCachedContent(S.selectedTopic.title, data);
+    setContentOrig(S.selectedTopic.title, data);
     document.getElementById('contentTopicTitle').textContent = S.selectedTopic.title;
     document.getElementById('contentTopicSource').textContent = S.selectedTopic.source;
     document.getElementById('contentCacheStatus').classList.add('hidden');
@@ -1123,13 +1194,13 @@ function renderEmailPanel() {
             <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Subject</div>
             ${e.hook_type ? `<span class="badge" style="background:#0a1a10;color:#4ade80">${esc(hookLabel(e.hook_type))}</span>` : ''}
           </div>
-          <button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.subject)})">Copy</button>
+          <button class="copy-btn" onclick="copyField(this,'email.${i}.subject')">Copy</button>
         </div>
-        <div class="text-white font-medium text-sm">${esc(e.subject)}</div>
+        <div class="text-white font-medium text-sm editable" contenteditable="true" data-ep="email.${i}.subject" data-placeholder="Subject line...">${esc(e.subject)}</div>
       </div>
-      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.alt_subject)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.alt_subject)}</div></div>
-      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.preview)})">Copy</button></div><div class="text-gray-300 text-sm">${esc(e.preview)}</div></div>
-      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body</div><button class="copy-btn" onclick="copyText(this,${JSON.stringify(e.body)})">Copy body</button></div><div class="email-body">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex items-center justify-between"><button class="refine-btn" onclick="openRefinePanel('email',${i})">✦ Refine this email</button><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
+      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Alt Subject</div><button class="copy-btn" onclick="copyField(this,'email.${i}.alt_subject')">Copy</button></div><div class="text-gray-300 text-sm editable" contenteditable="true" data-ep="email.${i}.alt_subject" data-placeholder="Alt subject...">${esc(e.alt_subject)}</div></div>
+      <div class="card p-5 mb-3"><div class="flex items-center justify-between mb-2"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Preview Text</div><button class="copy-btn" onclick="copyField(this,'email.${i}.preview')">Copy</button></div><div class="text-gray-300 text-sm editable" contenteditable="true" data-ep="email.${i}.preview" data-placeholder="Preview text...">${esc(e.preview)}</div></div>
+      <div class="card p-5"><div class="flex items-center justify-between mb-3"><div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Body <span class="edit-hint">· click to edit</span></div><button class="copy-btn" onclick="copyField(this,'email.${i}.body')">Copy body</button></div><div class="email-body editable" contenteditable="true" data-ep="email.${i}.body" data-placeholder="Email body...">${esc(e.body)}</div><div class="border-t border-gray-900 mt-5 pt-4 flex items-center justify-between"><button class="refine-btn" onclick="openRefinePanel('email',${i})">✦ Refine this email</button><button class="btn-primary text-xs py-2" onclick="copyFullEmail(this,${i})">Copy full email</button></div></div>
     </div>`).join('');
 }
 
@@ -1145,7 +1216,7 @@ function renderStoriesPanel() {
           </div>
           <button class="copy-btn" onclick="copyAllSlides(this,${i})">Copy all slides</button>
         </div>
-        <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyText(this,${JSON.stringify(slide.text)})">Copy</button></div>`).join('')}</div>
+        <div class="flex flex-col gap-5">${seq.slides.map((slide, si) => `<div class="flex gap-3 items-start"><div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#1a1a1a;color:#6b7280">${si+1}</div><div class="flex-1 min-w-0"><div class="slide-label">${esc(slide.label)}</div><div class="slide-text editable" contenteditable="true" data-ep="stories.${i}.slides.${si}.text" data-placeholder="Slide text...">${esc(slide.text)}</div></div><button class="copy-btn flex-shrink-0 mt-0.5" onclick="copyField(this,'stories.${i}.slides.${si}.text')">Copy</button></div>`).join('')}</div>
         <div class="border-t border-gray-900 mt-5 pt-4"><button class="refine-btn" onclick="openRefinePanel('stories',${i})">✦ Refine this sequence</button></div>
       </div>
     </div>`).join('');
@@ -1157,10 +1228,10 @@ function renderSkoolPanel() {
       <div class="card p-5">
         <div class="flex items-center justify-between mb-3">
           <div class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Skool Post</div>
-          <button class="copy-btn" onclick="copyText(this,${JSON.stringify((p.title ? p.title + '\n\n' : '') + p.body)})">Copy post</button>
+          <button class="copy-btn" onclick="copySkool(this,${i})">Copy post</button>
         </div>
-        ${p.title ? `<div class="text-white font-semibold text-base mb-3 leading-snug">${esc(p.title)}</div>` : ''}
-        <div class="email-body">${esc(p.body)}</div>
+        <div class="text-white font-semibold text-base mb-3 leading-snug editable" contenteditable="true" data-ep="skool.${i}.title" data-placeholder="Post title...">${esc(p.title||'')}</div>
+        <div class="email-body editable" contenteditable="true" data-ep="skool.${i}.body" data-placeholder="Post body...">${esc(p.body)}</div>
         <div class="border-t border-gray-900 mt-4 pt-4"><button class="refine-btn" onclick="openRefinePanel('skool',${i})">✦ Refine this post</button></div>
       </div>
     </div>`).join('');
@@ -1169,15 +1240,27 @@ function renderSkoolPanel() {
 // ─── History ──────────────────────────────────────────────────────────────────
 function saveToHistory(topic, content) {
   const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
-  history.unshift({ id: Date.now(), date: new Date().toISOString(), topic: { title: topic.title, source: topic.source, type: topic.type, hook: topic.hook }, content, notes: '' });
+  const id = Date.now();
+  history.unshift({ id, date: new Date().toISOString(), topic: { title: topic.title, source: topic.source, type: topic.type, hook: topic.hook }, content, notes: '' });
   localStorage.setItem('ns_history', JSON.stringify(history.slice(0, 60)));
+  S.sessionId = id;
+  return id;
 }
 
 function renderHistoryList() {
-  const history = JSON.parse(localStorage.getItem('ns_history') || '[]');
+  const all = JSON.parse(localStorage.getItem('ns_history') || '[]');
   const container = document.getElementById('historyList');
-  if (!history.length) {
+  if (!all.length) {
     container.innerHTML = `<div class="text-center py-16 text-gray-600 text-sm">No sessions yet. Generate some content and it will appear here.</div>`;
+    return;
+  }
+  const searchEl = document.getElementById('historySearch');
+  const q = (searchEl && searchEl.value || '').trim().toLowerCase();
+  const history = q
+    ? all.filter(s => [s.topic?.title, s.topic?.source, s.notes].filter(Boolean).join(' ').toLowerCase().includes(q))
+    : all;
+  if (!history.length) {
+    container.innerHTML = `<div class="text-center py-16 text-gray-600 text-sm">No sessions match "${esc(q)}".</div>`;
     return;
   }
   const groups = {};
@@ -1194,7 +1277,7 @@ function renderHistoryList() {
         return `<div class="history-card" id="hcard-${s.id}">
           <div class="flex items-start justify-between gap-3 mb-2">
             <div class="flex items-center gap-2 flex-wrap"><span class="badge ${badge.cls}">${badge.label}</span><span class="text-gray-600 text-xs">${new Date(s.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span></div>
-            <button class="copy-btn" style="font-size:11px" onclick="reloadSession('${s.id}')">Reload →</button>
+            <div class="flex items-center gap-1 flex-shrink-0"><button class="copy-btn" style="font-size:11px" onclick="reloadSession('${s.id}')">Reload →</button><button class="icon-btn" title="Delete this session" onclick="deleteSession('${s.id}')">&times;</button></div>
           </div>
           <div class="text-white text-sm font-medium mb-1 leading-snug">${esc(s.topic.title)}</div>
           <div class="text-amber-700 text-xs mb-3">${esc(s.topic.source)}</div>
@@ -1216,6 +1299,7 @@ function reloadSession(id) {
   if (!session) return;
   S.selectedTopic = session.topic;
   S.content = session.content;
+  S.sessionId = session.id;
   S.activeTab = 'email'; S.activeVersion = 0;
   document.getElementById('contentTopicTitle').textContent = session.topic.title;
   document.getElementById('contentTopicSource').textContent = session.topic.source;
@@ -1233,12 +1317,26 @@ function clearHistory() {
 
 // ─── Copy helpers ─────────────────────────────────────────────────────────────
 async function copyText(btn, text) {
+  let ok = false;
   try {
-    await navigator.clipboard.writeText(text);
+    if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; }
+    else { ok = legacyCopy(text); }
+  } catch { ok = legacyCopy(text); }
+  if (ok) {
     const orig = btn.textContent;
     btn.textContent = 'Copied!'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
-  } catch { /* silent */ }
+  } else {
+    showToast('Copy failed — select and copy manually', true);
+  }
+}
+function legacyCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    const ok = document.execCommand('copy'); document.body.removeChild(ta); return ok;
+  } catch { return false; }
 }
 async function copyFullEmail(btn, vIdx) {
   const e = S.content.email[vIdx];
@@ -1246,6 +1344,10 @@ async function copyFullEmail(btn, vIdx) {
 }
 async function copyAllSlides(btn, vIdx) {
   await copyText(btn, S.content.stories[vIdx].slides.map(s => `[${s.label}]\n${s.text}`).join('\n\n'));
+}
+async function copySkool(btn, vIdx) {
+  const p = S.content.skool[vIdx];
+  await copyText(btn, (p.title ? p.title + '\n\n' : '') + p.body);
 }
 function esc(str = '') {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -1354,19 +1456,154 @@ function applyRefinedCopy(raw) {
         const m = b.match(/^\[(.+?)\]\n([\s\S]+)$/);
         if (m) slides.push({ label: m[1], text: m[2].trim() });
       });
+      const seq = S.content.stories[vIdx].slides;
       if (slides.length >= 2) S.content.stories[vIdx].slides = slides;
-      else S.content.stories[vIdx].slides[1].text = raw;
-    } catch { S.content.stories[vIdx].slides[1].text = raw; }
+      else (seq[1] || seq[0]).text = raw;
+    } catch { const seq = S.content.stories[vIdx].slides; (seq[1] || seq[0]).text = raw; }
     renderStoriesPanel(); applyVersionVisibility();
   } else if (type === 'skool') {
     S.content.skool[vIdx].body = raw;
     renderSkoolPanel(); applyVersionVisibility();
   }
+  persistContent();
+  showToast('Applied & saved');
   // Flash the panel label to confirm
   const lbl = document.getElementById('refinePanelLabel');
   const orig = lbl.textContent;
   lbl.textContent = 'Applied!'; lbl.style.color = '#4ade80';
   setTimeout(() => { lbl.textContent = orig; lbl.style.color = ''; }, 1500);
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+let _toastTimer;
+function showToast(msg, warn = false) {
+  const t = document.getElementById('nsToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.toggle('warn', !!warn);
+  t.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.classList.remove('show'), 1700);
+}
+
+// ─── Inline editing of generated content ──────────────────────────────────────
+// Writes edits back into S.content by data-ep path, then persists to the content
+// cache AND the active history entry so nothing is ever silently lost.
+function setByPath(obj, path, value) {
+  const keys = path.split('.');
+  let node = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const k = /^\d+$/.test(keys[i]) ? Number(keys[i]) : keys[i];
+    if (node == null) return;
+    node = node[k];
+  }
+  if (node == null) return;
+  const last = keys[keys.length - 1];
+  node[/^\d+$/.test(last) ? Number(last) : last] = value;
+}
+function getByPath(obj, path) {
+  return path.split('.').reduce((n, k) => (n == null ? n : n[/^\d+$/.test(k) ? Number(k) : k]), obj);
+}
+function copyField(btn, path) { copyText(btn, getByPath(S.content, path) || ''); }
+function commitEdit(el) {
+  if (!S.content) return;
+  const path = el.dataset.ep;
+  const value = el.innerText.replace(/\n$/, '');
+  setByPath(S.content, path, value);
+  persistContent();
+  showToast('Saved');
+}
+document.addEventListener('focusout', e => {
+  const el = e.target;
+  if (el && el.classList && el.classList.contains('editable') && el.dataset && el.dataset.ep) commitEdit(el);
+});
+
+function persistContent() {
+  if (!S.selectedTopic || !S.content) return;
+  try { setCachedContent(S.selectedTopic.title, S.content); } catch {}
+  updateHistoryContent();
+}
+function updateHistoryContent() {
+  if (!S.sessionId) return;
+  try {
+    const h = JSON.parse(localStorage.getItem('ns_history') || '[]');
+    const idx = h.findIndex(s => String(s.id) === String(S.sessionId));
+    if (idx !== -1) { h[idx].content = S.content; localStorage.setItem('ns_history', JSON.stringify(h)); }
+  } catch {}
+}
+
+// ─── Revert to originally generated copy (reset-to-defaults) ───────────────────
+function setContentOrig(title, c) {
+  try { localStorage.setItem(`ns_orig_${todayKey()}_${title.slice(0,60)}`, JSON.stringify(c)); } catch {}
+}
+function getContentOrig(title) {
+  try { const r = localStorage.getItem(`ns_orig_${todayKey()}_${title.slice(0,60)}`); return r ? JSON.parse(r) : null; } catch { return null; }
+}
+function revertContent() {
+  if (!S.selectedTopic) return;
+  const orig = getContentOrig(S.selectedTopic.title);
+  if (!orig) { showToast('No original snapshot to revert to', true); return; }
+  if (!confirm('Discard your edits and restore the originally generated copy?')) return;
+  S.content = JSON.parse(JSON.stringify(orig));
+  persistContent();
+  renderContentView();
+  showToast('Reverted to generated');
+}
+
+// ─── History: delete one session ──────────────────────────────────────────────
+function deleteSession(id) {
+  if (!confirm('Delete this session?')) return;
+  try {
+    const h = JSON.parse(localStorage.getItem('ns_history') || '[]').filter(s => String(s.id) !== String(id));
+    localStorage.setItem('ns_history', JSON.stringify(h));
+  } catch {}
+  renderHistoryList();
+}
+
+// ─── Research list filter ─────────────────────────────────────────────────────
+function applyResearchFilter() {
+  const el = document.getElementById('researchSearch');
+  const q = (el && el.value || '').trim().toLowerCase();
+  document.querySelectorAll('#researchPanel .signal-row').forEach(row => {
+    row.style.display = (!q || row.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+
+// ─── Export the full session ──────────────────────────────────────────────────
+function sessionToMarkdown() {
+  if (!S.content || !S.selectedTopic) return '';
+  const t = S.selectedTopic, c = S.content;
+  const L = [];
+  L.push(`# ${t.title}`, '');
+  if (t.source) L.push(`**Signal:** ${t.source}`, '');
+  (c.email || []).forEach((e, i) => {
+    L.push(`## Email — Version ${i + 1}${e.hook_type ? ` (${e.hook_type.replace(/_/g,' ')})` : ''}`, '');
+    L.push(`**Subject:** ${e.subject}`, `**Alt subject:** ${e.alt_subject}`, `**Preview:** ${e.preview}`, '', e.body, '');
+  });
+  (c.stories || []).forEach((seq, i) => {
+    L.push(`## IG Stories — Version ${i + 1}${seq.type ? ` (${seq.type.replace(/_/g,' ')})` : ''}`, '');
+    (seq.slides || []).forEach((s, si) => L.push(`**${si + 1}. ${s.label}:** ${s.text}`));
+    L.push('');
+  });
+  (c.skool || []).forEach((p, i) => {
+    L.push(`## Skool Post — Version ${i + 1}`, '');
+    if (p.title) L.push(`**${p.title}**`, '');
+    L.push(p.body, '');
+  });
+  return L.join('\n');
+}
+function copySession(btn) { copyText(btn, sessionToMarkdown()); }
+function downloadSession() {
+  const md = sessionToMarkdown();
+  if (!md) { showToast('Nothing to export', true); return; }
+  const slug = (S.selectedTopic.title || 'session').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
+  const blob = new Blob([md], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${todayKey()}-${slug}.md`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Downloaded .md');
 }
 </script>
 </body>

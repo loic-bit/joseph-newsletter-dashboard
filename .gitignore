@@ -1,0 +1,7 @@
+# Internal audit artifacts — contain the auth password and token references.
+# Never publish to the Pages repo.
+AUDIT.md
+OVERHAUL-REPORT.md
+backup/
+overhaul-screenshots/
+.DS_Store
