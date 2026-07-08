@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T16:50:22.978718+00:00",
+  "generated_at": "2026-07-08T16:00:57.976840+00:00",
   "research": {
     "reddit_questions": [
       {
@@ -111,16 +111,6 @@
         "url": "https://www.reddit.com/r/realestateinvesting/comments/1uazik8/any_of_you_selfinsure/",
         "is_question": true,
         "age_days": 0
-      },
-      {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "Does anyone else end up with 6 tabs open before you've even decided if a property is worth looking at?",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>I caught myself doing this again today.</p> <p>Open Zillow.<br/> Then county records.<br/> Then rent comps.<br/> Back to Zillow because I forgot the taxes.<br/> Street View.<br/> Recent sales.<br/> Then another tab because I wanted to double-check something.</p> <p>At some point I just stopped and thought, how is this still the normal way to analyze a property?</p> <p>I probably spend as much time bouncing between tabs as I do actually thinking about the deal.</p> <p>Please tell me I&#39;m not the only one.</p> </div><!-- SC_ON --> &#32; submitted by &#32; <a ",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1ua6qcj/does_anyone_else_end_up_with_6_tabs_open_before/",
-        "is_question": true,
-        "age_days": 0
       }
     ],
     "reddit_top_posts": [
@@ -141,6 +131,16 @@
         "text": "<!-- SC_OFF --><div class=\"md\"><h1>Monthly Motivation Thread</h1> <p>Welcome to this monthly series. This post will repeat monthly, on the 21st of every month.</p> <p>This is your opportunity to share your successes, accomplishments, as well as provide us with an update on your goals and strategies as they pertain to Real Estate Investing.</p> <h1>Example Questions:</h1> <ol> <li>What are you hoping to accomplish this month?</li> <li>What method(s) are you using?</li> <li>Have you closed any interesting deals recently?</li> <li>What mistakes did you make, and what did they teach you?</li> <li>",
         "score": 0,
         "url": "https://www.reddit.com/r/realestateinvesting/comments/1ubj7vj/monthly_motivation_thread_june_21_2026/",
+        "is_question": false,
+        "age_days": 0
+      },
+      {
+        "source": "r/realestateinvesting",
+        "type": "post",
+        "title": "Noobie Weighing Investment Options",
+        "text": "<!-- SC_OFF --><div class=\"md\"><p>Hello all,</p> <p>Long time lurker, finally in the financial position to make a move. I currently work a W2 job and own a SFH, hoping to transition out of my career in the next decade and exclusively into RE investing. Looking for advice from pros on how to optimize my strategy. </p> <p>A bit about my SFH:</p> <p>• ~3% interest rate</p> <p>• 150k owed on 250k mortgage, ~500k+ valuation (post-COVID inflation and ~50k in updates, finished basement and additional bathroom)</p> <p>• Beautiful 1 acre property on popular commuter corridor.</p> <p>• Current PITI is $",
+        "score": 0,
+        "url": "https://www.reddit.com/r/realestateinvesting/comments/1upmpwz/noobie_weighing_investment_options/",
         "is_question": false,
         "age_days": 0
       },
@@ -213,16 +213,6 @@
         "url": "https://www.reddit.com/r/realestateinvesting/comments/1uk3fmx/should_i_ask_for_lenders_to_remove_escrow/",
         "is_question": false,
         "age_days": 0
-      },
-      {
-        "source": "r/realestateinvesting",
-        "type": "post",
-        "title": "Thinking of scaling creatively (8 units to > 15+)",
-        "text": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, </p> <p>I&#39;ve been managing and running my small MFH portfolio for 4 years now, I&#39;ve got most of the systems down - usually saving up money every year or two for another property.</p> <p>I was thinking, my portfolio is pretty healthy so I should take some more additional risk. Most of my properties are averaging $300k per property. Would it be ballsy to try to get seller financing deals for let&#39;s say a 4PLEX on the market that may not cashflow well, or just break even let&#39;s say around the $600k mark. Worst case I write off some losses du",
-        "score": 0,
-        "url": "https://www.reddit.com/r/realestateinvesting/comments/1ujv5bi/thinking_of_scaling_creatively_8_units_to_15/",
-        "is_question": false,
-        "age_days": 0
       }
     ],
     "youtube_questions": [
@@ -237,7 +227,7 @@
       {
         "video_id": "-Q5oOFGZ1w8",
         "video_title": "You Wire the Money. We Do Everything Else. (Section 8 Done For You)",
-        "text": "No cap ex?",
+        "text": "is a good credit score needed for this? i screwed up my score doing dumb things and im trying to get it better but its not their yet",
         "likes": 0,
         "is_question": true,
         "url": "https://youtube.com/watch?v=-Q5oOFGZ1w8"
@@ -245,7 +235,7 @@
       {
         "video_id": "-Q5oOFGZ1w8",
         "video_title": "You Wire the Money. We Do Everything Else. (Section 8 Done For You)",
-        "text": "is a good credit score needed for this? i screwed up my score doing dumb things and im trying to get it better but its not their yet",
+        "text": "No cap ex?",
         "likes": 0,
         "is_question": true,
         "url": "https://youtube.com/watch?v=-Q5oOFGZ1w8"
@@ -271,7 +261,7 @@
       {
         "video_id": "-Q5oOFGZ1w8",
         "video_title": "You Wire the Money. We Do Everything Else. (Section 8 Done For You)",
-        "text": "No cap ex?",
+        "text": "is a good credit score needed for this? i screwed up my score doing dumb things and im trying to get it better but its not their yet",
         "likes": 0,
         "is_question": true,
         "url": "https://youtube.com/watch?v=-Q5oOFGZ1w8"
@@ -279,18 +269,10 @@
       {
         "video_id": "-Q5oOFGZ1w8",
         "video_title": "You Wire the Money. We Do Everything Else. (Section 8 Done For You)",
-        "text": "is a good credit score needed for this? i screwed up my score doing dumb things and im trying to get it better but its not their yet",
+        "text": "No cap ex?",
         "likes": 0,
         "is_question": true,
         "url": "https://youtube.com/watch?v=-Q5oOFGZ1w8"
-      },
-      {
-        "video_id": "-5iXY7R_5uo",
-        "video_title": "If you’re buying a rental in the next 5 years, please watch this…",
-        "text": "Thank you, for helping people through the process of purchasing section 8 propertys.",
-        "likes": 0,
-        "is_question": false,
-        "url": "https://youtube.com/watch?v=-5iXY7R_5uo"
       },
       {
         "video_id": "PblJc7xDGHM",
@@ -302,6 +284,34 @@
       }
     ],
     "news_items": [
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Section 8 Housing Choice Voucher Program reopens - KVOM 101.7",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiekFVX3lxTE5wT1l3LTF3a2packRuUi1HYjk0UmgyZV82TTNlalZURDR3T0lSd3djaG9NSHhzVXJKZWZGTmtXWDJ6Vnc1d05fc1dnTmFWLTlnaUhkUnIzUGZZZnR6SFZfbmlsY1UwU3R5Z2IweDdQM0k4Znd5SFg5M2xn?oc=5\" target=\"_blank\">Section 8 Housing Choice Voucher Program reopens</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">KVOM 101.7</font>",
+        "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5wT1l3LTF3a2packRuUi1HYjk0UmgyZV82TTNlalZURDR3T0lSd3djaG9NSHhzVXJKZWZGTmtXWDJ6Vnc1d05fc1dnTmFWLTlnaUhkUnIzUGZZZnR6SFZfbmlsY1UwU3R5Z2IweDdQM0k4Znd5SFg5M2xn?oc=5",
+        "date": "Wed, 08 Jul 2026 14:06:26 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Housing Authority Budget Advances Rental Assistance - The San Diego Voice & Viewpoint",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMifkFVX3lxTE4tdFo5bTQ2Z1ZHYnplcmxHd0hMV1JBT1VTV01pNU5zR3FERlk5bDUxOWZraFEydU1QaFFrT0pFVmFBMTNJeTljQVVlTVhKMEtaS1BLRFQ0eUpweDBvdEZFckxra21RQk1aUDhRdUFQQ0FVWHJBeGVHcUhxWE83dw?oc=5\" target=\"_blank\">Housing Authority Budget Advances Rental Assistance</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The San Diego Voice & Viewpoint</font>",
+        "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE4tdFo5bTQ2Z1ZHYnplcmxHd0hMV1JBT1VTV01pNU5zR3FERlk5bDUxOWZraFEydU1QaFFrT0pFVmFBMTNJeTljQVVlTVhKMEtaS1BLRFQ0eUpweDBvdEZFckxra21RQk1aUDhRdUFQQ0FVWHJBeGVHcUhxWE83dw?oc=5",
+        "date": "Tue, 07 Jul 2026 19:08:45 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "‘Hypocrisy’: Congress wants more homes. HUD is closing its low-income housing pipeline. - Politico",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMijwFBVV95cUxQaG9WSUxORlBDc252X2ROM1RmYXF3OGR1VWhOekRBandvTzVKRGhVQTJGdXZfTjhyZ3Nkc285VFNOWnZULXVLaEY2b0Y1Rm5wS2hiSk96NnZDTzdQaDNESjBTTGlCYi1mWnRtdDdYdXVBbzA3YzUzc1dBX3BlMEV1X2ZEY1N3a2xoZ3lBQmEwSQ?oc=5\" target=\"_blank\">‘Hypocrisy’: Congress wants more homes. HUD is closing its low-income housing pipeline.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Politico",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQaG9WSUxORlBDc252X2ROM1RmYXF3OGR1VWhOekRBandvTzVKRGhVQTJGdXZfTjhyZ3Nkc285VFNOWnZULXVLaEY2b0Y1Rm5wS2hiSk96NnZDTzdQaDNESjBTTGlCYi1mWnRtdDdYdXVBbzA3YzUzc1dBX3BlMEV1X2ZEY1N3a2xoZ3lBQmEwSQ?oc=5",
+        "date": "Fri, 03 Jul 2026 18:00:00 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "City of Thibodaux awarded 5 additional HUD-VASH vouchers for homeless veterans - The Lafourche Gazette",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiggJBVV95cUxNbXhQYzFwM2xrNzVLa1AwSzVFdExwZDgtdWNEbzRCYndlZUR4Y0NSQk1pckR4MU9mTmd5Wm03WF9LRHI3WFZTWElFT1lzc3NNem5kalNqckNrQllXY3pMdGVOVmtDRW84WVhxdnNoWjFuNnJOQWNjRG05X05aTWZtTFhqX3dBVTJzUDYtRnp3S3U4Q0xNelVJRXAxYXJkVGJXWnN0ZmszdkpDT0lad3gwbW56LUZucmFycFUzZlVmU25IbzBhWEZ5QmRLR1dHUDBZUUZGQ2tEY1VKajNIeHIyZWZVU0Q3djJkY01RdUd3QndIQzNLQkxJOVJ0c1FBSzRNYkE?oc",
+        "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNbXhQYzFwM2xrNzVLa1AwSzVFdExwZDgtdWNEbzRCYndlZUR4Y0NSQk1pckR4MU9mTmd5Wm03WF9LRHI3WFZTWElFT1lzc3NNem5kalNqckNrQllXY3pMdGVOVmtDRW84WVhxdnNoWjFuNnJOQWNjRG05X05aTWZtTFhqX3dBVTJzUDYtRnp3S3U4Q0xNelVJRXAxYXJkVGJXWnN0ZmszdkpDT0lad3gwbW56LUZucmFycFUzZlVmU25IbzBhWEZ5QmRLR1dHUDBZUUZGQ2tEY1VKajNIeHIyZWZVU0Q3djJkY01RdUd3QndIQzNLQkxJOVJ0c1FBSzRNYkE?oc=5",
+        "date": "Tue, 07 Jul 2026 17:46:00 GMT"
+      },
       {
         "source": "Google News: Section 8 vouchers",
         "title": "HUD’s FY 2027 Spending Bill Funds Vouchers—But Would Make Them Harder to Get - Shelterforce",
@@ -322,6 +332,13 @@
         "description": "<a href=\"https://news.google.com/rss/articles/CBMiugFBVV95cUxPYWZMMl93cHZIYzh4UGlFbktGd0xEQnFKVTYxZy11LW9VYkxUSnh6WHpNMTJhSVNtYjljaHgtNFpqU2pqWThKUE44VXBnRU15VDFoajVrajZrRlBMOUU5SGVCdmpVR19vZU5hYmtXN0RDSWxIdmZoZzZHZk1TcGZzam1tNjg0QmlIT3FHdkRiRkFSaXV4aTBib0lEUmp0YUMyWHdTdUVhWFMxVnRMQzljX0d2MU5CcF9NM3fSAb8BQVVfeXFMTmdxZ2d6ZTUwcTFFeURidDZXZWVFN3NLN1hYamVfcFJwTHpWTVR1cG9hNGtfaTR2NEF1T0tuWWt1b2ZYTmpFel",
         "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPYWZMMl93cHZIYzh4UGlFbktGd0xEQnFKVTYxZy11LW9VYkxUSnh6WHpNMTJhSVNtYjljaHgtNFpqU2pqWThKUE44VXBnRU15VDFoajVrajZrRlBMOUU5SGVCdmpVR19vZU5hYmtXN0RDSWxIdmZoZzZHZk1TcGZzam1tNjg0QmlIT3FHdkRiRkFSaXV4aTBib0lEUmp0YUMyWHdTdUVhWFMxVnRMQzljX0d2MU5CcF9NM3fSAb8BQVVfeXFMTmdxZ2d6ZTUwcTFFeURidDZXZWVFN3NLN1hYamVfcFJwTHpWTVR1cG9hNGtfaTR2NEF1T0tuWWt1b2ZYTmpFelBHRDFCNnlfaGRQOFk4NUxwcFp0R0dqR3p2d19zeXg5ZGMydmpMa09TNnJvQ3BReEFlLTZLT1k5c2JCQUdYLU1WbHBkM1E0Nll0aHBHNUhBMEdiRUczLXZhVmhIX194LXo0d1dHOHhUNG00ODhMcFdKQWd0VGxqYVE?oc=5",
         "date": "Wed, 10 Jun 2026 07:00:00 GMT"
+      },
+      {
+        "source": "Google News: Section 8 vouchers",
+        "title": "Understanding Section 8: A Guide to the Housing Choice Voucher Program - Inforney News",
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiygFBVV95cUxQUFNDY3hlbVNkeDZReVFvOVMyTUFuUklLOUNGYXkzVURUdkp3RTZWSWtUU0U3c3Y4QjRJd0hENnk1eVdNa2F2bm8xMDdVQmtXMzEwWUFzcGtBZ0FEYUF3WnNjODdaSkRkbDYtWVBDcUVfb3J4MFliMjFERnQ4MWY4dVl4dmp2bnBHNldCWEh3LUl2VDc2ZjFuLVFQamJabFdZVnVVVjNDMnN1dXNzZlVFSW1lY2tqWTR1Yk1lZGdlaEc2UE0xdm1pbDBR?oc=5\" target=\"_blank\">Understanding Section 8: A Guide to the Housing Choice ",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQUFNDY3hlbVNkeDZReVFvOVMyTUFuUklLOUNGYXkzVURUdkp3RTZWSWtUU0U3c3Y4QjRJd0hENnk1eVdNa2F2bm8xMDdVQmtXMzEwWUFzcGtBZ0FEYUF3WnNjODdaSkRkbDYtWVBDcUVfb3J4MFliMjFERnQ4MWY4dVl4dmp2bnBHNldCWEh3LUl2VDc2ZjFuLVFQamJabFdZVnVVVjNDMnN1dXNzZlVFSW1lY2tqWTR1Yk1lZGdlaEc2UE0xdm1pbDBR?oc=5",
+        "date": "Thu, 02 Jul 2026 17:31:14 GMT"
       },
       {
         "source": "Google News: Section 8 vouchers",
@@ -350,41 +367,6 @@
         "description": "<a href=\"https://news.google.com/rss/articles/CBMikwFBVV95cUxOZXpuRVJtOTRWNEltYzRYU21BU0F2WmdiVkQ3VkRQalNnQzEwOHVsQzhNNmFXMlg1VFVNMmZidjF1blFVdldhUFJkZDQ3UWJ3ZlpDcmJqZFRHdnV2Yl9MRUpxbTI0b0x0R20xNGo0VmxxR0pUYjhpNmktcmR3amZWTmlkN3BWOEpHSmFwQVN3VUl5elk?oc=5\" target=\"_blank\">Audit finds issues in Shreveport housing voucher program</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Black Chronicle</font>",
         "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOZXpuRVJtOTRWNEltYzRYU21BU0F2WmdiVkQ3VkRQalNnQzEwOHVsQzhNNmFXMlg1VFVNMmZidjF1blFVdldhUFJkZDQ3UWJ3ZlpDcmJqZFRHdnV2Yl9MRUpxbTI0b0x0R20xNGo0VmxxR0pUYjhpNmktcmR3amZWTmlkN3BWOEpHSmFwQVN3VUl5elk?oc=5",
         "date": "Wed, 01 Jul 2026 05:42:38 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "HUD limits Tenant Protection Vouchers - Nixon Peabody",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMimAFBVV95cUxPR0MwZFBQeUFLTzZ3aF9XVVRxTENjb2pQYUV5dXVqSUcwT01QZHA1aDRKU2RaUzA5N0FCX1VSc3owREt6bkV2S3pnMmFVeXFMc1ZZR0J5WXR1bHdYX0NBa0xHM19LOUhFMWcxdzNjM0EwN3VsbnVDeXRxUDdQdXd2QWJOeEhqaDc2Undvb2R2dGF1VW5SRFVHNA?oc=5\" target=\"_blank\">HUD limits Tenant Protection Vouchers</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nixon Peabody</font>",
-        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPR0MwZFBQeUFLTzZ3aF9XVVRxTENjb2pQYUV5dXVqSUcwT01QZHA1aDRKU2RaUzA5N0FCX1VSc3owREt6bkV2S3pnMmFVeXFMc1ZZR0J5WXR1bHdYX0NBa0xHM19LOUhFMWcxdzNjM0EwN3VsbnVDeXRxUDdQdXd2QWJOeEhqaDc2Undvb2R2dGF1VW5SRFVHNA?oc=5",
-        "date": "Tue, 12 May 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Atlanta Housing to offer $60K in down payment assistance for Section 8 renters - Atlanta Civic Circle",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiogFBVV95cUxOZmxTN1RoZHFEZV9zTlA0V2lURVRaVnV2ZXg5am9jZjFHeThvWWItSGJnNktMa2g0aG4wQ2JaN1d1Q0M3Z1lkTXRiSnhKaUxqeEJxS1lNdmd1eUlmNm56azE0SmF5MmRKandiVHBPMXBXQ3BtWGxLVmZDTGFGVEp6YmdOLUdvaGtvN0d0STBNVHNKUDdfUFNNZ3FvWi1DdG1Iamc?oc=5\" target=\"_blank\">Atlanta Housing to offer $60K in down payment assistance for Section 8 renters</a>&nbsp;&nbsp;<font color=\"#",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOZmxTN1RoZHFEZV9zTlA0V2lURVRaVnV2ZXg5am9jZjFHeThvWWItSGJnNktMa2g0aG4wQ2JaN1d1Q0M3Z1lkTXRiSnhKaUxqeEJxS1lNdmd1eUlmNm56azE0SmF5MmRKandiVHBPMXBXQ3BtWGxLVmZDTGFGVEp6YmdOLUdvaGtvN0d0STBNVHNKUDdfUFNNZ3FvWi1DdG1Iamc?oc=5",
-        "date": "Tue, 12 May 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Appellate court finds law unconstitutional that protects Section 8 housing voucher users - The Ithaca Voice",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMivgFBVV95cUxOMnIwTDJkanlVM18ybEI0Z0cwQldWcHZwNFNfYUVpSWEtbmwtN3QyM0kzOGdnNF9uRnFHUzRaMmJOcTBPZ0hQdVFTVzlHVmM0Q1dyMDBwTkZ4TUdTb1E2MTRvYVZMNUwxR2prZ0d3WFptRW1EWjRHUDJHcXBYM1Q4WDNGYTNhY3RlV2FXTl9JTGR4YmFXMTZMTXRMV2I3NWxZdEs0VV9CT1lBcGxuM3lhVVQxOWZYbjIxNVZBd2lB?oc=5\" target=\"_blank\">Appellate court finds law unconstitutional that protects Section 8 hous",
-        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOMnIwTDJkanlVM18ybEI0Z0cwQldWcHZwNFNfYUVpSWEtbmwtN3QyM0kzOGdnNF9uRnFHUzRaMmJOcTBPZ0hQdVFTVzlHVmM0Q1dyMDBwTkZ4TUdTb1E2MTRvYVZMNUwxR2prZ0d3WFptRW1EWjRHUDJHcXBYM1Q4WDNGYTNhY3RlV2FXTl9JTGR4YmFXMTZMTXRMV2I3NWxZdEs0VV9CT1lBcGxuM3lhVVQxOWZYbjIxNVZBd2lB?oc=5",
-        "date": "Sat, 21 Mar 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Landlords could not deny housing to tenants because of their Section 8 voucher. Now they can. - Central Current",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxQSXQ1SUpoM0NOaWlRWWF2c3lLQm5rSVM0YjJjU2MtaVY3T05FNFRtemdqdU5RQUdJRUpuWWtZemtjS2RPdXhNeHdxNVpsN2trSWJSZWJERFlOZk95OHJwNTdiQjlUSXNKRUsxc21idTVvV1ZGTFg0UGtqX3daTDczWWoyVmFwN1A1NDdkWU1SZjNkUy1yX1F5VHV3UWJjZGFhdk5mSlRFOWlydy14S0QyOExYaUNqazFIeGFR?oc=5\" target=\"_blank\">Landlords could not deny housing to tenants because of their Section 8 vouc",
-        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQSXQ1SUpoM0NOaWlRWWF2c3lLQm5rSVM0YjJjU2MtaVY3T05FNFRtemdqdU5RQUdJRUpuWWtZemtjS2RPdXhNeHdxNVpsN2trSWJSZWJERFlOZk95OHJwNTdiQjlUSXNKRUsxc21idTVvV1ZGTFg0UGtqX3daTDczWWoyVmFwN1A1NDdkWU1SZjNkUy1yX1F5VHV3UWJjZGFhdk5mSlRFOWlydy14S0QyOExYaUNqazFIeGFR?oc=5",
-        "date": "Mon, 23 Mar 2026 07:00:00 GMT"
-      },
-      {
-        "source": "Google News: Section 8 vouchers",
-        "title": "Section 8 voucher ruling shocks housing community - Spectrum News",
-        "description": "<a href=\"https://news.google.com/rss/articles/CBMijAFBVV95cUxOR3JsUXdUaDFESEh5MzkzRXFHakx2Z2F1ZUJhRkY5Nkk0UVdrS2JyWkdsYmN5OFg5b190Qk5taVZ1ODJsN2UtNHQ1NllPY1kzclQ1ZlQxUEgzZTdOOTBOam9IOTdBdUo5QmhTU1MtUkhZdDhhaEZOMm1NQTlyU2Q1Q3hTc1JEcGxKUEhxUA?oc=5\" target=\"_blank\">Section 8 voucher ruling shocks housing community</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Spectrum News</font>",
-        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOR3JsUXdUaDFESEh5MzkzRXFHakx2Z2F1ZUJhRkY5Nkk0UVdrS2JyWkdsYmN5OFg5b190Qk5taVZ1ODJsN2UtNHQ1NllPY1kzclQ1ZlQxUEgzZTdOOTBOam9IOTdBdUo5QmhTU1MtUkhZdDhhaEZOMm1NQTlyU2Q1Q3hTc1JEcGxKUEhxUA?oc=5",
-        "date": "Thu, 05 Mar 2026 08:00:00 GMT"
       }
     ],
     "joseph_videos": [
@@ -393,7 +375,7 @@
         "title": "The Government Will Pay You $1,200/Month to Own This Type of Rental",
         "description": "Work with me 1:1 - https://go.investingsection8.com/d036c01d\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/5f7cad10\n\nDealFinder AI: https://go.investingsection8.com/73a7c686\n\nClaim Free HUD Inspection Checklist Guide: https://go.investingsection8.com/fbc98f0b\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealc",
         "published_at": "2026-05-19T19:00:20Z",
-        "view_count": 453,
+        "view_count": 454,
         "like_count": 19,
         "comment_count": 2,
         "url": "https://youtube.com/watch?v=HB40CwiBiVU"
@@ -413,20 +395,10 @@
         "title": "I Built a $2.2M Section 8 Portfolio by Age 22. Here's Every Mistake I Made",
         "description": "Work with me 1:1 - https://go.investingsection8.com/0d0dadb6\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/f4608e79\n\nDealFinder AI: https://go.investingsection8.com/396a6844\n\nClaim Free HUD Inspection Checklist Guide: https://go.investingsection8.com/03393e24\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealc",
         "published_at": "2026-06-01T20:14:14Z",
-        "view_count": 328,
+        "view_count": 331,
         "like_count": 19,
         "comment_count": 0,
         "url": "https://youtube.com/watch?v=ypwNyRiaw_4"
-      },
-      {
-        "video_id": "-5iXY7R_5uo",
-        "title": "If you’re buying a rental in the next 5 years, please watch this…",
-        "description": "Work with me 1:1 - https://go.investingsection8.com/16c277fb\n\nDealFinder AI: https://go.dealfinderai.org/53ad9f6e\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/3f6c731a\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=joseph81\nTenantCloud: https://app.tenantcloud.com/signup?affiliate=enhb4qunk",
-        "published_at": "2026-05-12T19:01:42Z",
-        "view_count": 326,
-        "like_count": 14,
-        "comment_count": 1,
-        "url": "https://youtube.com/watch?v=-5iXY7R_5uo"
       },
       {
         "video_id": "PblJc7xDGHM",
@@ -457,6 +429,16 @@
         "like_count": 11,
         "comment_count": 9,
         "url": "https://youtube.com/watch?v=G8p_AE08-AQ"
+      },
+      {
+        "video_id": "YHvufvqnwAI",
+        "title": "How to Invest in Section 8 Housing in 2026 (From Someone Actually Doing It)",
+        "description": "Work with me 1:1 - https://go.investingsection8.com/e29a541a\n\nFull Financing Guide - https://go.investingsection8.com/16566e39\n\nLearn how to start investing in Section 8 for FREE - https://go.investingsection8.com/75595d54\n\nDealFinder AI - https://go.investingsection8.com/ea5438ff\n\nResources I 1000% Recommend (affiliate links):\nDealcheck.io (BESTDEAL for 20% off!): https://dealcheck.io?fp_ref=jose",
+        "published_at": "2026-07-06T00:40:37Z",
+        "view_count": 263,
+        "like_count": 15,
+        "comment_count": 3,
+        "url": "https://youtube.com/watch?v=YHvufvqnwAI"
       },
       {
         "video_id": "EzSQEy3k2oM",
@@ -513,8 +495,8 @@
     "this_week_drafts": 0,
     "weekly_goal": 3,
     "reddit_items": 25,
-    "reddit_questions": 12,
-    "yt_comments": 6,
+    "reddit_questions": 11,
+    "yt_comments": 5,
     "yt_questions": 3,
     "news_items": 154
   }
