@@ -1,0 +1,12 @@
+{
+  "name": "is8-newsletter-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Newsletter Studio dashboard for Investing Section 8 (Joseph Khateri)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
