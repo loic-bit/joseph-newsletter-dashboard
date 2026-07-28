@@ -420,6 +420,10 @@ async function refreshResearch() {
         headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ ref: 'main' }) }
     );
+    if (triggerRes.status === 401 || triggerRes.status === 403) {
+      localStorage.removeItem('ns_gh_dispatch_token');
+      throw new Error('Token rejected. Click Refresh Data again and paste the current token.');
+    }
     if (!triggerRes.ok) throw new Error(`Dispatch failed: ${triggerRes.status}`);
 
     label.textContent = 'Fetching sources...';
